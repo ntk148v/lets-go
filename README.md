@@ -126,3 +126,104 @@ const (
 * Rune: `Rune` is an alias for `int32`, (use when you're iterating over characters in a string).
 * Complex Numbers: `complex128` (64 bit real and imaginary parts) or `complex32`.
 * Errors: Go has a builtin type specially for errors, called `error.var e`.
+
+### 2.5. Operators and Built-in Functions
+
+* Go supports the normal set of numerical operators.
+
+```
+Precedence	Operator(s)
+Highest   	* / % << >> & &^
+            `+ -
+            == != < <= > >=
+            <-
+            &&
+Lowest    	||
+```
+
+* `&` bitwise and, `|` bitwise or, `^` bitwise xor, `&^` bit clear respectively.
+
+### 2.6. Go Keywords
+
+```
+break     default      func    interface   select
+case      defer        go      map         struct
+chan      else         goto    package     switch
+const     fallthrough  if      range       type
+continue  for          import  return      var
+```
+
+* `var`, `const`, `package`, `import` are used in the previous sections.
+* `func` is used to declare functions and methods.
+* `return` is used to return from functions.
+* `go` is used for concurrency.
+* `select` is used to choose from different types of communication.
+* `interface`.
+* `struct` is used for abstract data types.
+* `type`.
+
+### 2.7. Control Structures
+
+* If-Else
+
+```Go
+if x > 0 {
+    return y
+} esle {
+    return x
+}
+
+if err := MagicFunction(); err != nil {
+    return err
+}
+
+// do something
+```
+
+* Goto: With `goto` you jump to a label which must be defined within the current function.
+
+```Go
+/* gototest */
+/* Create a loop */
+func gototestfunc() {
+    i := 0
+Here:
+    fmt.Println()
+    i++
+    goto Here
+}
+```
+
+* For: `for` loop has three forms, only one of which has semicolons:
+
+```Go
+for init; condition; post { } // aloop using the syntax borrowed from C
+for condition { } // a while loop
+for { } // a endless loop
+
+sum := 0
+for i := 0; i < 10; i++ {
+    sum = sum + i
+}
+```
+
+* Break and continue
+
+```Go
+for i := 0; i < 10; i++ {
+    if i > 5 {
+        break
+    }
+    fmt.Println(i)
+}
+
+/* With loops within loop you can specify a label after `break` to identify which loop to stop */
+J: for j := 0; j < 5; j++ {
+    for i := 0; i < 10; i++ {
+        if i > 5 {
+            break J
+        }
+        fmt.Println(i)
+    }
+}
+```
