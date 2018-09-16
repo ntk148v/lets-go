@@ -7,6 +7,8 @@
 
 These above links contain a lot of sources, so finding documentation isn't a big deal.. Just choose one and let's start. In my case, I follow [Learning Go - Miek Gieben](https://miek.nl/go/).
 
+> **NOTE**: Every examples in this documentation are stored in directories named by section. I assume that every commands in section X will be executed **in X directory**, so I don't write a full path to Go script file.
+
 ## 1. Introduction
 
 > Is Go an object-oriented language? Yes and no!
@@ -15,16 +17,14 @@ These above links contain a lot of sources, so finding documentation isn't a big
 * What is Golang? Golang Programming language is an open source programming language that makes it easy to build simple, reliable and efficient software.
 * Go is a compliaed statically typed language that feels like a dynamically typed, interpreted language.
 
-> **NOTE**: Every examples in this documentation are stored in directories named by section. I assume that every commands in section X will be executed **in X directory**, so I don't write a full path to Go script file.
-
 ## 2. Basic
 
 ### 2.1. Say Hello World in Golang!
 
 * Get started with Go in the classic way: printing "Hello World" (Ken Thompson and Dennies Ritchie started this when they presented the C language in the 1970s #til)
 
-```
-
+```Go
+/* helloworld.go */
 package main
 
 import "fmt" // Implements formatted I/O
@@ -90,17 +90,17 @@ _, b := 26, 9
     * The full list for (signed and unsigned) integers is `int8`, `int16`, `int32`, `int64` and `byte` (an alias for `uint8`), `uint8`, `uint16`, `uint32`, `uint64`.
     * For floating point values there is `float32`, `float64`, ~~float~~.
 
-```Go
-/* numericaltypes.go */
-package main
+    ```Go
+    /* numericaltypes.go */
+    package main
 
-func main() {
-    var a int
-    var b int32
-    b = a + a // Give an error: cannot use a + a (type int) as type int32 in assignment.
-    b = b + 5
-}
-```
+    func main() {
+        var a int
+        var b int32
+        b = a + a // Give an error: cannot use a + a (type int) as type int32 in assignment.
+        b = b + 5
+    }
+    ```
 
 * Constants: Constants are created at compile time, and can only be numbers, strings, or booleans. You can use `iota` to enumerate values.
 
@@ -115,13 +115,13 @@ const (
     * Strings in Go are a sequence of UTF-8 characters enclosed in double quotes. If you use the single quote you mean one character (encoded in UTF-8) - which is *not* a `string` in Go. Note that! In Python (my favourite programming language), I can use both of them for string assignment.
     * String in Go are immutable. To change one character in string, you have to create a new one.
 
-```Go
-s1 := "Hello"
-c := []rune(s) // Convert s1 to an array of runes
-c[0] := 'M'
-s2 := string(c) // Create a new string s2 with the alteration
-fmt.Printf("%s\n", s2)
-```
+    ```Go
+    s1 := "Hello"
+    c := []rune(s) // Convert s1 to an array of runes
+    c[0] := 'M'
+    s2 := string(c) // Create a new string s2 with the alteration
+    fmt.Printf("%s\n", s2)
+    ```
 
 * Rune: `Rune` is an alias for `int32`, (use when you're iterating over characters in a string).
 * Complex Numbers: `complex128` (64 bit real and imaginary parts) or `complex32`.
