@@ -24,7 +24,7 @@ These above links contain a lot of sources, so finding documentation isn't a big
 * Get started with Go in the classic way: printing "Hello World" (Ken Thompson and Dennies Ritchie started this when they presented the C language in the 1970s #til)
 
 ```Go
-/* helloworld.go */
+/* hello_world.go */
 package main
 
 import "fmt" // Implements formatted I/O
@@ -37,7 +37,7 @@ func main() {
 
 ### 2.2. Compiling and Running Code
 
-* To build [helloworld.go](./2/helloworld.go), just type:
+* To build [helloworld.go](./2/hello_world.go), just type:
 
 ```
 $ go build helloworld.go # Return an executable called helloworld 
@@ -91,7 +91,7 @@ _, b := 26, 9
     * For floating point values there is `float32`, `float64`, ~~float~~.
 
     ```Go
-    /* numericaltypes.go */
+    /* numerical_types.go */
     package main
 
     func main() {
@@ -183,7 +183,7 @@ if err := MagicFunction(); err != nil {
 * Goto: With `goto` you jump to a label which must be defined within the current function.
 
 ```Go
-/* gototest */
+/* goto_test */
 /* Create a loop */
 func gototestfunc() {
     i := 0
@@ -314,7 +314,7 @@ cap    	 copy   	println
 
     fmt.Println(s) // Return [3, 5, 7]
 
-    /* slicelengthcapacity.go */
+    /* slice_length_capacity.go */
     package main
 
     import "fmt"
@@ -433,3 +433,136 @@ func callback(y int, f func(int)) {
     f(y)
 }
 ```
+
+### 3.4. Deferred Code
+
+```Go
+/* Open a file and perform various writes and reads on it. */
+func ReadWrite() bool {
+    file.Open("file")
+    // Do your thing
+    if failureX {
+        file.Close()
+        return false
+    }
+
+    // Repeat a lot of code.
+    if failureY {
+        file.Close()
+        return false
+    }
+    file.Close()
+    return true
+}
+
+/* Same situation but using defer */
+func ReadWrite() bool {
+    file.Open("file")
+    defer file.Close() // add file.Close() to the defer list
+    // Do your thing
+    if failureX {
+        return false
+    }
+
+    if failureY {
+        return false 
+    }
+    return true
+}
+```
+
+* Can put multiple functions on the "defer list".
+* `Defer` functions are executed in *LIFO* order.
+
+```Go
+for i := 0; i < 5; i++ {
+    defer fmt.Printf("%d ", i) // 4 3 2 1 0
+}
+```
+
+* With `defer` you can even change return values, provided that you are using named result parameters and a function literal (`def func(x int) {/*....*/}(5)`).
+
+```Go
+func f() (ret int)
+    defer func() { // Initialized with zero
+        ret++
+    }()
+    return 0 // This will not be the returned value, because of defer. Ths function f will return 1
+}
+```
+
+### 3.5. Variadic Parameter
+
+* Functions that take a variable number of parameters are known as variadic functions.
+
+```Go
+func func1(arg... int) { // the variadic parameter is just a slice.
+    for _, n := range arg {
+        fmt.Printf("And the number is: %d\n", n)
+    }
+}
+```
+
+### 3.6. Panic and recovering
+
+* Go does not have an exception mechanism: *you can not throw exception*. Instead it uses a *panic and recover mechanism*.
+    * Panic: Built-in function that tstops the oridinary flow of control and begins panicking. When function F call `pacnic`, execution of `F` stops, any deferred functions in F are executed normally, and then F returns to its caller. To the caller, F then behaves like a call to panic. The process continues up the stack until all functions in the current goroutine have returned, at which point the program crashes. Panics can be initiated by invoking panic directly. They can also be caused by runtime errors, such as out-of-bounds array accesses.
+    * Recover: Built-in function that regains control of a panicking goroutine. Recover is only useful inside deferred functions. During normal execution, a call to recover will return nil and have no other effect. If the current goroutine is panicking, a call to recover will capture the value given to panic and resume normal execution.
+
+
+```Go
+/* defer_panic_recover.go */
+package main
+
+import "fmt"
+
+func main() {
+	f()
+	fmt.Println("Returned normally from f.")
+}
+
+func f() {
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Recovered in f", r)
+		}
+	}()
+	fmt.Println("Calling g.")
+	g(0)
+	fmt.Println("Returned normally from g.")
+}
+
+func g(i int) {
+	if i > 3 {
+		fmt.Println("Panicking!")
+		panic(fmt.Sprintf("%v", i))
+	}
+	defer fmt.Println("Defer in g", i)
+	fmt.Println("Printing in g", i)
+	g(i + 1)
+}
+/* Result */
+// Calling g.
+// Printing in g 0
+// Printing in g 1
+// Printing in g 2
+// Printing in g 3
+// Panicking!
+// Defer in g 3
+// Defer in g 2
+// Defer in g 1
+// Defer in g 0
+// Recovered in f 4
+// Returned normally from f.
+```
+
+* Still don't understanding how these works? Don't worry, I got you. Check [Go Defer Simplified with Praticial Visuals by Inanc Gunmus](https://blog.learngoprogramming.com/golang-defer-simplified-77d3b2b817ff).
+* Other useful links about Defer:
+    * [5 Gotchas of Defer in Go — Part I](https://blog.learngoprogramming.com/gotchas-of-defer-in-go-1-8d070894cb01)
+    * [5 Gotchas of Defer in Go — Part II](https://blog.learngoprogramming.com/5-gotchas-of-defer-in-go-golang-part-ii-cc550f6ad9aa)
+
+## 4. Packages
+
+* A package is a collection of functions and data.
+* The convention for package names is to use lowercase characters - the file does not have to match the package name.
+
