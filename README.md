@@ -566,3 +566,95 @@ func g(i int) {
 * A package is a collection of functions and data.
 * The convention for package names is to use lowercase characters - the file does not have to match the package name.
 
+```Go
+package even
+
+func Even(i int) bool { // starts with capital -> exported
+    return i%2 == 0
+}
+
+func odd(i int) bool { // start with lower-case -> private
+    return i%2 == 1
+}
+```
+
+* Build the package
+
+```
+$ mkdir $GOPATH/src/even
+$ cp even.go $GOPATH/src/even
+$ go build
+$ go install
+```
+
+* Now you can use the package in your program with `import "even"`.
+
+### 4.1. Identifiers
+
+* The Convention in Go is to use CamelCase rather than underscores to write multi-word names.
+* The Convention in Go is that package names are lowercase, single word names.
+* Override default package name: `import bar "bytes"`.
+* Another convention is that the package name is the base name of its source directory; the package in `src/compress/gzip` is imported as `compress/gzip` but has name `gzip`, not `compress/gzip`.
+* Avoid stuttering when naming things.
+* The function to make new instance of `ring.Ring` package (package `container/ring`), would normally be called `NewRing`, but since `Ring` is the only type exported by the package, since the package is called `ring`, it's called just `New`. Clients of the package see that as `ring.New`.
+
+### 4.2. Documeting packages
+
+* Each package should have a *package comment**.*
+* When a package consists of multiple files the package comment should only appear in 1 file.
+* A common convention (in really big packages) is to have a separate `doc.go` that only holds the package comment.
+
+```Go
+/*
+    The regexp package implements a simple library for
+    regular expressions.
+
+    The syntax of the regular expressions accepted is:
+
+    regexp:
+        concatenation { '|' concatenation }
+*/
+package regexp
+```
+
+* Each defined (and exported) function should have a samll line of text documenting the behavior of the function.
+
+### 4.3. Testing packages
+
+* Writing test involves the `testing` package and the program `go test`.
+* Fill this section later...
+
+### 4.4. Useful packages
+
+* **fmt**: Package `fmt` implements formatted I/O with functions analogous to C's`printf` and `scanf`. The format verbs are derived from C's but are simpler. Some verbs (%-sequences) that can be used:
+    * %v, the value in a default format, when printing structs, the plus flag (%+v) adds fields names.
+    * %#v, a Go-syntax representation of the value.
+    * %T, a Go-sytanx representation of the type of the value.
+
+* **io**: The package provides basic interfaces to I/O primitives. Its primary job is to wrap existing implementation of such primitives, such as those in package `os`, into shared public interfaces that abstract the functionality, plus some other related primitives.
+
+* **bufio**: This package implements buffered I/O. It wraps an io.Reader or io.Writer object, creating another object (Reader or Writer) that also implements the interface but provides buffering and some help for textual I/O.
+
+* **sort**: The sort package provides primitives for sorting arrays and user-defined collections.
+
+* **strconv**: The strconv package implements conversions to and from string representations of basic data types.
+
+* **os**: The os package provides a platform-independent interface to operating system functionality. The design is Unix-like.
+
+* **sync**: The package sync provides basic synchronization primitives such as mutual exclusion locks.
+
+* **flag**: The flag package implements command-line flag parsing.
+
+* **encoding/json**: The encoding/json package implements encoding and decoding of JSON objects as defined in RFC 4627.
+
+* **html/template**: Data-driven templates for generating textual output such as HTML.
+
+* **net/http**: The net/http package implements parsing of HTTP requests, replies, and URLs and provides an extensible HTTP server and a basic HTTP client.
+
+* **unsafe**: The unsafe package contains operations that step around the type safety of Go programs. Normally you don’t need this package, but it is worth mentioning that unsafe Go programs are possible.
+
+* **reflect**: The reflect package implements run-time reflection, allowing a program to manipulate objects with arbitrary types. The typical use is to take a value with static type interface{} and extract its dynamic type information by calling TypeOf, which returns an object with interface type Type.
+
+* **os/exec**: The os/exec package runs external commands.
+
+## 5. Beyond the basics
