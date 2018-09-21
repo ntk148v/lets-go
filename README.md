@@ -658,3 +658,136 @@ package regexp
 * **os/exec**: The os/exec package runs external commands.
 
 ## 5. Beyond the basics
+
+* Go has pointers but not pointer arthmetic, so they act more like references than pointers that you may know from C.
+    * A pointer is a variable which stores the address of another variable.
+    * A reference is a variable which refers to another value.
+    * Want to understand more? Check this [article](http://spf13.com/post/go-pointers-vs-references/)
+
+* Pointers are useful. Remember that when you call a function in Go, the variables are *pass-by-value*. So, for efficiency and the possibility to modify a passed value in functions we have pointers.
+
+* All newly declared variables are assigned their zero value and pointers are no different. A newly declared pointer, or just a pointer that points to nothing, has a nil-value.
+
+```Go
+var p *int // declare a pointer
+fmt.Printf("%v", p)
+
+var i int
+p = &i // Make p point to i
+
+fmt.Printf("%v", p) // Print somthing like 0x7ff96b81c000a
+```
+
+![pointer](https://www.callicoder.com/assets/images/post/large/golang-pointers-illustration.jpg)
+
+### 5.1. Allocation
+
+* Go also has garbage collection.
+* To allocate memory Go has 2 primitives, `new` and `make`.
+* **new** allocates; **make** initializes.
+    * *new(T)* returns \*T pointing to a zerod T.
+    * *make(T)* returns an initialized T.
+    * *make* is only used for slices, maps, channels.
+
+* Constructors and compiste literals
+
+```Go
+// A lot of boiler plate
+func NewFile(fd int, name string) *File {
+    if fd < 0 {
+        return nil
+    }
+    f := new(File)
+    f.fd = fd
+    f.name = name
+    f.dirinfo = nil
+    f.nepipe = 0
+    return f
+}
+// Using a composite literal
+func NewFile(fd int, name string) *File {
+    if fd < 0 {
+        return nil
+    }
+    f := File{fd, name, nil. 0}
+    return &f // Return the address of a local variable. The storage associated with the variable survives after the function returns.
+    // return &File{fd, name, nil, 0}
+    // return &File{fd: fd, name: name}
+}
+```
+
+* As a limiting case, if a composite literal contains no fields at all, it creates a zero value for the type. The expression `new(File)` and `&File{}` are equivalent.
+
+* Composite literal can also be created for arrays, slices, and maps, with the field labels being indices or map keys as appropriate.
+
+```Go
+ar := [...]string{Enone: "no error", Einval: "invalid argument"}
+sl := []string{Enone: "no error", Einval: "invalid argument"}
+ma := map[int]string {Enone: "no error", Einval: "invalid argument"}
+```
+
+### 5.2. Defining your own types
+
+```Go
+/* defining_own_type.go */
+package main
+
+import "fmt"
+
+type NameAge struct {
+	name string // both non exported fiedls
+	age  int
+}
+
+func main() {
+	a := new(NameAge)
+	a.name = "Kien"
+	a.age = 25
+	fmt.Printf("%v\n", a) // &{Kien, 25}
+}
+```
+
+* More on structure fields
+
+```Go
+struct {
+    x, y int
+    A *[]int
+    F func()
+}
+```
+
+* Methods:
+
+    * Create a function that takes the type as an argument:
+
+    ```Go
+    func doSomething1(n1 *NameAge, n2 int) {/* */}
+    // method call
+    var n *NameAge
+    n.doSomething1(2)
+    ```
+
+    * Create a function that works on the type:
+
+    ```Go
+    func (n1 *NameAge) doSomething2(n2 int) {/* */}
+    ```
+
+> **NOTE**: If x is addressable and &x's method set contains m, x.m() is shorthand for (&x).m().
+
+* Suppose we have:
+
+```Go
+// A mutex is a data type with two methods, Lock and Unlock
+type Mutex struct {/* Mutex fields */}
+func (m *Mutex) Lock() {/* Lock impl */}
+func (m *Mutext) Unlock {/* Unlock impl */}
+
+// NewMutex is equal to Mutex, but it does not have any of the methods of Mutex.
+type NewMutex Mutex
+// PrintableMutex hash inherited the method set from Mutex, contains the methods
+// Lock and Unlock bound to its anonymous field Mutex
+type PrintableMutex struct{Mutex}
+```
+
