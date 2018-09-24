@@ -791,3 +791,49 @@ type NewMutex Mutex
 type PrintableMutex struct{Mutex}
 ```
 
+### 5.3. Conversions
+
+```
+FROM    b []byte    i []int    r []rune    s string    f float32    i int
+TO
+[]byte  .                                  []byte(s)
+[]int               .                      []int(s)
+[]rune                                     []rune(s)
+string  string(b)   string(i)  string(r)   .
+float32                                                .            float32(i)
+int                                                    int(f)       .
+```
+
+* float64 works the same as float32
+* From a `string` to a slice of bytes or runes
+
+```Go
+mystring := "hello this is string"
+byteslice := []byte(mystring)
+runeslice := []rune(string)
+```
+
+* From a slice of bytes or runes to a string
+
+```Go
+b := []byte{'h', 'e', 'l', 'l', 'o'} // Composite literal
+s := string(b)
+i := []rune(26, 9, 1994)
+r := string(i)
+```
+
+* For numeric values:
+    * Convert to an integer with a specific (bit) length: `uint8(int)`.
+    * From floating point to an integer value: `int(float32)`. This discards the fraction part from the floating point value.
+    * And other way around `float32(int)`
+
+* User defined types and conversions
+
+```Go
+type foo struct { int } // Anonymous struct field
+type bar foo            // bar is an alias for foo
+
+var b bar = bar{1} // Declare `b` to be a `bar`
+var f foo = b      // Assign `b` to `f` --> Cannot use b (type bar) as type foo in assignment
+var f foo = foo(b) // OK!
+```
