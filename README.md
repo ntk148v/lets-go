@@ -1082,3 +1082,8 @@ x, ok = <-ch
 Otherwise ok is set to False. In that case the channel was closed and the value
 received is a zero value of the channel's type.
 ```
+
+## 8. Communication
+
+* Building blocks in Go for communcating with the outside world (fiels, directories, networking and executing other programs).
+* Central to Go's I/O are the interfaces `io.Reader` and `io.Writer`.
