@@ -837,3 +837,120 @@ var b bar = bar{1} // Declare `b` to be a `bar`
 var f foo = b      // Assign `b` to `f` --> Cannot use b (type bar) as type foo in assignment
 var f foo = foo(b) // OK!
 ```
+
+## 6. Interfaces
+
+* Every type has an interface, which is the *set of methods defined* for that type.
+
+```Go
+/* a struct type S with 1 field, 2 methods */
+type S struct { i int }
+func (p *S) Get() int { return p.i }
+func (p *S) Put(v int) { p.i = v }
+
+/* an interface type */
+type I interface {
+    Get() int
+    Put() int
+}
+/* S is a valid implementation for interface I */
+```
+
+* S is a valid implementation for ineterface I. A Go program can use this fact via yet another meaning of interface, which is an interface value:
+
+```Go
+func f(p I) {
+    fmt.Println(p.Get())
+    p.Put(1)
+}
+var s S
+/* Because S implements I, we can call the
+function f passing in a pointer to a value
+of type S */
+/* The reason we need to take the address of s,
+rather than a value of type S, is because
+we defined the methods on s to operae on pointers */
+f(&s)
+```
+
+* The fact that you do not need to declare whether or not a type implements an interface means that Go implements a form of [duck typing](https://en.wikipedia.org/wiki/Duck_typing). This is not pure duck typing, because when possible the Go complier will statically check whether the type implements the inerface. However, Go does have a purely dynamic aspect, in that you can convert from one interface to another. In the general case, that conversion is checked at run time. If the conversion is invalid - if the type of the value stored in the existing interface value does not satisfy the interface to which it is being converted - the program will fail with a run time error.
+    * *Duck typing - If it looks like a duck, and it quacks like a duck, then it is a duck*. It means if it has a set of methods that match an interface, then you can use it wherever that interface is needed without explicitly defining that your types implement that interface.
+
+    ```Go
+    package main
+
+    import "fmt"
+
+    type Duck interface {
+        Quack()
+    }
+
+    type Donald struct {
+    }
+
+    func (d Donald) Quack() {
+        fmt.Println("quack quack!")
+    }
+
+    type Daisy struct {
+    }
+
+    func (d Daisy) Quack() {
+        fmt.Println("-quack -quack")
+    }
+
+    func sayQuack(duck Duck) {
+        duck.Quack()
+    }
+
+    type Dog struct {
+    }
+
+    func (d Dog) Bark() {
+        fmt.Println("go go")
+    }
+
+    func main() {
+        donald := Donald{}
+        sayQuack(donald) // quack
+        daisy := Daisy{}
+        sayQuack(daisy) // --quack
+        dog := Dog()
+        sayQuack(dog) // compile error - cannot use dog (type Dog) as type Duck
+    }
+    ```
+
+### 6.1. Which is what?
+
+* Let's define another type R that also implements the interface I:
+
+```Go
+type R struct { i int }
+func (p * R) Get() int { return p.i }
+func (p *R) Put(v int) { p.i = v }
+
+func f(p I) {
+    switch t := p.(type) {
+        case *S:
+        case *R:
+        default:
+    }
+}
+```
+
+### 6.2. Empty interface
+
+* Create a generic function which has an empty interface as its argument
+
+```Go
+func g(something interface{}) int {
+    return something.(I).Get()
+}
+```
+
+* The `.(I)` is a type assertion which converts `something` to an interface of type I. If we have the type we can invoke the `Get()` function.
+
+```Go
+s = new(S)
+fmt.Println(g(s))
+```
