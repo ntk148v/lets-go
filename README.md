@@ -874,6 +874,7 @@ f(&s)
 ```
 
 * The fact that you do not need to declare whether or not a type implements an interface means that Go implements a form of [duck typing](https://en.wikipedia.org/wiki/Duck_typing). This is not pure duck typing, because when possible the Go complier will statically check whether the type implements the inerface. However, Go does have a purely dynamic aspect, in that you can convert from one interface to another. In the general case, that conversion is checked at run time. If the conversion is invalid - if the type of the value stored in the existing interface value does not satisfy the interface to which it is being converted - the program will fail with a run time error.
+
     * *Duck typing - If it looks like a duck, and it quacks like a duck, then it is a duck*. It means if it has a set of methods that match an interface, then you can use it wherever that interface is needed without explicitly defining that your types implement that interface.
 
     ```Go
@@ -922,7 +923,7 @@ f(&s)
 
 ### 6.1. Which is what?
 
-* Let's define another type R that also implements the interface I:
+* Let's define another type R that also implements the interface I.
 
 ```Go
 type R struct { i int }
@@ -953,4 +954,131 @@ func g(something interface{}) int {
 ```Go
 s = new(S)
 fmt.Println(g(s))
+```
+
+### 6.3. Methods
+
+* Methods are functions that have a receiver.
+* You can definen methods on any type (except on non-local types, this includes built-in types: the type `int` can not have methods).
+* Methods on interface types
+    * An interface defines a set of methods. A method contains the actual code.
+    * An interface is the definition and the methods are the implementation.
+* By convention, one-method interfaces are named by the method name plus the -er suffix: Reader, Writer, Formatter,...
+
+### 6.4. Listing interfaces in interfaces
+
+### 6.5. Introspection and reflection
+
+## 7. Concurrency
+
+* Firstly, don't mess between [parallelism and concurrency](https://github.com/ntk148v/til/blob/master/concurrency-parallelism/concurrency-is-not-parallelism.md).
+* **Goroutines** are the central entity in Go's ability for concurrency. A goroutine has a simple model: it is a function executing in parallel with other goroutines in the same address space. It is lightweight, costing little more than the allocation of stack space. And the stack start small, so they are cheap, and grow by allocating (and freeing) heap storage as required.
+
+```Go
+ready("Tea", 2) // Normal function call
+go ready("Tea", 2) // .. Bum! Here is goroutine
+
+/* X ready example */
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func ready(w string, sec int) {
+	time.Sleep(time.Duration(sec) * time.Second)
+	fmt.Println(w, "is ready!")
+}
+
+func main() {
+	go ready("Tea", 2) // Tea is ready - After 2 second (3)
+	go ready("Coffee", 1) // Coffee is ready - After 1 second (2)
+	fmt.Println("I'm waiting") // Right away (1)
+    // If did not wait for the goroutines, the program would be terminated
+    // immediately and any running goroutines would die with it!
+	time.Sleep(5 * time.Second)
+}
+```
+
+* In fact, we have no idea how long we should wait until all goroutine have exited. To fix this, we need some kind of mechanism which allows us to communicate with the goroutines - channel. A channel can be compared to a two-way pipe in Unix shells: you can send to and receive values from it.
+
+```Go
+/* Define a channel, we must also define the type of
+the values we can send on the channel */
+ci := make(chan int)
+cs := make(chan string)
+cf := make(chan interface{})
+ci <- 1 // Send the integer 1 to the channel ci
+<-ci    // Receive an integer from the channel ci
+i := <-ci // Receive from the channel ci and store it in i
+```
+
+* Put this to previous example (ready).
+
+```Go
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+var c chan int
+
+func ready(w string, sec int) {
+	time.Sleep(time.Duration(sec) * time.Second)
+	fmt.Println(w, "is ready!")
+	c <- 1
+}
+
+func main() {
+	c = make(chan int)
+	go ready("Tea", 2)
+	go ready("Coffee", 1)
+	fmt.Println("I'm waiting")
+	<-c // Wait until we receive a value from the channel
+	<-c
+}
+```
+
+* What if we don't know how many goroutines we started? This is where another Go built-in comes in: `select`. 
+
+```Go
+L: for {
+    select {
+    case <-c:
+        i++
+        if i > 1 {
+            break L
+        }
+    }
+}
+```
+
+### 7.1. Make it run in parallel
+
+* While our goroutines were running concurrently, they were not running in parallel! (Once more time, make sure you know that Concurrency is not Parralel!)
+* With `runtime.GOMAXPROCS(n)` or set an environment variable `GOMAXPROCS` you can set the number of goroutines that can run in parallel.
+    * GOMAXPROCS sets the maximum number of CPUs that can be executing simultaneously and returns the previous setting. If n < 1, it does not change the current setting. This call will go away when the scheduler improves.>
+
+* From version 1.5 and above, `GOMAXPROCS` defaults to the number of CPU cores.
+
+### 7.2. More on channels
+
+* Note that:
+
+```Go
+ch := make(chan type, value)
+// if value == 0 -> unbuffered
+// if value > 0 -> buffer value elements
+```
+
+* When a channel is closed the reading side needs to know this
+
+```Go
+x, ok = <-ch
+/* Where ok is set to True the channel is not closed and we've read something
+Otherwise ok is set to False. In that case the channel was closed and the value
+received is a zero value of the channel's type.
 ```
