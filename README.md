@@ -1087,3 +1087,39 @@ received is a zero value of the channel's type.
 
 * Building blocks in Go for communcating with the outside world (fiels, directories, networking and executing other programs).
 * Central to Go's I/O are the interfaces `io.Reader` and `io.Writer`.
+
+### 8.1. io.Reader
+
+* `io.Reader` is an important interface in the language Go. A lot (if not all) functions that need to read from something take an `io.Reader` as input.
+* The writing side `io.Writer` has the `Write` method.
+* If you think of new type in your program or package and you make it fulfill the `io.Reader` or `io.Writer` interface, *the whole standard Go library can be used* on that type.
+
+### 8.2. Command line arguments
+
+* Arguments from the command line are available inside your program via the string slide `os.Args`.
+* The `flag` package has a more sophisticated interface, and also provided a way to parse flags.
+
+### 8.3. Executing commands
+
+* The `os/exec` package has functions to run external commands, and is the premier way to execute commands from within a Go program.
+
+```Go
+import "os/exec"
+
+cmd := exec.Command("/bin/ls", "-l")
+// Just run without doing anything with the returned data
+err := cmd.Run()
+// Capturing the standard output
+buf, err := cmd.Output() // buf is byte slice
+```
+
+### 8.4. Networking
+
+* All network related types and functions can be found in the package `net`.
+* One of the most important functions in there is `Dial`. When you `Dial` into a remote system the function returns a `Conn` interface type, which can be used to send and receive information. The function `Dial` neatly abstracts away the network family and transport.
+
+```Go
+conn, e := Dial("tcp", "192.0.32.10:80")
+conn, e := Dial("udp", "192.0.32.10:80")
+conn, e := Dial("tcp", "[2620:0:2d0:200::10]:80")
+```
