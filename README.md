@@ -429,7 +429,7 @@ cap    	 copy   	println
     value, key := monthdays["Jan"]
     ```
 
-    * Use `make` when only declaring a map. A map is **reference type**.
+    * Use `make` when only declaring a map. A map is **reference type**. [A map **is not** reference variable](https://dave.cheney.net/2017/04/30/if-a-map-isnt-a-reference-variable-what-is-it), its value is a pointer to a `runtime.hmap` structure. 
 
 ## 3. Functions
 
@@ -705,7 +705,14 @@ package regexp
 * Go has pointers but not pointer arthmetic, so they act more like references than pointers that you may know from C.
     * A pointer is a variable which stores the address of another variable.
     * A reference is a variable which refers to another value.
-    * Want to understand more? Check this [article](http://spf13.com/post/go-pointers-vs-references/)
+    * There is no pointer arithmetic. You cannot write in Go. That is, you cannot alter the address p points to unless you assign another address to it.
+
+    ```Go
+    var p *int
+    p++
+    ```
+
+    * Want to understand more? Check this [article](http://spf13.com/post/go-pointers-vs-references/) or [another `this`](https://dave.cheney.net/2017/04/26/understand-go-pointers-in-less-than-800-words-or-your-money-back).
 
 * Pointers are useful. Remember that when you call a function in Go, the variables are *pass-by-value*. So, for efficiency and the possibility to modify a passed value in functions we have pointers.
 
