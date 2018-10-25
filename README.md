@@ -1182,6 +1182,8 @@ conn, e := Dial("tcp", "[2620:0:2d0:200::10]:80")
 
 There is the page lists a few resources for programmers interested in learning about the Golang.
 
+Oops, actually you can refer to [awesome-go](https://github.com/avelino/awesome-go) for a complete list.
+
 ### Online resources
 
 * [The Go programming language tour](https://tour.golang.org/welcome/)
