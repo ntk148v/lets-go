@@ -42,6 +42,10 @@
         - [8.2. Command line arguments](#82-command-line-arguments)
         - [8.3. Executing commands](#83-executing-commands)
         - [8.4. Networking](#84-networking)
+    - [Resource for new Go programmers](#resource-for-new-go-programmers)
+        - [Online resources](#online-resources)
+        - [Installing Go and configure your workspace](#installing-go-and-configure-your-workspace)
+        - [Text editors & IDE](#text-editors--ide)
 
 ## Learn
 
@@ -1173,3 +1177,25 @@ conn, e := Dial("tcp", "192.0.32.10:80")
 conn, e := Dial("udp", "192.0.32.10:80")
 conn, e := Dial("tcp", "[2620:0:2d0:200::10]:80")
 ```
+
+## Resource for new Go programmers
+
+There is the page lists a few resources for programmers interested in learning about the Golang.
+
+### Online resources
+
+* [The Go programming language tour](https://tour.golang.org/welcome/)
+* [Go by example](https://gobyexample.com/)
+* [Effective Go](https://golang.org/doc/effective_go.html)
+* [Go Code Review Comments](https://github.com/golang/go/wiki/CodeReviewComments)
+* [Dave Cheney's Blog](https://dave.cheney.net)
+
+### Installing Go and configure your workspace
+
+* [How to write Go code](https://golang.org/doc/code.html)
+* [Five suggestions for setting up a Go project](https://dave.cheney.net/2014/12/01/five-suggestions-for-setting-up-a-go-project)
+
+### Text editors & IDE
+
+* [vim-go](https://github.com/fatih/vim-go)
+* [GoLand, Jetbrains](http://www.jetbrains.com/go/)
