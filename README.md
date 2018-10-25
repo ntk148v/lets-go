@@ -1018,6 +1018,50 @@ fmt.Println(g(s))
     * An interface defines a set of methods. A method contains the actual code.
     * An interface is the definition and the methods are the implementation.
 * By convention, one-method interfaces are named by the method name plus the -er suffix: Reader, Writer, Formatter,...
+* Pointer and Non-pointer method receivers.
+
+```Go
+func (s *MyStruct) pointerMethod() {} // method on pointer
+func (s MyStruct) valueMethod() {} // method on value
+```
+
+    * When defining a method on a type, the receiver behaves exactly as if it were an argument to the method. Whether to define the receiver as a value or as a pointer is the same question, then, as whether a function argument should be a value or a pointer.
+    * 1st: Does the method need to modify the receiver? If it *does*, the receiver must be a *pointer* (Slices and maps act as references, so their story is a little more subtle, but for instance to change the length of a slice in a method the receiver must still be a pointer). Otherwise, it should be *value*.
+
+    ```Go
+    package main
+
+    import "fmt"
+
+    type Mutatable struct {
+        a int
+        b int
+    }
+
+    func (m Mutatable) StayTheSame() {
+        m.a = 5
+        m.b = 7
+    }
+
+    func (m *Mutatable) Mutate() {
+        m.a = 5
+        m.b = 7
+    }
+
+    func main() {
+        m := &Mutatable{0, 0}
+        fmt.Println(m)
+        m.StayTheSame()
+        fmt.Println(m)
+        m.Mutate()
+        fmt.Println(m)
+    }
+    ```
+
+    * 2nd: efficiency. If the receiver is large, a big `struct` for instance, it will be much cheaper to use a pointer receiver.
+    * 3rd: consistency. If some of the methods of the type must have pointer receivers, the rest should too, so the method set is consistent regardless of how the type is used.
+    * For types such as basic types, slices and small `struct`, a value receiver is very cheap so unless the semantics of the methods requires a pointer, a value receiver is effient and clear.
+
 
 ### 6.4. Listing interfaces in interfaces
 
