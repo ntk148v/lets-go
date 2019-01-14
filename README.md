@@ -346,7 +346,7 @@ cap    	 copy   	println
     a := [...]int{1, 2, 3}
     ```
 
-    * Array are **value types**: Assigning one array to another copies all the elements. In particular, if you pass an array to a function it will receive a copy of the array, not a pointer to it.
+    * Array are **value types**: Assigning one array to another copies all the elements. In particular, if you pass an array to a function it will receive a copy of the array, not a pointer to it. To avoid the copy you could pass a pointer to the array, but then that's a pointer to an array, not an array.
 
 * Slices:
     * Similar to an array, but it can grow when new elements are added.
@@ -388,10 +388,48 @@ cap    	 copy   	println
     }
     ```
 
-    * `len` is the number of elements it contains.
-    * `cap` is the number of elements in the underlyting array, counting from the 1st element in the slice.
+    * A slice is a descriptor of an array segment. It consists of a pointer to the array, the length of the segment and its capacity (the maximum length of the segment).
+
+    ![slice-1](https://blog.golang.org/go-slices-usage-and-internals_slice-struct.png)
 
     ```Go
+    s := make([]byte, 5)
+    ```
+
+    ![slice-2](https://blog.golang.org/go-slices-usage-and-internals_slice-1.png<Paste>)
+
+    * `len` is the number of elements referred to by the slice.
+    * `cap` is the number of elements in the underlying array (beginning at the element referred to by the slice pointer).
+
+	```Go
+	s = s[2:4]
+	```
+
+	![slice-3](https://blog.golang.org/go-slices-usage-and-internals_slice-2.png)
+
+	* Slicing does not copy the slice's data. It creates a new slice that points to the original array. This makes slice operations as efficient as manipulating array indicies. Therefore, modifying the elements (not the slice itself) of a re-slice modifies the elements of the original slice:
+
+	```Go
+	d := []byte{'r', 'o', 'a', 'd'}
+	e := d[2:]
+	// e = []byte{'a', 'd'}
+	e[1] = 'm'
+	// e = []byte{'a', 'm'}
+	// d = []byte{'r', 'o', 'a', 'm'}
+	```
+
+	* Earlier we sliced `s` to a length shorter than its capacity. We can grow s to its capacity by slicing it again.
+
+	```Go
+	s = s[:cap(s)]
+	```
+
+    ![slice-4](https://blog.golang.org/go-slices-usage-and-internals_slice-3.png)
+
+    * A slice cannot be grown beyond its capacity.
+
+    ```Go
+    // Another example
     var array [m]int
     slice := array[:n]
     // len(slice) == n
