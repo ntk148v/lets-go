@@ -1273,6 +1273,7 @@ Oops, actually you can refer to [awesome-go](https://github.com/avelino/awesome-
 * [Effective Go](https://golang.org/doc/effective_go.html)
 * [Go Code Review Comments](https://github.com/golang/go/wiki/CodeReviewComments)
 * [Dave Cheney's Blog](https://dave.cheney.net)
+    * [Praticial Go: Real world advice for writing matintainable Go programs](https://dave.cheney.net/practical-go/presentations/qcon-china.html)
 
 ### Installing Go and configure your workspace
 
