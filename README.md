@@ -1272,6 +1272,7 @@ Oops, actually you can refer to [awesome-go](https://github.com/avelino/awesome-
 * [Go by example](https://gobyexample.com/)
 * [Effective Go](https://golang.org/doc/effective_go.html)
 * [Go Code Review Comments](https://github.com/golang/go/wiki/CodeReviewComments)
+* [Go styleguide](https://github.com/bahlo/go-styleguide)
 * [Dave Cheney's Blog](https://dave.cheney.net)
     * [Praticial Go: Real world advice for writing matintainable Go programs](https://dave.cheney.net/practical-go/presentations/qcon-china.html)
 
