@@ -1,51 +1,55 @@
 # Let's Go!
 
 - [Let's Go!](#lets-go)
-    - [Learn](#learn)
-    - [1. Introduction](#1-introduction)
-    - [2. Basic](#2-basic)
-        - [2.1. Say Hello World in Golang!](#21-say-hello-world-in-golang)
-        - [2.2. Compiling and Running Code](#22-compiling-and-running-code)
-        - [2.4. Variables, Types and Keywords](#24-variables-types-and-keywords)
-        - [2.5. Operators and Built-in Functions](#25-operators-and-built-in-functions)
-        - [2.6. Go Keywords](#26-go-keywords)
-        - [2.7. Control Structures](#27-control-structures)
-        - [2.8. Built-in functions](#28-built-in-functions)
-        - [2.9. Arrays, Slices and Maps](#29-arrays-slices-and-maps)
-    - [3. Functions](#3-functions)
-        - [3.1. Scope](#31-scope)
-        - [3.2. Functions as values](#32-functions-as-values)
-        - [3.3. Callbacks](#33-callbacks)
-        - [3.4. Deferred Code](#34-deferred-code)
-        - [3.5. Variadic Parameter](#35-variadic-parameter)
-        - [3.6. Panic and recovering](#36-panic-and-recovering)
-    - [4. Packages](#4-packages)
-        - [4.1. Identifiers](#41-identifiers)
-        - [4.2. Documeting packages](#42-documeting-packages)
-        - [4.3. Testing packages](#43-testing-packages)
-        - [4.4. Useful packages](#44-useful-packages)
-    - [5. Beyond the basics](#5-beyond-the-basics)
-        - [5.1. Allocation](#51-allocation)
-        - [5.2. Defining your own types](#52-defining-your-own-types)
-        - [5.3. Conversions](#53-conversions)
-    - [6. Interfaces](#6-interfaces)
-        - [6.1. Which is what?](#61-which-is-what)
-        - [6.2. Empty interface](#62-empty-interface)
-        - [6.3. Methods](#63-methods)
-        - [6.4. Listing interfaces in interfaces](#64-listing-interfaces-in-interfaces)
-        - [6.5. Introspection and reflection](#65-introspection-and-reflection)
-    - [7. Concurrency](#7-concurrency)
-        - [7.1. Make it run in parallel](#71-make-it-run-in-parallel)
-        - [7.2. More on channels](#72-more-on-channels)
-    - [8. Communication](#8-communication)
-        - [8.1. io.Reader](#81-ioreader)
-        - [8.2. Command line arguments](#82-command-line-arguments)
-        - [8.3. Executing commands](#83-executing-commands)
-        - [8.4. Networking](#84-networking)
-    - [Resource for new Go programmers](#resource-for-new-go-programmers)
-        - [Online resources](#online-resources)
-        - [Installing Go and configure your workspace](#installing-go-and-configure-your-workspace)
-        - [Text editors & IDE](#text-editors--ide)
+  - [Learn](#learn)
+  - [1. Introduction](#1-introduction)
+  - [2. Basic](#2-basic)
+    - [2.1. Say Hello World in Golang!](#21-say-hello-world-in-golang)
+    - [2.2. Compiling and Running Code](#22-compiling-and-running-code)
+    - [2.4. Variables, Types and Keywords](#24-variables-types-and-keywords)
+    - [2.5. Operators and Built-in Functions](#25-operators-and-built-in-functions)
+    - [2.6. Go Keywords](#26-go-keywords)
+    - [2.7. Control Structures](#27-control-structures)
+    - [2.8. Built-in functions](#28-built-in-functions)
+    - [2.9. Arrays, Slices and Maps](#29-arrays-slices-and-maps)
+  - [3. Functions](#3-functions)
+    - [3.1. Scope](#31-scope)
+    - [3.2. Functions as values](#32-functions-as-values)
+    - [3.3. Callbacks](#33-callbacks)
+    - [3.4. Deferred Code](#34-deferred-code)
+    - [3.5. Variadic Parameter](#35-variadic-parameter)
+    - [3.6. Panic and recovering](#36-panic-and-recovering)
+  - [4. Packages](#4-packages)
+    - [4.1. Identifiers](#41-identifiers)
+    - [4.2. Documeting packages](#42-documeting-packages)
+    - [4.3. Creating a package](#43-creating-a-package)
+    - [4.4. Package initialization](#44-package-initialization)
+    - [4.5. Program execution order](#45-program-execution-order)
+    - [4.6. Installing 3rd party package](#46-installing-3rd-party-package)
+    - [4.7. Testing packages](#47-testing-packages)
+    - [4.8. Useful packages](#48-useful-packages)
+  - [5. Beyond the basics](#5-beyond-the-basics)
+    - [5.1. Allocation](#51-allocation)
+    - [5.2. Defining your own types](#52-defining-your-own-types)
+    - [5.3. Conversions](#53-conversions)
+  - [6. Interfaces](#6-interfaces)
+    - [6.1. Which is what?](#61-which-is-what)
+    - [6.2. Empty interface](#62-empty-interface)
+    - [6.3. Methods](#63-methods)
+    - [6.4. Listing interfaces in interfaces](#64-listing-interfaces-in-interfaces)
+    - [6.5. Introspection and reflection](#65-introspection-and-reflection)
+  - [7. Concurrency](#7-concurrency)
+    - [7.1. Make it run in parallel](#71-make-it-run-in-parallel)
+    - [7.2. More on channels](#72-more-on-channels)
+  - [8. Communication](#8-communication)
+    - [8.1. io.Reader](#81-ioreader)
+    - [8.2. Command line arguments](#82-command-line-arguments)
+    - [8.3. Executing commands](#83-executing-commands)
+    - [8.4. Networking](#84-networking)
+  - [Resource for new Go programmers](#resource-for-new-go-programmers)
+    - [Online resources](#online-resources)
+    - [Installing Go and configure your workspace](#installing-go-and-configure-your-workspace)
+    - [Text editors & IDE](#text-editors--ide)
 
 ## Learn
 
@@ -702,14 +706,46 @@ $ go install
 package regexp
 ```
 
-* Each defined (and exported) function should have a samll line of text documenting the behavior of the function.
+* Each defined (and exported) function should have a same line of text documenting the behavior of the function.
 
-### 4.3. Testing packages
+### 4.3. Creating a package
+
+* There are two types of packages: An **executable package** (main  application since you will be running it) and an **utility package** (is not self executable, instead it enhances functionality of an executable package by providing utility functions and other import assets).
+* Go exports a variable if a variable name starts with **Uppercase**. All other variables not starting with an uppercase letter is private to the package.
+*  For an executable package, a file with `main` function is entry file for execution.
+
+### 4.4. Package initialization
+
+* **Package scope - A  scope is a region in code block where a defined variable is accessible**. A package scope is a region within a package where a declared variable is accessible from within a package (*across all files in the package*). This region is the top-most block of any file in the package. **You are not allowed to re-declare global variable with same name in the same package**
+* **Variable initialization**.
+* **Init function**: Like `main` function, `init` function is called by Go when a package is initialized. It does not take any arguments and doesn’t return any value. `init`function is implicitly declared by Go. You can have multiple `init` functions in a file or a package. Order of the execution of `init` function in a file will be according to the order of their appearances.
+* **Package alias**: Underscore is a special character in Go which act as `null` container.
+* A main thing to remember is, **an imported package is initialized only once per package**. Hence if you have many import statements in a package, an imported package is going to be initialized only once in the lifetime of main package execution.
+
+### 4.5.  Program execution order
+
+```shell
+go run *.go
+├── Main package is executed
+├── All imported packages are initialized
+|  ├── All imported packages are initialized (recursive definition)
+|  ├── All global variables are initialized 
+|  └── init functions are called in lexical file name order
+└── Main package is initialized
+   ├── All global variables are initialized
+   └── init functions are called in lexical file name order
+```
+
+### 4.6. Installing 3rd party package
+
+Installing a 3rd party package is nothing but cloning the remote code into local `src/<package>` directory. Unfortunately, Go does not support package version or provide package manager but a proposal is waiting [**here**](https://github.com/golang/proposal/blob/master/design/24301-versioned-go.md).
+
+### 4.7. Testing packages
 
 * Writing test involves the `testing` package and the program `go test`.
 * Fill this section later...
 
-### 4.4. Useful packages
+### 4.8. Useful packages
 
 * **fmt**: Package `fmt` implements formatted I/O with functions analogous to C's`printf` and `scanf`. The format verbs are derived from C's but are simpler. Some verbs (%-sequences) that can be used:
     * %v, the value in a default format, when printing structs, the plus flag (%+v) adds fields names.
