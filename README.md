@@ -1296,6 +1296,63 @@ conn, e := Dial("udp", "192.0.32.10:80")
 conn, e := Dial("tcp", "[2620:0:2d0:200::10]:80")
 ```
 
+## 9. Modules (>=1.11)
+
+Go 1.11 includes preliminary support for versioned [modules](https://github.com/golang/go/wiki/Modules).
+
+### 9.1. Quickstart
+
+A simple example:
+
+```bash
+# Create a directory outside of your GOPATH:
+$ mkdir -p /tmp/scratchpad/hello
+$ cd /tmp/scratchpad/hello
+# Initialize a new module:
+$ go mod init github.com/you/hello
+
+go: creating new go.mod: module github.com/you/hello
+# Write your code
+$ cat <<EOF > hello.go
+package main
+
+import (
+    "fmt"
+    "rsc.io/quote"
+)
+
+func main() {
+    fmt.Println(quote.Hello())
+}
+EOF
+# Build and run
+$ go build 
+$ ./hello
+
+Hello, world.
+
+$ cat go.mod
+
+module github.com/you/hello
+
+require rsc.io/quote v1.5.2
+```
+
+## 9.2. New concepts
+
+* **Modules**: a collection of related Go packages that are versioned together as a single unit.
+* Summarizing the relationship between repositories, modules, and packages:
+  - A repository contains one or more Go modules.
+  - Each module contains one or more Go packages.
+  - Each package consists of one or more Go source files in a single directory.
+* **go.mod**: A module is defined by a tree of Go source files with a `go.mod` file in the tree's root directory. Module source code may be located outside of GOPATH. There are four directives: `module`, `require`, `replace`, `exclude`.
+* **Version selection**: If you add a new import to your source code that is not yet covered by a `require`in `go.mod`, most go commands like 'go build' and 'go test' will automatically look up the proper module and add the *highest* version of that new direct dependency to your module's `go.mod` as a `require` directive. For example, if your new import corresponds to dependency M whose latest tagged release version is `v1.2.3`, your module's `go.mod` will end up with `require M v1.2.3`, which indicates module M is a dependency with allowed version >= v1.2.3 (and < v2, given v2 is considered incompatible with v1).
+* **Semantic Import versioning**: The result of following both the import compatibility rule and semver is called *Semantic Import Versioning*, where the major version is included in the import path — this ensures the import path changes any time the major version increments due to a break in compatibility.
+* As a result of Semantic Import Versioning, code opting in to Go modules **must comply with these rules**:
+  - Follow [semver](https://semver.org/) (with tags such as `v1.2.3`).
+  - If the module is version v2 or higher, the major version of the module *must* be included as a `/vN` at the end of the module paths used in `go.mod` files (e.g., `module github.com/my/mod/v2`, `require github.com/my/mod/v2 v2.0.0`) and in the package import path (e.g., `import "github.com/my/mod/v2/mypkg"`).
+  - If the module is version v0 or v1, do *not* include the major version in either the module path or the import path.
+
 ## Resource for new Go programmers
 
 There is the page lists a few resources for programmers interested in learning about the Golang.
