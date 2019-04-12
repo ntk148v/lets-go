@@ -48,7 +48,20 @@
     - [8.4. Networking](#84-networking)
   - [9. Modules (>=1.11)](#9-modules-111)
     - [9.1. Quickstart](#91-quickstart)
-  - [9.2. New concepts](#92-new-concepts)
+    - [9.2. New concepts](#92-new-concepts)
+  - [10. Web Programming](#10-web-programming)
+    - [10.1. HTTP Server](#101-http-server)
+    - [10.2. Routing (using gorilla/mux)](#102-routing-using-gorillamux)
+    - [10.3. Templating](#103-templating)
+    - [10.4. Requests & Forms](#104-requests--forms)
+    - [10.5. Assets & Files](#105-assets--files)
+    - [10.6. Middleware (Basic)](#106-middleware-basic)
+    - [10.7. Middleware (Advanced)](#107-middleware-advanced)
+    - [10.8. Session](#108-session)
+    - [10.9. Session](#109-session)
+    - [10.10. JSON](#1010-json)
+    - [10.11. Websockets](#1011-websockets)
+    - [10.12. Security - Password Hashing (bcrypt)](#1012-security---password-hashing-bcrypt)
   - [Resource for new Go programmers](#resource-for-new-go-programmers)
     - [Online resources](#online-resources)
     - [Installing Go and configure your workspace](#installing-go-and-configure-your-workspace)
@@ -94,7 +107,7 @@ func main() {
 * To build [helloworld.go](./2/hello_world.go), just type:
 
 ```
-$ go build helloworld.go # Return an executable called helloworld 
+$ go build helloworld.go # Return an executable called helloworld
 ```
 
 * Run a previous step result
@@ -325,7 +338,7 @@ J: for j := 0; j < 5; j++ {
 close 	 new    	panic   	complex
 delete 	 make   	recover 	real
 len    	 append 	print   	imag
-cap    	 copy   	println 	
+cap    	 copy   	println
 ```
 
     * close: is used in channel communication. It closes a channel (obviously XD)
@@ -478,7 +491,7 @@ cap    	 copy   	println
     value, key := monthdays["Jan"]
     ```
 
-    * Use `make` when only declaring a map. A map is **reference type**. [A map **is not** reference variable](https://dave.cheney.net/2017/04/30/if-a-map-isnt-a-reference-variable-what-is-it), its value is a pointer to a `runtime.hmap` structure. 
+    * Use `make` when only declaring a map. A map is **reference type**. [A map **is not** reference variable](https://dave.cheney.net/2017/04/30/if-a-map-isnt-a-reference-variable-what-is-it), its value is a pointer to a `runtime.hmap` structure.
 
 ## 3. Functions
 
@@ -557,7 +570,7 @@ func ReadWrite() bool {
     }
 
     if failureY {
-        return false 
+        return false
     }
     return true
 }
@@ -732,7 +745,7 @@ go run *.go
 ├── Main package is executed
 ├── All imported packages are initialized
 |  ├── All imported packages are initialized (recursive definition)
-|  ├── All global variables are initialized 
+|  ├── All global variables are initialized
 |  └── init functions are called in lexical file name order
 └── Main package is initialized
    ├── All global variables are initialized
@@ -799,7 +812,7 @@ Installing a 3rd party package is nothing but cloning the remote code into local
 
 * Pointer type (\* type) and address-of (&) operators \*: If a variable is declared `var x int`, the expression `&x` ("address of x") yields a pointer to an integer variable (a value of type `* int`). If this value is called `p`, we say "`p` points to to `x`", or equivalently "`p` contains the address of `x`". The variable to which `p` points is written `*p`. The expression `*p` yields the value of that variable, an `int`, but since `*p` denotes a variable, it may also appear on the left-hand side of an assignment, in which case the assignment updates the variable. [Reference here](<https://notes.shichao.io/gopl/ch2/#pointers>)
 
-    
+
 
     ```go
     x := 1
@@ -809,7 +822,7 @@ Installing a 3rd party package is nothing but cloning the remote code into local
     fmt.Println(x)   // "2"
     ```
 
-    
+
 
 * All newly declared variables are assigned their zero value and pointers are no different. A newly declared pointer, or just a pointer that points to nothing, has a nil-value.
 
@@ -1118,27 +1131,27 @@ fmt.Println(g(s))
 
     * When defining a method on a type, the receiver behaves exactly as if it were an argument to the method. Whether to define the receiver as a value or as a pointer is the same question, then, as whether a function argument should be a value or a pointer.
     * 1st: Does the method need to modify the receiver? If it *does*, the receiver must be a *pointer* (Slices and maps act as references, so their story is a little more subtle, but for instance to change the length of a slice in a method the receiver must still be a pointer). Otherwise, it should be *value*.
-    
+
     ```Go
     package main
-    
+
     import "fmt"
-    
+
     type Mutatable struct {
         a int
         b int
     }
-    
+
     func (m Mutatable) StayTheSame() {
         m.a = 5
         m.b = 7
     }
-    
+
     func (m *Mutatable) Mutate() {
         m.a = 5
         m.b = 7
     }
-    
+
     func main() {
         m := &Mutatable{0, 0}
         fmt.Println(m)
@@ -1148,7 +1161,7 @@ fmt.Println(g(s))
         fmt.Println(m)
     }
     ```
-    
+
     * 2nd: efficiency. If the receiver is large, a big `struct` for instance, it will be much cheaper to use a pointer receiver.
     * 3rd: consistency. If some of the methods of the type must have pointer receivers, the rest should too, so the method set is consistent regardless of how the type is used.
     * For types such as basic types, slices and small `struct`, a value receiver is very cheap so unless the semantics of the methods requires a pointer, a value receiver is effient and clear.
@@ -1231,7 +1244,7 @@ func main() {
 }
 ```
 
-* What if we don't know how many goroutines we started? This is where another Go built-in comes in: `select`. 
+* What if we don't know how many goroutines we started? This is where another Go built-in comes in: `select`.
 
 ```Go
 L: for {
@@ -1345,7 +1358,7 @@ func main() {
 }
 EOF
 # Build and run
-$ go build 
+$ go build
 $ ./hello
 
 Hello, world.
@@ -1357,7 +1370,7 @@ module github.com/you/hello
 require rsc.io/quote v1.5.2
 ```
 
-## 9.2. New concepts
+### 9.2. New concepts
 
 * **Modules**: a collection of related Go packages that are versioned together as a single unit.
 * Summarizing the relationship between repositories, modules, and packages:
@@ -1371,6 +1384,200 @@ require rsc.io/quote v1.5.2
   - Follow [semver](https://semver.org/) (with tags such as `v1.2.3`).
   - If the module is version v2 or higher, the major version of the module *must* be included as a `/vN` at the end of the module paths used in `go.mod` files (e.g., `module github.com/my/mod/v2`, `require github.com/my/mod/v2 v2.0.0`) and in the package import path (e.g., `import "github.com/my/mod/v2/mypkg"`).
   - If the module is version v0 or v1, do *not* include the major version in either the module path or the import path.
+
+## 10. Web Programming
+
+[Go Web Example](https://gowebexamples.com)
+
+### 10.1. HTTP Server
+
+A basic HTTP server has a few key jobs to take care of:
+* *Process dynamic request*: Process incoming requests from users who browse the website, log into their accounts or post images.
+* *Serve static assets*: Serve JavaScript, CSS and images to browsers to create a dynamic experience for the user.
+* *Accept connections*: The HTTP Server must listen on a specific port to be able to accept connections from the Internet.
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+)
+
+func main() {
+    // Process dynamic request
+	http.HandleFunc("/", func (w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Welcome to my website!")
+	})
+
+    // Serving static assets
+	fs := http.FileServer(http.Dir("static/"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+
+    // Accept connections
+	http.ListenAndServe(":80", nil)
+}
+```
+
+### 10.2. Routing (using gorilla/mux)
+
+### 10.3. Templating
+
+### 10.4. Requests & Forms
+
+### 10.5. Assets & Files
+
+### 10.6. Middleware (Basic)
+
+A simple logging middleware.
+
+```go
+// basic-middleware.go
+package main
+
+import (
+	"fmt"
+	"log"
+	"net/http"
+)
+
+func logging(f http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		log.Println(r.URL.Path)
+		f(w, r)
+	}
+}
+
+func foo(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "foo")
+}
+
+func bar(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "bar")
+}
+
+func main() {
+	http.HandleFunc("/foo", logging(foo))
+	http.HandleFunc("/bar", logging(bar))
+
+	http.ListenAndServe(":8080", nil)
+}
+```
+
+### 10.7. Middleware (Advanced)
+
+* A middleware in itself simple takes a `http.HandleFunc` as one of its parameters, wraps it and returns a new `http.HandlerFunc` for the server to call.
+
+* Define a new type `Middleware` which makes it eventually easier to chain multiple middlewares together.
+
+* How a new middleware is created, boilerplate code:
+
+```go
+func newMiddleware() Middleware {
+
+	// Create a new Middleware
+	middleware := func(next http.HandlerFunc) http.HandlerFunc {
+
+		// Define the http.HandlerFunc which is called by the server eventually
+		handler := func(w http.ResponseWriter, r *http.Request) {
+
+			// ... do middleware things
+
+			// Call the next middleware/handler in chain
+			next(w, r)
+		}
+
+		// Return newly created handler
+		return handler
+	}
+
+	// Return newly created middleware
+	return middleware
+}
+```
+
+* Show me code! Ok, a full example is here:
+
+```go
+// advanced-middleware.go
+package main
+
+import (
+	"fmt"
+	"log"
+	"net/http"
+	"time"
+)
+
+type Middleware func(http.HandlerFunc) http.HandlerFunc
+
+// Logging logs all requests with its path and the time it took to process
+func Logging() Middleware {
+
+	// Create a new Middleware
+	return func(f http.HandlerFunc) http.HandlerFunc {
+
+		// Define the http.HandlerFunc
+		return func(w http.ResponseWriter, r *http.Request) {
+
+			// Do middleware things
+			start := time.Now()
+			defer func() { log.Println(r.URL.Path, time.Since(start)) }()
+
+			// Call the next middleware/handler in chain
+			f(w, r)
+		}
+	}
+}
+
+// Method ensures that url can only be requested with a specific method, else returns a 400 Bad Request
+func Method(m string) Middleware {
+
+	// Create a new Middleware
+	return func(f http.HandlerFunc) http.HandlerFunc {
+
+		// Define the http.HandlerFunc
+		return func(w http.ResponseWriter, r *http.Request) {
+
+			// Do middleware things
+			if r.Method != m {
+				http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+				return
+			}
+
+			// Call the next middleware/handler in chain
+			f(w, r)
+		}
+	}
+}
+
+// Chain applies middlewares to a http.HandlerFunc
+func Chain(f http.HandlerFunc, middlewares ...Middleware) http.HandlerFunc {
+	for _, m := range middlewares {
+		f = m(f)
+	}
+	return f
+}
+
+func Hello(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "hello world")
+}
+
+func main() {
+	http.HandleFunc("/", Chain(Hello, Method("GET"), Logging()))
+	http.ListenAndServe(":8080", nil)
+}
+```
+
+### 10.8. Session
+
+### 10.9. Session
+
+### 10.10. JSON
+
+### 10.11. Websockets
+
+### 10.12. Security - Password Hashing (bcrypt)
 
 ## Resource for new Go programmers
 
