@@ -5,20 +5,20 @@
   - [1. Introduction](#1-introduction)
   - [2. Basic](#2-basic)
     - [2.1. Say Hello World in Golang!](#21-say-hello-world-in-golang)
-    - [2.2. Compiling and Running Code](#22-compiling-and-running-code)
-    - [2.4. Variables, Types and Keywords](#24-variables-types-and-keywords)
-    - [2.5. Operators and Built-in Functions](#25-operators-and-built-in-functions)
+    - [2.2. Compiling & Running Code](#22-compiling-and-running-code)
+    - [2.4. Variables, Types & Keywords](#24-variables-types-and-keywords)
+    - [2.5. Operators & Built-in Functions](#25-operators-and-built-in-functions)
     - [2.6. Go Keywords](#26-go-keywords)
     - [2.7. Control Structures](#27-control-structures)
     - [2.8. Built-in functions](#28-built-in-functions)
-    - [2.9. Arrays, Slices and Maps](#29-arrays-slices-and-maps)
+    - [2.9. Arrays, Slices & Maps](#29-arrays-slices-and-maps)
   - [3. Functions](#3-functions)
     - [3.1. Scope](#31-scope)
     - [3.2. Functions as values](#32-functions-as-values)
     - [3.3. Callbacks](#33-callbacks)
     - [3.4. Deferred Code](#34-deferred-code)
     - [3.5. Variadic Parameter](#35-variadic-parameter)
-    - [3.6. Panic and recovering](#36-panic-and-recovering)
+    - [3.6. Panic & recovering](#36-panic-and-recovering)
   - [4. Packages](#4-packages)
     - [4.1. Identifiers](#41-identifiers)
     - [4.2. Documeting packages](#42-documeting-packages)
@@ -37,7 +37,7 @@
     - [6.2. Empty interface](#62-empty-interface)
     - [6.3. Methods](#63-methods)
     - [6.4. Listing interfaces in interfaces](#64-listing-interfaces-in-interfaces)
-    - [6.5. Introspection and reflection](#65-introspection-and-reflection)
+    - [6.5. Introspection & reflection](#65-introspection-and-reflection)
   - [7. Concurrency](#7-concurrency)
     - [7.1. Make it run in parallel](#71-make-it-run-in-parallel)
     - [7.2. More on channels](#72-more-on-channels)
@@ -64,7 +64,7 @@
     - [10.12. Security - Password Hashing (bcrypt)](#1012-security---password-hashing-bcrypt)
   - [Resource for new Go programmers](#resource-for-new-go-programmers)
     - [Online resources](#online-resources)
-    - [Installing Go and configure your workspace](#installing-go-and-configure-your-workspace)
+    - [Installing Go & configure your workspace](#installing-go-and-configure-your-workspace)
     - [Text editors & IDE](#text-editors--ide)
 
 ## Learn
@@ -72,23 +72,23 @@
 * [Official Golang Documetation](https://golang.org/doc/#learning)
 * [Community-driven initiatives](https://github.com/golang/go/wiki/Learn)
 
-These above links contain a lot of sources, so finding documentation isn't a big deal.. Just choose one and let's start. In my case, I follow [Learning Go - Miek Gieben](https://miek.nl/go/).
+These above links contain a lot of sources, so finding documentation isn't a big deal.. Just choose one & let's start. In my case, I follow [Learning Go - Miek Gieben](https://miek.nl/go/).
 
 > **NOTE**: Every examples in this documentation are stored in directories named by section. I assume that every commands in section X will be executed **in X directory**, so I don't write a full path to Go script file.
 
 ## 1. Introduction
 
-> Is Go an object-oriented language? Yes and no!
+> Is Go an object-oriented language? Yes & no!
 >                   [FAQ - Golang documentation](https://golang.org/doc/faq#Is_Go_an_object-oriented_language)
 
-* What is Golang? Golang Programming language is an open source programming language that makes it easy to build simple, reliable and efficient software.
+* What is Golang? Golang Programming language is an open source programming language that makes it easy to build simple, reliable & efficient software.
 * Go is a compliaed statically typed language that feels like a dynamically typed, interpreted language.
 
 ## 2. Basic
 
 ### 2.1. Say Hello World in Golang!
 
-* Get started with Go in the classic way: printing "Hello World" (Ken Thompson and Dennies Ritchie started this when they presented the C language in the 1970s #til)
+* Get started with Go in the classic way: printing "Hello World" (Ken Thompson & Dennies Ritchie started this when they presented the C language in the 1970s #til)
 
 ```Go
 /* hello_world.go */
@@ -102,7 +102,7 @@ func main() {
 }
 ```
 
-### 2.2. Compiling and Running Code
+### 2.2. Compiling & Running Code
 
 * To build [helloworld.go](./2/hello_world.go), just type:
 
@@ -122,7 +122,7 @@ $ ./helloworld
 $ go run helloworld.go
 ```
 
-### 2.4. Variables, Types and Keywords
+### 2.4. Variables, Types & Keywords
 
 * Go is different from most other language in that type of a variable is specified *after* the variable name: ~~int a~~ a int.
 
@@ -133,11 +133,11 @@ var s string // s is assigned the zero string, which is ""
 a = 26
 s = "hello"
 
-/* Declaring and assigning in Go is a two step process, but they may be combined */
+/* Declaring & assigning in Go is a two step process, but they may be combined */
 a := 26 // In this case the variable type is deduced from the value. A value of 26 indicates an int for example.
 b := "hello" // The type should be string
 
-/* Multiple var declarations may also be grouped (import and const also allow this) */
+/* Multiple var declarations may also be grouped (import & const also allow this) */
 var (
     a int
     b string
@@ -154,7 +154,7 @@ _, b := 26, 9
 * Boolean Types: `bool`
 * Numerical Types:
     * Go has most of the well-know types such as `int` - it has the appropriate length for your machine (32-bit machine - 32 bits, 64-bit machine - 64 bits)
-    * The full list for (signed and unsigned) integers is `int8`, `int16`, `int32`, `int64` and `byte` (an alias for `uint8`), `uint8`, `uint16`, `uint32`, `uint64`.
+    * The full list for (signed & unsigned) integers is `int8`, `int16`, `int32`, `int64` & `byte` (an alias for `uint8`), `uint8`, `uint16`, `uint32`, `uint64`.
     * For floating point values there is `float32`, `float64`, ~~float~~.
 
     ```Go
@@ -169,7 +169,7 @@ _, b := 26, 9
     }
     ```
 
-* Constants: Constants are created at compile time, and can only be numbers, strings, or booleans. You can use `iota` to enumerate values.
+* Constants: Constants are created at compile time, & can only be numbers, strings, or booleans. You can use `iota` to enumerate values.
 
 ```Go
 const (
@@ -191,10 +191,10 @@ const (
     ```
 
 * Rune: `Rune` is an alias for `int32`, (use when you're iterating over characters in a string).
-* Complex Numbers: `complex128` (64 bit real and imaginary parts) or `complex32`.
+* Complex Numbers: `complex128` (64 bit real & imaginary parts) or `complex32`.
 * Errors: Go has a builtin type specially for errors, called `error.var e`.
 
-### 2.5. Operators and Built-in Functions
+### 2.5. Operators & Built-in Functions
 
 * Go supports the normal set of numerical operators.
 
@@ -221,7 +221,7 @@ continue  for          import  return      var
 ```
 
 * `var`, `const`, `package`, `import` are used in the previous sections.
-* `func` is used to declare functions and methods.
+* `func` is used to declare functions & methods.
 * `return` is used to return from functions.
 * `go` is used for concurrency.
 * `select` is used to choose from different types of communication.
@@ -274,7 +274,7 @@ for i := 0; i < 10; i++ {
 }
 ```
 
-* Break and continue
+* Break & continue
 
 ```Go
 for i := 0; i < 10; i++ {
@@ -296,19 +296,19 @@ J: for j := 0; j < 5; j++ {
 ```
 
 * Range:
-    * `range` can be used for loops. It can loop over slices, arrays, strings, maps and channels.
+    * `range` can be used for loops. It can loop over slices, arrays, strings, maps & channels.
     * `range` is an iterator that, when called, returns the next key-value pair from the "thing" it loops over.
 
     ```Go
     list := []string{"a", "b", "c", "d", "e", "f"}
     for k, v := range list {
-        // do some fancy thing with k and v
+        // do some fancy thing with k & v
     }
     ```
 
 * Switch:
-    * The case are evaluated top to bottom until a match is found, and if the `switch` has no expression it switches on `true`.
-    * It's therefore possible - and idomatic - to write an `if-else-if-else` chain as a `switch`.
+    * The case are evaluated top to bottom until a match is found, & if the `switch` has no expression it switches on `true`.
+    * It's therefore possible - & idomatic - to write an `if-else-if-else` chain as a `switch`.
 
     ```Go
     /* Convert hexadecimal character to an int value */
@@ -343,13 +343,13 @@ cap    	 copy   	println
 
     * close: is used in channel communication. It closes a channel (obviously XD)
     * delete: is used for deleting entries in maps.
-    * len and cap: are used on a number of different types, `len` is used to return the lengths of strrings, maps, slices and arrays.
+    * len & cap: are used on a number of different types, `len` is used to return the lengths of strrings, maps, slices & arrays.
     * new: is used for allocating memory for user defined data types.
     * copy, append: `copy` is for copying slices. And `append` is for concatenating slices.
     * panic, recover: are used for an exception mechanism.
     * complex, real, imag: all deal with complex numbers.
 
-### 2.9. Arrays, Slices and Maps
+### 2.9. Arrays, Slices & Maps
 
 * Brief: list -> arrays, slices. dict -> map
 * Arrays:
@@ -408,7 +408,7 @@ cap    	 copy   	println
     }
     ```
 
-    * A slice is a descriptor of an array segment. It consists of a pointer to the array, the length of the segment and its capacity (the maximum length of the segment).
+    * A slice is a descriptor of an array segment. It consists of a pointer to the array, the length of the segment & its capacity (the maximum length of the segment).
 
     ![slice-1](https://blog.golang.org/go-slices-usage-and-internals_slice-struct.png)
 
@@ -457,7 +457,7 @@ cap    	 copy   	println
     // len(array) == cap(array) == m
     ```
 
-    * To extend a slice, there are a couple of built-in functions that make life easier: `append` and `copy`.
+    * To extend a slice, there are a couple of built-in functions that make life easier: `append` & `copy`.
 
     ```Go
     s0 := []int{0, 0}
@@ -542,7 +542,7 @@ func callback(y int, f func(int)) {
 ### 3.4. Deferred Code
 
 ```Go
-/* Open a file and perform various writes and reads on it. */
+/* Open a file & perform various writes & reads on it. */
 func ReadWrite() bool {
     file.Open("file")
     // Do your thing
@@ -585,7 +585,7 @@ for i := 0; i < 5; i++ {
 }
 ```
 
-* With `defer` you can even change return values, provided that you are using named result parameters and a function literal (`def func(x int) {/*....*/}(5)`).
+* With `defer` you can even change return values, provided that you are using named result parameters & a function literal (`def func(x int) {/*....*/}(5)`).
 
 ```Go
 func f() (ret int)
@@ -608,11 +608,11 @@ func func1(arg... int) { // the variadic parameter is just a slice.
 }
 ```
 
-### 3.6. Panic and recovering
+### 3.6. Panic & recovering
 
-* Go does not have an exception mechanism: *you can not throw exception*. Instead it uses a *panic and recover mechanism*.
-    * Panic: Built-in function that tstops the oridinary flow of control and begins panicking. When function F call `pacnic`, execution of `F` stops, any deferred functions in F are executed normally, and then F returns to its caller. To the caller, F then behaves like a call to panic. The process continues up the stack until all functions in the current goroutine have returned, at which point the program crashes. Panics can be initiated by invoking panic directly. They can also be caused by runtime errors, such as out-of-bounds array accesses.
-    * Recover: Built-in function that regains control of a panicking goroutine. Recover is only useful inside deferred functions. During normal execution, a call to recover will return nil and have no other effect. If the current goroutine is panicking, a call to recover will capture the value given to panic and resume normal execution.
+* Go does not have an exception mechanism: *you can not throw exception*. Instead it uses a *panic & recover mechanism*.
+    * Panic: Built-in function that tstops the oridinary flow of control & begins panicking. When function F call `pacnic`, execution of `F` stops, any deferred functions in F are executed normally, & then F returns to its caller. To the caller, F then behaves like a call to panic. The process continues up the stack until all functions in the current goroutine have returned, at which point the program crashes. Panics can be initiated by invoking panic directly. They can also be caused by runtime errors, such as out-of-bounds array accesses.
+    * Recover: Built-in function that regains control of a panicking goroutine. Recover is only useful inside deferred functions. During normal execution, a call to recover will return nil & have no other effect. If the current goroutine is panicking, a call to recover will capture the value given to panic & resume normal execution.
 
 
 ```Go
@@ -668,7 +668,7 @@ func g(i int) {
 
 ## 4. Packages
 
-* A package is a collection of functions and data.
+* A package is a collection of functions & data.
 * The convention for package names is to use lowercase characters - the file does not have to match the package name.
 
 ```Go
@@ -726,7 +726,7 @@ package regexp
 
 ### 4.3. Creating a package
 
-* There are two types of packages: An **executable package** (main  application since you will be running it) and an **utility package** (is not self executable, instead it enhances functionality of an executable package by providing utility functions and other import assets).
+* There are two types of packages: An **executable package** (main  application since you will be running it) & an **utility package** (is not self executable, instead it enhances functionality of an executable package by providing utility functions & other import assets).
 * Go exports a variable if a variable name starts with **Uppercase**. All other variables not starting with an uppercase letter is private to the package.
 *  For an executable package, a file with `main` function is entry file for execution.
 
@@ -734,7 +734,7 @@ package regexp
 
 * **Package scope - A  scope is a region in code block where a defined variable is accessible**. A package scope is a region within a package where a declared variable is accessible from within a package (*across all files in the package*). This region is the top-most block of any file in the package. **You are not allowed to re-declare global variable with same name in the same package**
 * **Variable initialization**.
-* **Init function**: Like `main` function, `init` function is called by Go when a package is initialized. It does not take any arguments and doesn’t return any value. `init`function is implicitly declared by Go. You can have multiple `init` functions in a file or a package. Order of the execution of `init` function in a file will be according to the order of their appearances.
+* **Init function**: Like `main` function, `init` function is called by Go when a package is initialized. It does not take any arguments & doesn’t return any value. `init`function is implicitly declared by Go. You can have multiple `init` functions in a file or a package. Order of the execution of `init` function in a file will be according to the order of their appearances.
 * **Package alias**: Underscore is a special character in Go which act as `null` container.
 * A main thing to remember is, **an imported package is initialized only once per package**. Hence if you have many import statements in a package, an imported package is going to be initialized only once in the lifetime of main package execution.
 
@@ -758,23 +758,104 @@ Installing a 3rd party package is nothing but cloning the remote code into local
 
 ### 4.7. Testing packages
 
-* Writing test involves the `testing` package and the program `go test`.
-* Fill this section later...
+* Writing test involves the `testing` package & the program `go test`.
+* Source [Golang writing unit tests](https://blog.alexellis.io/golang-writing-unit-tests/)
+* Unit testing in Go is just a opinionated as any other aspect of the language like formatting or naming.
+* Example:
+
+```golang
+package main
+
+func Sum(x int, y int) int {
+    return x + y
+}
+
+func main() {
+    Sum(5, 5)
+}
+
+// Testcase
+package main
+
+import "testing"
+
+func TestSum(t *testing.T) {
+    total := Sum(5, 5)
+    if total != 10 {
+       t.Errorf("Sum was incorrect, got: %d, want: %d.", total, 10)
+    }
+}
+```
+
+* Test tables is a set  (slice array) of test input & output values. Example:
+
+```golang
+package main
+
+import "testing"
+
+func TestSum(t *testing.T) {
+	tables := []struct {
+		x int
+		y int
+		n int
+	}{
+		{1, 1, 2},
+		{1, 2, 3},
+		{2, 2, 4},
+		{5, 2, 7},
+	}
+
+	for _, table := range tables {
+		total := Sum(table.x, table.y)
+		if total != table.n {
+			t.Errorf("Sum of (%d+%d) was incorrect, got: %d, want: %d.", table.x, table.y, total, table.n)
+		}
+	}
+}
+```
+
+* Launching tests:
+    * Within the same directory as the test, *this picks up any files matching packagename_test.go*:
+
+    ```bash
+    go test
+    ```
+
+    * By fully-qualified package name:
+
+    ```bash
+    go test github.com/username/package
+    ```
+
+* Statement coverage: The `go test` tool has built-in code-coverage for statements.
+
+```bash
+$ go test -cover
+PASS
+coverage: 50.0% of statements
+ok  	github.com/alexellis/golangbasics1	0.009s
+# Generate a HTML coverage report.
+$ go test -cover -coverprofile=c.out
+$ go tool cover -html=c.out -o coverage.html 
+```
+
+* Isolating dependencies: The Key factor that defines a unit test is isolation from runtime dependencies or collaborators.
 
 ### 4.8. Useful packages
 
-* **fmt**: Package `fmt` implements formatted I/O with functions analogous to C's`printf` and `scanf`. The format verbs are derived from C's but are simpler. Some verbs (%-sequences) that can be used:
+* **fmt**: Package `fmt` implements formatted I/O with functions analogous to C's`printf` & `scanf`. The format verbs are derived from C's but are simpler. Some verbs (%-sequences) that can be used:
     * %v, the value in a default format, when printing structs, the plus flag (%+v) adds fields names.
     * %#v, a Go-syntax representation of the value.
     * %T, a Go-sytanx representation of the type of the value.
 
 * **io**: The package provides basic interfaces to I/O primitives. Its primary job is to wrap existing implementation of such primitives, such as those in package `os`, into shared public interfaces that abstract the functionality, plus some other related primitives.
 
-* **bufio**: This package implements buffered I/O. It wraps an io.Reader or io.Writer object, creating another object (Reader or Writer) that also implements the interface but provides buffering and some help for textual I/O.
+* **bufio**: This package implements buffered I/O. It wraps an io.Reader or io.Writer object, creating another object (Reader or Writer) that also implements the interface but provides buffering & some help for textual I/O.
 
-* **sort**: The sort package provides primitives for sorting arrays and user-defined collections.
+* **sort**: The sort package provides primitives for sorting arrays & user-defined collections.
 
-* **strconv**: The strconv package implements conversions to and from string representations of basic data types.
+* **strconv**: The strconv package implements conversions to & from string representations of basic data types.
 
 * **os**: The os package provides a platform-independent interface to operating system functionality. The design is Unix-like.
 
@@ -782,15 +863,15 @@ Installing a 3rd party package is nothing but cloning the remote code into local
 
 * **flag**: The flag package implements command-line flag parsing.
 
-* **encoding/json**: The encoding/json package implements encoding and decoding of JSON objects as defined in RFC 4627.
+* **encoding/json**: The encoding/json package implements encoding & decoding of JSON objects as defined in RFC 4627.
 
 * **html/template**: Data-driven templates for generating textual output such as HTML.
 
-* **net/http**: The net/http package implements parsing of HTTP requests, replies, and URLs and provides an extensible HTTP server and a basic HTTP client.
+* **net/http**: The net/http package implements parsing of HTTP requests, replies, & URLs & provides an extensible HTTP server & a basic HTTP client.
 
 * **unsafe**: The unsafe package contains operations that step around the type safety of Go programs. Normally you don’t need this package, but it is worth mentioning that unsafe Go programs are possible.
 
-* **reflect**: The reflect package implements run-time reflection, allowing a program to manipulate objects with arbitrary types. The typical use is to take a value with static type interface{} and extract its dynamic type information by calling TypeOf, which returns an object with interface type Type.
+* **reflect**: The reflect package implements run-time reflection, allowing a program to manipulate objects with arbitrary types. The typical use is to take a value with static type interface{} & extract its dynamic type information by calling TypeOf, which returns an object with interface type Type.
 
 * **os/exec**: The os/exec package runs external commands.
 
@@ -808,9 +889,9 @@ Installing a 3rd party package is nothing but cloning the remote code into local
 
     * Want to understand more? Check this [article](http://spf13.com/post/go-pointers-vs-references/) or [another `this`](https://dave.cheney.net/2017/04/26/understand-go-pointers-in-less-than-800-words-or-your-money-back).
 
-* Pointers are useful. Remember that when you call a function in Go, the variables are *pass-by-value*. So, for efficiency and the possibility to modify a passed value in functions we have pointers.
+* Pointers are useful. Remember that when you call a function in Go, the variables are *pass-by-value*. So, for efficiency & the possibility to modify a passed value in functions we have pointers.
 
-* Pointer type (\* type) and address-of (&) operators \*: If a variable is declared `var x int`, the expression `&x` ("address of x") yields a pointer to an integer variable (a value of type `* int`). If this value is called `p`, we say "`p` points to to `x`", or equivalently "`p` contains the address of `x`". The variable to which `p` points is written `*p`. The expression `*p` yields the value of that variable, an `int`, but since `*p` denotes a variable, it may also appear on the left-hand side of an assignment, in which case the assignment updates the variable. [Reference here](<https://notes.shichao.io/gopl/ch2/#pointers>)
+* Pointer type (\* type) & address-of (&) operators \*: If a variable is declared `var x int`, the expression `&x` ("address of x") yields a pointer to an integer variable (a value of type `* int`). If this value is called `p`, we say "`p` points to to `x`", or equivalently "`p` contains the address of `x`". The variable to which `p` points is written `*p`. The expression `*p` yields the value of that variable, an `int`, but since `*p` denotes a variable, it may also appear on the left-hand side of an assignment, in which case the assignment updates the variable. [Reference here](<https://notes.shichao.io/gopl/ch2/#pointers>)
 
 
 
@@ -824,7 +905,7 @@ Installing a 3rd party package is nothing but cloning the remote code into local
 
 
 
-* All newly declared variables are assigned their zero value and pointers are no different. A newly declared pointer, or just a pointer that points to nothing, has a nil-value.
+* All newly declared variables are assigned their zero value & pointers are no different. A newly declared pointer, or just a pointer that points to nothing, has a nil-value.
 
 ```Go
 var p *int // declare a pointer
@@ -841,13 +922,13 @@ fmt.Printf("%v", p) // Print somthing like 0x7ff96b81c000a
 ### 5.1. Allocation
 
 * Go also has garbage collection.
-* To allocate memory Go has 2 primitives, `new` and `make`.
+* To allocate memory Go has 2 primitives, `new` & `make`.
 * **new** allocates; **make** initializes.
     * *new(T)* returns \*T pointing to a zerod T.
     * *make(T)* returns an initialized T.
     * *make* is only used for slices, maps, channels.
 
-* Constructors and compiste literals
+* Constructors & compiste literals
 
 ```Go
 // A lot of boiler plate
@@ -874,9 +955,9 @@ func NewFile(fd int, name string) *File {
 }
 ```
 
-* As a limiting case, if a composite literal contains no fields at all, it creates a zero value for the type. The expression `new(File)` and `&File{}` are equivalent.
+* As a limiting case, if a composite literal contains no fields at all, it creates a zero value for the type. The expression `new(File)` & `&File{}` are equivalent.
 
-* Composite literal can also be created for arrays, slices, and maps, with the field labels being indices or map keys as appropriate.
+* Composite literal can also be created for arrays, slices, & maps, with the field labels being indices or map keys as appropriate.
 
 ```Go
 ar := [...]string{Enone: "no error", Einval: "invalid argument"}
@@ -932,12 +1013,12 @@ struct {
     func (n1 *NameAge) doSomething2(n2 int) {/* */}
     ```
 
-> **NOTE**: If x is addressable and &x's method set contains m, x.m() is shorthand for (&x).m().
+> **NOTE**: If x is addressable & &x's method set contains m, x.m() is shorthand for (&x).m().
 
 * Suppose we have:
 
 ```Go
-// A mutex is a data type with two methods, Lock and Unlock
+// A mutex is a data type with two methods, Lock & Unlock
 type Mutex struct {/* Mutex fields */}
 func (m *Mutex) Lock() {/* Lock impl */}
 func (m *Mutext) Unlock {/* Unlock impl */}
@@ -945,7 +1026,7 @@ func (m *Mutext) Unlock {/* Unlock impl */}
 // NewMutex is equal to Mutex, but it does not have any of the methods of Mutex.
 type NewMutex Mutex
 // PrintableMutex hash inherited the method set from Mutex, contains the methods
-// Lock and Unlock bound to its anonymous field Mutex
+// Lock & Unlock bound to its anonymous field Mutex
 type PrintableMutex struct{Mutex}
 ```
 
@@ -985,7 +1066,7 @@ r := string(i)
     * From floating point to an integer value: `int(float32)`. This discards the fraction part from the floating point value.
     * And other way around `float32(int)`
 
-* User defined types and conversions
+* User defined types & conversions
 
 ```Go
 type foo struct { int } // Anonymous struct field
@@ -1033,7 +1114,7 @@ f(&s)
 
 * The fact that you do not need to declare whether or not a type implements an interface means that Go implements a form of [duck typing](https://en.wikipedia.org/wiki/Duck_typing). This is not pure duck typing, because when possible the Go complier will statically check whether the type implements the inerface. However, Go does have a purely dynamic aspect, in that you can convert from one interface to another. In the general case, that conversion is checked at run time. If the conversion is invalid - if the type of the value stored in the existing interface value does not satisfy the interface to which it is being converted - the program will fail with a run time error.
 
-    * *Duck typing - If it looks like a duck, and it quacks like a duck, then it is a duck*. It means if it has a set of methods that match an interface, then you can use it wherever that interface is needed without explicitly defining that your types implement that interface.
+    * *Duck typing - If it looks like a duck, & it quacks like a duck, then it is a duck*. It means if it has a set of methods that match an interface, then you can use it wherever that interface is needed without explicitly defining that your types implement that interface.
 
     ```Go
     package main
@@ -1120,9 +1201,9 @@ fmt.Println(g(s))
 * You can definen methods on any type (except on non-local types, this includes built-in types: the type `int` can not have methods).
 * Methods on interface types
     * An interface defines a set of methods. A method contains the actual code.
-    * An interface is the definition and the methods are the implementation.
+    * An interface is the definition & the methods are the implementation.
 * By convention, one-method interfaces are named by the method name plus the -er suffix: Reader, Writer, Formatter,...
-* Pointer and Non-pointer method receivers.
+* Pointer & Non-pointer method receivers.
 
     ```Go
     func (s *MyStruct) pointerMethod() {} // method on pointer
@@ -1130,7 +1211,7 @@ fmt.Println(g(s))
     ```
 
     * When defining a method on a type, the receiver behaves exactly as if it were an argument to the method. Whether to define the receiver as a value or as a pointer is the same question, then, as whether a function argument should be a value or a pointer.
-    * 1st: Does the method need to modify the receiver? If it *does*, the receiver must be a *pointer* (Slices and maps act as references, so their story is a little more subtle, but for instance to change the length of a slice in a method the receiver must still be a pointer). Otherwise, it should be *value*.
+    * 1st: Does the method need to modify the receiver? If it *does*, the receiver must be a *pointer* (Slices & maps act as references, so their story is a little more subtle, but for instance to change the length of a slice in a method the receiver must still be a pointer). Otherwise, it should be *value*.
 
     ```Go
     package main
@@ -1164,17 +1245,17 @@ fmt.Println(g(s))
 
     * 2nd: efficiency. If the receiver is large, a big `struct` for instance, it will be much cheaper to use a pointer receiver.
     * 3rd: consistency. If some of the methods of the type must have pointer receivers, the rest should too, so the method set is consistent regardless of how the type is used.
-    * For types such as basic types, slices and small `struct`, a value receiver is very cheap so unless the semantics of the methods requires a pointer, a value receiver is effient and clear.
+    * For types such as basic types, slices & small `struct`, a value receiver is very cheap so unless the semantics of the methods requires a pointer, a value receiver is effient & clear.
 
 
 ### 6.4. Listing interfaces in interfaces
 
-### 6.5. Introspection and reflection
+### 6.5. Introspection & reflection
 
 ## 7. Concurrency
 
-* Firstly, don't mess between [parallelism and concurrency](https://github.com/ntk148v/til/blob/master/concurrency-parallelism/concurrency-is-not-parallelism.md).
-* **Goroutines** are the central entity in Go's ability for concurrency. A goroutine has a simple model: it is a function executing in parallel with other goroutines in the same address space. It is lightweight, costing little more than the allocation of stack space. And the stack start small, so they are cheap, and grow by allocating (and freeing) heap storage as required.
+* Firstly, don't mess between [parallelism & concurrency](https://github.com/ntk148v/til/blob/master/concurrency-parallelism/concurrency-is-not-parallelism.md).
+* **Goroutines** are the central entity in Go's ability for concurrency. A goroutine has a simple model: it is a function executing in parallel with other goroutines in the same address space. It is lightweight, costing little more than the allocation of stack space. And the stack start small, so they are cheap, & grow by allocating (and freeing) heap storage as required.
 
 ```Go
 ready("Tea", 2) // Normal function call
@@ -1198,12 +1279,12 @@ func main() {
 	go ready("Coffee", 1) // Coffee is ready - After 1 second (2)
 	fmt.Println("I'm waiting") // Right away (1)
     // If did not wait for the goroutines, the program would be terminated
-    // immediately and any running goroutines would die with it!
+    // immediately & any running goroutines would die with it!
 	time.Sleep(5 * time.Second)
 }
 ```
 
-* In fact, we have no idea how long we should wait until all goroutine have exited. To fix this, we need some kind of mechanism which allows us to communicate with the goroutines - channel. A channel can be compared to a two-way pipe in Unix shells: you can send to and receive values from it.
+* In fact, we have no idea how long we should wait until all goroutine have exited. To fix this, we need some kind of mechanism which allows us to communicate with the goroutines - channel. A channel can be compared to a two-way pipe in Unix shells: you can send to & receive values from it.
 
 ```Go
 /* Define a channel, we must also define the type of
@@ -1213,7 +1294,7 @@ cs := make(chan string)
 cf := make(chan interface{})
 ci <- 1 // Send the integer 1 to the channel ci
 <-ci    // Receive an integer from the channel ci
-i := <-ci // Receive from the channel ci and store it in i
+i := <-ci // Receive from the channel ci & store it in i
 ```
 
 * Put this to previous example (ready).
@@ -1262,9 +1343,9 @@ L: for {
 
 * While our goroutines were running concurrently, they were not running in parallel! (Once more time, make sure you know that Concurrency is not Parralel!)
 * With `runtime.GOMAXPROCS(n)` or set an environment variable `GOMAXPROCS` you can set the number of goroutines that can run in parallel.
-    * GOMAXPROCS sets the maximum number of CPUs that can be executing simultaneously and returns the previous setting. If n < 1, it does not change the current setting. This call will go away when the scheduler improves.>
+    * GOMAXPROCS sets the maximum number of CPUs that can be executing simultaneously & returns the previous setting. If n < 1, it does not change the current setting. This call will go away when the scheduler improves.>
 
-* From version 1.5 and above, `GOMAXPROCS` defaults to the number of CPU cores.
+* From version 1.5 & above, `GOMAXPROCS` defaults to the number of CPU cores.
 
 ### 7.2. More on channels
 
@@ -1280,30 +1361,30 @@ ch := make(chan type, value)
 
 ```Go
 x, ok = <-ch
-/* Where ok is set to True the channel is not closed and we've read something
-Otherwise ok is set to False. In that case the channel was closed and the value
+/* Where ok is set to True the channel is not closed & we've read something
+Otherwise ok is set to False. In that case the channel was closed & the value
 received is a zero value of the channel's type.
 ```
 
 ## 8. Communication
 
-* Building blocks in Go for communcating with the outside world (fiels, directories, networking and executing other programs).
-* Central to Go's I/O are the interfaces `io.Reader` and `io.Writer`.
+* Building blocks in Go for communcating with the outside world (fiels, directories, networking & executing other programs).
+* Central to Go's I/O are the interfaces `io.Reader` & `io.Writer`.
 
 ### 8.1. io.Reader
 
 * `io.Reader` is an important interface in the language Go. A lot (if not all) functions that need to read from something take an `io.Reader` as input.
 * The writing side `io.Writer` has the `Write` method.
-* If you think of new type in your program or package and you make it fulfill the `io.Reader` or `io.Writer` interface, *the whole standard Go library can be used* on that type.
+* If you think of new type in your program or package & you make it fulfill the `io.Reader` or `io.Writer` interface, *the whole standard Go library can be used* on that type.
 
 ### 8.2. Command line arguments
 
 * Arguments from the command line are available inside your program via the string slide `os.Args`.
-* The `flag` package has a more sophisticated interface, and also provided a way to parse flags.
+* The `flag` package has a more sophisticated interface, & also provided a way to parse flags.
 
 ### 8.3. Executing commands
 
-* The `os/exec` package has functions to run external commands, and is the premier way to execute commands from within a Go program.
+* The `os/exec` package has functions to run external commands, & is the premier way to execute commands from within a Go program.
 
 ```Go
 import "os/exec"
@@ -1317,8 +1398,8 @@ buf, err := cmd.Output() // buf is byte slice
 
 ### 8.4. Networking
 
-* All network related types and functions can be found in the package `net`.
-* One of the most important functions in there is `Dial`. When you `Dial` into a remote system the function returns a `Conn` interface type, which can be used to send and receive information. The function `Dial` neatly abstracts away the network family and transport.
+* All network related types & functions can be found in the package `net`.
+* One of the most important functions in there is `Dial`. When you `Dial` into a remote system the function returns a `Conn` interface type, which can be used to send & receive information. The function `Dial` neatly abstracts away the network family & transport.
 
 ```Go
 conn, e := Dial("tcp", "192.0.32.10:80")
@@ -1357,7 +1438,7 @@ func main() {
     fmt.Println(quote.Hello())
 }
 EOF
-# Build and run
+# Build & run
 $ go build
 $ ./hello
 
@@ -1373,16 +1454,16 @@ require rsc.io/quote v1.5.2
 ### 9.2. New concepts
 
 * **Modules**: a collection of related Go packages that are versioned together as a single unit.
-* Summarizing the relationship between repositories, modules, and packages:
+* Summarizing the relationship between repositories, modules, & packages:
   - A repository contains one or more Go modules.
   - Each module contains one or more Go packages.
   - Each package consists of one or more Go source files in a single directory.
 * **go.mod**: A module is defined by a tree of Go source files with a `go.mod` file in the tree's root directory. Module source code may be located outside of GOPATH. There are four directives: `module`, `require`, `replace`, `exclude`.
-* **Version selection**: If you add a new import to your source code that is not yet covered by a `require`in `go.mod`, most go commands like 'go build' and 'go test' will automatically look up the proper module and add the *highest* version of that new direct dependency to your module's `go.mod` as a `require` directive. For example, if your new import corresponds to dependency M whose latest tagged release version is `v1.2.3`, your module's `go.mod` will end up with `require M v1.2.3`, which indicates module M is a dependency with allowed version >= v1.2.3 (and < v2, given v2 is considered incompatible with v1).
-* **Semantic Import versioning**: The result of following both the import compatibility rule and semver is called *Semantic Import Versioning*, where the major version is included in the import path — this ensures the import path changes any time the major version increments due to a break in compatibility.
+* **Version selection**: If you add a new import to your source code that is not yet covered by a `require`in `go.mod`, most go commands like 'go build' & 'go test' will automatically look up the proper module & add the *highest* version of that new direct dependency to your module's `go.mod` as a `require` directive. For example, if your new import corresponds to dependency M whose latest tagged release version is `v1.2.3`, your module's `go.mod` will end up with `require M v1.2.3`, which indicates module M is a dependency with allowed version >= v1.2.3 (and < v2, given v2 is considered incompatible with v1).
+* **Semantic Import versioning**: The result of following both the import compatibility rule & semver is called *Semantic Import Versioning*, where the major version is included in the import path — this ensures the import path changes any time the major version increments due to a break in compatibility.
 * As a result of Semantic Import Versioning, code opting in to Go modules **must comply with these rules**:
   - Follow [semver](https://semver.org/) (with tags such as `v1.2.3`).
-  - If the module is version v2 or higher, the major version of the module *must* be included as a `/vN` at the end of the module paths used in `go.mod` files (e.g., `module github.com/my/mod/v2`, `require github.com/my/mod/v2 v2.0.0`) and in the package import path (e.g., `import "github.com/my/mod/v2/mypkg"`).
+  - If the module is version v2 or higher, the major version of the module *must* be included as a `/vN` at the end of the module paths used in `go.mod` files (e.g., `module github.com/my/mod/v2`, `require github.com/my/mod/v2 v2.0.0`) & in the package import path (e.g., `import "github.com/my/mod/v2/mypkg"`).
   - If the module is version v0 or v1, do *not* include the major version in either the module path or the import path.
 
 ## 10. Web Programming
@@ -1393,7 +1474,7 @@ require rsc.io/quote v1.5.2
 
 A basic HTTP server has a few key jobs to take care of:
 * *Process dynamic request*: Process incoming requests from users who browse the website, log into their accounts or post images.
-* *Serve static assets*: Serve JavaScript, CSS and images to browsers to create a dynamic experience for the user.
+* *Serve static assets*: Serve JavaScript, CSS & images to browsers to create a dynamic experience for the user.
 * *Accept connections*: The HTTP Server must listen on a specific port to be able to accept connections from the Internet.
 
 ```go
@@ -1466,7 +1547,7 @@ func main() {
 
 ### 10.7. Middleware (Advanced)
 
-* A middleware in itself simple takes a `http.HandleFunc` as one of its parameters, wraps it and returns a new `http.HandlerFunc` for the server to call.
+* A middleware in itself simple takes a `http.HandleFunc` as one of its parameters, wraps it & returns a new `http.HandlerFunc` for the server to call.
 
 * Define a new type `Middleware` which makes it eventually easier to chain multiple middlewares together.
 
@@ -1511,7 +1592,7 @@ import (
 
 type Middleware func(http.HandlerFunc) http.HandlerFunc
 
-// Logging logs all requests with its path and the time it took to process
+// Logging logs all requests with its path & the time it took to process
 func Logging() Middleware {
 
 	// Create a new Middleware
@@ -1595,7 +1676,7 @@ Oops, actually you can refer to [awesome-go](https://github.com/avelino/awesome-
 * [Dave Cheney's Blog](https://dave.cheney.net)
     * [Praticial Go: Real world advice for writing matintainable Go programs](https://dave.cheney.net/practical-go/presentations/qcon-china.html)
 
-### Installing Go and configure your workspace
+### Installing Go & configure your workspace
 
 * [How to write Go code](https://golang.org/doc/code.html)
 * [Five suggestions for setting up a Go project](https://dave.cheney.net/2014/12/01/five-suggestions-for-setting-up-a-go-project)
