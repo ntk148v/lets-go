@@ -828,6 +828,12 @@ func TestSum(t *testing.T) {
     go test github.com/username/package
     ```
 
+* HTTP testing:
+
+    * The `net/http/httptest` sub-package facilitates the testing automation of both HTTP server and client code.
+    * When writing HTTP server code, you will undoubtedly run into the need to test your code in a robust and repeatable manner, without having to set up some fragile code harness to simulate end-to-end testing. Type `httptest.ResponseRecorder` is designed specifically to provide unit testing capabilities for exercising the HTTP handler methods by inspecting state changes to the http.ResponseWriter in the tested function.
+    * Creating test code for an HTTP client is more involved, since you actually need a server running for proper testing. Luckily, package `httptest` provides type `httptest.Server` to programmatically create servers to test client requests and send back mock responses to the client.
+
 * Statement coverage: The `go test` tool has built-in code-coverage for statements.
 
 ```bash
@@ -839,6 +845,41 @@ ok  	github.com/alexellis/golangbasics1	0.009s
 $ go test -cover -coverprofile=c.out
 $ go tool cover -html=c.out -o coverage.html 
 ```
+
+* Code benchmark: The purpose of benchmarking is to measure a code's performance. The go test command-line tool comes with support for the automated generation and measurement of benchmark metrics. Similar to unit tests, the test tool uses benchmark functions to specify what portion of the code to measure.
+
+  * Running the benchmark
+
+    ```bash
+    $> go test -bench=.
+     PASS
+     BenchmarkVectorAdd-2 2000000 761 ns/op
+     BenchmarkVectorSub-2 2000000 788 ns/op
+     BenchmarkVectorScale-2 5000000 269 ns/op
+     BenchmarkVectorMag-2 5000000 243 ns/op
+     BenchmarkVectorUnit-2 3000000 507 ns/op
+     BenchmarkVectorDotProd-2 3000000 549 ns/op
+     BenchmarkVectorAngle-2 2000000 659 ns/op
+     ok github.com/vladimirvivien/learning-go/ch12/vector 14.123s
+    ```
+
+  * Skipping test functions
+
+    ```bash
+    > go test -bench=. -run=NONE -v
+     PASS
+     BenchmarkVectorAdd-2 2000000 791 ns/op
+     BenchmarkVectorSub-2 2000000 777 ns/op
+    Code Testing
+    [ 314 ]
+     ...
+     BenchmarkVectorAngle-2 2000000 653 ns/op
+     ok github.com/vladimirvivien/learning-go/ch12/vector 14.069s
+    ```
+
+  * Comparative benchmarks: to compare the performance of different algorithms that implement similar functionalities. Exercising the algorithms using performance benchmarks will indicate which of the implementations may be more compute and memory efficient.
+
+    
 
 * Isolating dependencies: The Key factor that defines a unit test is isolation from runtime dependencies or collaborators.
 
@@ -1659,6 +1700,49 @@ func main() {
 ### 10.11. Websockets
 
 ### 10.12. Security - Password Hashing (bcrypt)
+
+## 11. Data IO in Go
+
+### 11.1. IO with readers and writers
+
+Go models data input and output as a stream that flows from sources to targets. Data sources, such as files, network connections, or even some in-memory objects , can be modeled as streams of bytes from which data can be read or written to.
+
+### 11.2. Formatted IO with fmt
+
+The most common usage of the `fmt` package is for writting to standard output and reading from standard input.
+
+```golang
+type metalloid struct {
+	name string
+	number int32
+	weight float64
+}
+
+func main() {
+	var metalloids = []metalloid{
+		{"Boron", 5, 10.81},
+ 		...
+ 		{"Polonium", 84, 209.0},
+	}
+ 	file, _ := os.Create("./metalloids.txt")
+ 	defer file.Close()
+ 	for _, m := range metalloids {
+        fmt.Fprintf(
+            file,
+            "%-10s %-10d %-10.3f\n",
+            m.name, m.number, m.weight,
+        )
+ 	}
+}
+```
+
+### 11.3. Buffered IO
+
+The `bufio` package offers several functions to do buffered writing of IO streams using an `io.Writer interface.
+
+### 11.4. In-memory IO
+
+In `bytes` package offers common primitives to achieve streaming IO on blocks of bytes stored in memory, represented by the `bytes.Buffer` byte. Since the `bytes.Buffer` type implements both `io.Reader` and `io.Writer` interfaces it is a great option to stream data into or out of memory using streaming IO primitives.
 
 ## Resource for new Go programmers
 
