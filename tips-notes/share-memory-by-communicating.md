@@ -4,7 +4,7 @@ Traditional threading models (commonly used when writing Java, C++ and Python pr
 
 Go's concurrency primitives - goroutines and channels - provide an elegant and distinct means of structuring concurrent software. Instead of explicitly using locks to mediate access to shared data, go encourages the use of channels to pass references to data between goroutines.
 
-*Do not communicate by sharing memory; instead, share memory by communicating.*
+_Do not communicate by sharing memory; instead, share memory by communicating._
 
 In a traditional threading environment, one might structure its data like so:
 

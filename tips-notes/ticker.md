@@ -10,29 +10,29 @@ Let's test it:
 package main
 
 import (
-	"fmt"
-	"time"
+    "fmt"
+    "time"
 )
 
 func main() {
-	ticker := time.NewTicker(time.Second)
-	defer ticker.Stop()
-	done := make(chan bool)
-	go func() {
-		time.Sleep(10 * time.Second)
-		done <- true
-	}()
-	for {
-		select {
-		case <-done:
-			fmt.Println("Done!")
-			return
-		case t := <-ticker.C:
-			fmt.Println("Current time: ", t)
-			time.Sleep(time.Second * 10)
-			fmt.Println("After a tick 2s", time.Now())
-		}
-	}
+    ticker := time.NewTicker(time.Second)
+    defer ticker.Stop()
+    done := make(chan bool)
+    go func() {
+        time.Sleep(10 * time.Second)
+        done <- true
+    }()
+    for {
+        select {
+        case <-done:
+            fmt.Println("Done!")
+            return
+        case t := <-ticker.C:
+            fmt.Println("Current time: ", t)
+            time.Sleep(time.Second * 10)
+            fmt.Println("After a tick 2s", time.Now())
+        }
+    }
 }
 ```
 

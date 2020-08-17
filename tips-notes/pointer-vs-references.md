@@ -2,9 +2,9 @@
 
 [Source](https://spf13.com/post/go-pointers-vs-references/)
 
-* C, C++: pointers
-* C++, Java, Python, Perl & PHP: references
-* On the surface both references and pointers are very similar, both are used to have one variable provide  access to another.
+- C, C++: pointers
+- C++, Java, Python, Perl & PHP: references
+- On the surface both references and pointers are very similar, both are used to have one variable provide access to another.
 
 ## What is the difference?
 

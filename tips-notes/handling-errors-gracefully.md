@@ -2,7 +2,7 @@
 
 [Source](https://hackernoon.com/golang-handling-errors-gracefully-8e27f1db729f)
 
-## What is an error in go? 
+## What is an error in go?
 
 ```golang
 // The error built-in interface type is the conventional interface for
@@ -27,9 +27,10 @@ Question: We just handled the error at the top layer? Perfect? Nah!
 ## A solution
 
 Goals:
-* Provide a good error stack trace.
-* Log the error.
-* Provide a contextual error information to the user when necessary.
+
+- Provide a good error stack trace.
+- Log the error.
+- Provide a contextual error information to the user when necessary.
 
 Create an error type:
 

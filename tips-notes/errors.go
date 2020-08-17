@@ -2,6 +2,7 @@ package error
 
 import (
 	"fmt"
+
 	"github.com/pkg/errors"
 )
 

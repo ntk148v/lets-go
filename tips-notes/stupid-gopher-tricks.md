@@ -50,7 +50,7 @@ if err := tmpl.Execute(os.Stdout, data); err != nil {
 
 ### JSON
 
-* Encode and decode JSON objects.
+- Encode and decode JSON objects.
 
 ```golang
 b, err := json.Marshal(struct {
@@ -73,7 +73,7 @@ if err != nil {
 fmt.Println(data.ID, data.Name)
 ```
 
-* Structs can be nested to describe more complex JSON objects
+- Structs can be nested to describe more complex JSON objects
 
 ```golang
 var data struct {
@@ -111,7 +111,7 @@ var m = map[int]Foo{
 }
 ```
 
-* Combined with anonymous structs, this convenience shortens the code dramatically:
+- Combined with anonymous structs, this convenience shortens the code dramatically:
 
 ```golang
 var s = []struct {
@@ -136,5 +136,6 @@ var t = []struct {
     {42, "Answer"},
 }
 ```
+
 ...
 [WIP]
