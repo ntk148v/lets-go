@@ -946,14 +946,13 @@ $ go tool cover -html=c.out -o coverage.html
 
 - Pointer type (\* type) & address-of (&) operators \*: If a variable is declared `var x int`, the expression `&x` ("address of x") yields a pointer to an integer variable (a value of type `* int`). If this value is called `p`, we say "`p` points to to `x`", or equivalently "`p` contains the address of `x`". The variable to which `p` points is written `*p`. The expression `*p` yields the value of that variable, an `int`, but since `*p` denotes a variable, it may also appear on the left-hand side of an assignment, in which case the assignment updates the variable. [Reference here](https://notes.shichao.io/gopl/ch2/#pointers)
 
-
-    ```go
-    x := 1
-    p := &x          // p, of type *int, points to x
-    fmt.Println(*p)  // "1"
-    *p = 2           // equivalent to x = 2
-    fmt.Println(x)   // "2"
-    ```
+  ```go
+  x := 1
+  p := &x          // p, of type *int, points to x
+  fmt.Println(*p)  // "1"
+  *p = 2           // equivalent to x = 2
+  fmt.Println(x)   // "2"
+  ```
 
 - All newly declared variables are assigned their zero value & pointers are no different. A newly declared pointer, or just a pointer that points to nothing, has a nil-value.
 
