@@ -1211,6 +1211,8 @@ f(&s)
   }
   ```
 
+- Go's interfaces let you use `duck typing` like you would in a purely dynamic language like Python but still have the compiler catch obvious mistakes like passing an `int` where an object with a `Read` method was expected, or like calling the `Read` method with the wrong number of arguments.
+
 ### 6.1. Which is what?
 
 - Let's define another type R that also implements the interface I.
