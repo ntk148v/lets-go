@@ -1419,6 +1419,8 @@ Otherwise ok is set to False. In that case the channel was closed & the value
 received is a zero value of the channel's type.
 ```
 
+- You can find more about concurrency [here](./tips-notes/concurrency-synchronization/README.md).
+
 ## 8. Communication
 
 - Building blocks in Go for communcating with the outside world (fiels, directories, networking & executing other programs).
