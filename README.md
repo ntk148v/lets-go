@@ -427,7 +427,7 @@ cap         copy       println
   s := make([]byte, 5)
   ```
 
-  ![slice-2](https://blog.golang.org/go-slices-usage-and-internals_slice-1.png<Paste>)
+  ![slice-2](https://blog.golang.org/go-slices-usage-and-internals_slice-1.png)
 
   - `len` is the number of elements referred to by the slice.
   - `cap` is the number of elements in the underlying array (beginning at the element referred to by the slice pointer).
