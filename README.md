@@ -891,7 +891,7 @@ $ go tool cover -html=c.out -o coverage.html
 
   - Comparative benchmarks: to compare the performance of different algorithms that implement similar functionalities. Exercising the algorithms using performance benchmarks will indicate which of the implementations may be more compute and memory efficient.
 
-* Isolating dependencies: The Key factor that defines a unit test is isolation from runtime dependencies or collaborators.
+- Isolating dependencies: The Key factor that defines a unit test is isolation from runtime dependencies or collaborators. Check out [Dependency Injection](./tips-notes/dependency-injection.md).
 
 ### 4.8. Useful packages
 
