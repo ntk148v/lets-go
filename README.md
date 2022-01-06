@@ -1,10 +1,10 @@
-# Let's Go!
+# Let's Go
 
-- [Let's Go!](#lets-go)
+- [Let's Go](#lets-go)
   - [Learn](#learn)
   - [1. Introduction](#1-introduction)
   - [2. Basic](#2-basic)
-    - [2.1. Say Hello World in Golang!](#21-say-hello-world-in-golang)
+    - [2.1. Say Hello World in Golang](#21-say-hello-world-in-golang)
     - [2.2. Compiling & Running Code](#22-compiling--running-code)
     - [2.4. Variables, Types & Keywords](#24-variables-types--keywords)
     - [2.5. Operators & Built-in Functions](#25-operators--built-in-functions)
@@ -91,7 +91,7 @@ These above links contain a lot of sources, so finding documentation isn't a big
 
 ## 2. Basic
 
-### 2.1. Say Hello World in Golang!
+### 2.1. Say Hello World in Golang
 
 - Get started with Go in the classic way: printing "Hello World" (Ken Thompson & Dennies Ritchie started this when they presented the C language in the 1970s #til)
 
@@ -112,19 +112,19 @@ func main() {
 - To build [helloworld.go](./2/hello_world.go), just type:
 
 ```
-$ go build helloworld.go # Return an executable called helloworld
+go build helloworld.go # Return an executable called helloworld
 ```
 
 - Run a previous step result
 
 ```
-$ ./helloworld
+./helloworld
 ```
 
 - Want to ombine these two steps? Ok, Golang got you.
 
 ```
-$ go run helloworld.go
+go run helloworld.go
 ```
 
 ### 2.4. Variables, Types & Keywords
@@ -421,22 +421,22 @@ cap         copy       println
 
   - A slice is a descriptor of an array segment. It consists of a pointer to the array, the length of the segment & its capacity (the maximum length of the segment).
 
-  ![slice-1](https://blog.golang.org/go-slices-usage-and-internals_slice-struct.png)
+  ![slice-1](https://go.dev/blog/slices-intro/slice-struct.png)
 
   ```Go
   s := make([]byte, 5)
   ```
 
-  ![slice-2](https://blog.golang.org/go-slices-usage-and-internals_slice-1.png)
+  ![slice-2](https://go.dev/blog/slices-intro/slice-1.png)
 
   - `len` is the number of elements referred to by the slice.
   - `cap` is the number of elements in the underlying array (beginning at the element referred to by the slice pointer).
 
-        ```Go
+        ```go
         s = s[2:4]
         ```
 
-        ![slice-3](https://blog.golang.org/go-slices-usage-and-internals_slice-2.png)
+        ![slice-3](https://go.dev/blog/slices-intro/slice-2.png)
 
         * Slicing does not copy the slice's data. It creates a new slice that points to the original array. This makes slice operations as efficient as manipulating array indicies. Therefore, modifying the elements (not the slice itself) of a re-slice modifies the elements of the original slice:
 
@@ -455,9 +455,9 @@ cap         copy       println
         s = s[:cap(s)]
         ```
 
-  ![slice-4](https://blog.golang.org/go-slices-usage-and-internals_slice-3.png)
-
   - A slice cannot be grown beyond its capacity.
+
+  ![slice-4](https://go.dev/blog/slices-intro/slice-3.png)
 
   ```Go
   // Another example
@@ -697,10 +697,10 @@ func odd(i int) bool { // start with lower-case -> private
 - Build the package
 
 ```
-$ mkdir $GOPATH/src/even
-$ cp even.go $GOPATH/src/even
-$ go build
-$ go install
+mkdir $GOPATH/src/even
+cp even.go $GOPATH/src/even
+go build
+go install
 ```
 
 - Now you can use the package in your program with `import "even"`.
