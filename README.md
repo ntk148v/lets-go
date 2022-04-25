@@ -58,15 +58,15 @@
     - [10.6. Middleware (Basic)](#106-middleware-basic)
     - [10.7. Middleware (Advanced)](#107-middleware-advanced)
     - [10.8. Session](#108-session)
-    - [10.9. Session](#109-session)
-    - [10.10. JSON](#1010-json)
-    - [10.11. Websockets](#1011-websockets)
-    - [10.12. Security - Password Hashing (bcrypt)](#1012-security---password-hashing-bcrypt)
+    - [10.10. Websockets](#1010-websockets)
+    - [10.11. Security - Password Hashing (bcrypt)](#1011-security---password-hashing-bcrypt)
   - [11. Data IO in Go](#11-data-io-in-go)
     - [11.1. IO with readers and writers](#111-io-with-readers-and-writers)
     - [11.2. Formatted IO with fmt](#112-formatted-io-with-fmt)
     - [11.3. Buffered IO](#113-buffered-io)
     - [11.4. In-memory IO](#114-in-memory-io)
+  - [12. Encoding & Decoding](#12-encoding--decoding)
+    - [12.1. JSON](#121-json)
   - [Resource for new Go programmers](#resource-for-new-go-programmers)
     - [Online resources](#online-resources)
     - [Installing Go & configure your workspace](#installing-go--configure-your-workspace)
@@ -111,19 +111,19 @@ func main() {
 
 - To build [helloworld.go](./2/hello_world.go), just type:
 
-```
+```bash
 go build helloworld.go # Return an executable called helloworld
 ```
 
 - Run a previous step result
 
-```
+```bash
 ./helloworld
 ```
 
 - Want to ombine these two steps? Ok, Golang got you.
 
-```
+```bash
 go run helloworld.go
 ```
 
@@ -350,13 +350,13 @@ len         append     print       imag
 cap         copy       println
 ```
 
-    * close: is used in channel communication. It closes a channel (obviously XD)
-    * delete: is used for deleting entries in maps.
-    * len & cap: are used on a number of different types, `len` is used to return the lengths of strrings, maps, slices & arrays.
-    * new: is used for allocating memory for user defined data types.
-    * copy, append: `copy` is for copying slices. And `append` is for concatenating slices.
-    * panic, recover: are used for an exception mechanism.
-    * complex, real, imag: all deal with complex numbers.
+- close: is used in channel communication. It closes a channel (obviously XD)
+- delete: is used for deleting entries in maps.
+- len & cap: are used on a number of different types, `len` is used to return the lengths of strrings, maps, slices & arrays.
+- new: is used for allocating memory for user defined data types.
+- copy, append: `copy` is for copying slices. And `append` is for concatenating slices.
+- panic, recover: are used for an exception mechanism.
+- complex, real, imag: all deal with complex numbers.
 
 ### 2.9. Arrays, Slices & Maps
 
@@ -432,28 +432,28 @@ cap         copy       println
   - `len` is the number of elements referred to by the slice.
   - `cap` is the number of elements in the underlying array (beginning at the element referred to by the slice pointer).
 
-        ```go
-        s = s[2:4]
-        ```
+    ```go
+    s = s[2:4]
+    ```
 
-        ![slice-3](https://go.dev/blog/slices-intro/slice-2.png)
+    ![slice-3](https://go.dev/blog/slices-intro/slice-2.png)
 
-        * Slicing does not copy the slice's data. It creates a new slice that points to the original array. This makes slice operations as efficient as manipulating array indicies. Therefore, modifying the elements (not the slice itself) of a re-slice modifies the elements of the original slice:
+    - Slicing does not copy the slice's data. It creates a new slice that points to the original array. This makes slice operations as efficient as manipulating array indicies. Therefore, modifying the elements (not the slice itself) of a re-slice modifies the elements of the original slice:
 
-        ```Go
-        d := []byte{'r', 'o', 'a', 'd'}
-        e := d[2:]
-        // e = []byte{'a', 'd'}
-        e[1] = 'm'
-        // e = []byte{'a', 'm'}
-        // d = []byte{'r', 'o', 'a', 'm'}
-        ```
+      ```Go
+      d := []byte{'r', 'o', 'a', 'd'}
+      e := d[2:]
+      // e = []byte{'a', 'd'}
+      e[1] = 'm'
+      // e = []byte{'a', 'm'}
+      // d = []byte{'r', 'o', 'a', 'm'}
+      ```
 
-        * Earlier we sliced `s` to a length shorter than its capacity. We can grow s to its capacity by slicing it again.
+      - Earlier we sliced `s` to a length shorter than its capacity. We can grow s to its capacity by slicing it again.
 
-        ```Go
-        s = s[:cap(s)]
-        ```
+      ```Go
+      s = s[:cap(s)]
+      ```
 
   - A slice cannot be grown beyond its capacity.
 
@@ -696,7 +696,7 @@ func odd(i int) bool { // start with lower-case -> private
 
 - Build the package
 
-```
+```bash
 mkdir $GOPATH/src/even
 cp even.go $GOPATH/src/even
 go build
@@ -1708,13 +1708,9 @@ func main() {
 
 ### 10.8. Session
 
-### 10.9. Session
+### 10.10. Websockets
 
-### 10.10. JSON
-
-### 10.11. Websockets
-
-### 10.12. Security - Password Hashing (bcrypt)
+### 10.11. Security - Password Hashing (bcrypt)
 
 ## 11. Data IO in Go
 
@@ -1758,6 +1754,48 @@ The `bufio` package offers several functions to do buffered writing of IO stream
 ### 11.4. In-memory IO
 
 In `bytes` package offers common primitives to achieve streaming IO on blocks of bytes stored in memory, represented by the `bytes.Buffer` byte. Since the `bytes.Buffer` type implements both `io.Reader` and `io.Writer` interfaces it is a great option to stream data into or out of memory using streaming IO primitives.
+
+## 12. Encoding & Decoding
+
+- Go’s standard library comes packed with some great encoding and decoding packages covering a wide array of encoding schemes. Everything from CSV, XML, JSON, and even gob - a Go specific encoding format - is covered, and all of these packages are incredibly easy to get started with.
+
+### 12.1. JSON
+
+- Go offers built-in support for JSON encoding and decoding, including to and from built-in and custom data types.
+- Checkout the basic example:
+
+```go
+package main
+
+import (
+    "encoding/json"
+    "fmt"
+)
+
+type Person struct {
+    Name string
+    Age  int
+}
+
+func main() {
+    bob := &Person{
+        Name: "Bob",
+        Age:  20,
+    }
+    bobRaw, _ := json.Marshal(bob)
+    fmt.Println(string(bobRaw))
+
+    aliceRaw := []byte(`{"name": "Alice", "age": 23}`)
+    var alice Person
+
+    if err := json.Unmarshal(aliceRaw, &alice); err != nil {
+        panic(err)
+    }
+    fmt.Println(alice)
+}
+```
+
+- In fact that not all applications have the pleasure of working with data that maps one-to-one to its JSON representation. Struct tags help cover most of these use cases, but if you work with enough APIs you are bound to eventually come across a case where it just isn’t enough.
 
 ## Resource for new Go programmers
 
