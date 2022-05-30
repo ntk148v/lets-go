@@ -755,6 +755,7 @@ func g(i int) {
 - Other useful links about Defer:
   - [5 Gotchas of Defer in Go — Part I](https://blog.learngoprogramming.com/gotchas-of-defer-in-go-1-8d070894cb01)
   - [5 Gotchas of Defer in Go — Part II](https://blog.learngoprogramming.com/5-gotchas-of-defer-in-go-golang-part-ii-cc550f6ad9aa)
+- Check out [use cases](./tip-notes/../tips-notes/panic-and-recover-use-cases.md)
 
 ## 4. Packages
 
