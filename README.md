@@ -1457,6 +1457,20 @@ func main() {
 }
 ```
 
+- Buffered channel:
+  - Buffered channel is used to perform asynchronous communcation.
+  - A buffered channel has no such guarantee.
+  - A receive will block only if there's no value in the channel to receive.
+  - A send will block only if there's no available buffer to place the value being sent.
+- Unbuffered channel:
+  - Unbuffered channel is used to perform synchronous communication between goroutines. Unbuffered channel provides a guarantee that an exchange between 2 goroutines is performed at the instant the send and receive take place.
+  - Synchronization is fundamental in the interaction between the send and receive on the channel.
+
+```go
+unbuffered := make(chan int) // Unbuffered channel of integer type
+buffered := make(chan int, 10)    // Buffered channel of integer type
+```
+
 - What if we don't know how many goroutines we started? This is where another Go built-in comes in: `select`.
 
 ```Go
@@ -1466,6 +1480,82 @@ L: for {
         i++
         if i > 1 {
             break L
+        }
+    }
+}
+```
+
+```go
+package main
+
+import "fmt"
+
+func fibonacci(c, quit chan int) {
+    x, y := 0, 1
+    for {
+        select {
+        case c <- x:
+            x, y = y, x+y
+        case <-quit:
+            fmt.Println("quit")
+            return
+        }
+    }
+}
+
+func main() {
+    c := make(chan int)
+    quit := make(chan int)
+    go func() {
+        for i := 0; i < 10; i++ {
+            fmt.Println(<-c)
+        }
+        quit <- 0
+    }()
+    fibonacci(c, quit)
+}
+// 2
+// 3
+// 5
+// 8
+// 13
+// 21
+// 34
+// quit
+```
+
+```go
+// Default selection
+// The default case in a select is run if no other case is ready.
+
+// Use a default case to try a send or receive without blocking:
+
+// select {
+// case i := <-c:
+//     // use i
+// default:
+//     // receiving from c would block
+// }
+package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func main() {
+    tick := time.Tick(100 * time.Millisecond)
+    boom := time.After(500 * time.Millisecond)
+    for {
+        select {
+        case <-tick:
+            fmt.Println("tick.")
+        case <-boom:
+            fmt.Println("BOOM!")
+            return
+        default:
+            fmt.Println("    .")
+            time.Sleep(50 * time.Millisecond)
         }
     }
 }
