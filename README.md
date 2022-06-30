@@ -2105,6 +2105,7 @@ Oops, actually you can refer to [awesome-go](https://github.com/avelino/awesome-
 - [Go styleguide](https://github.com/bahlo/go-styleguide)
 - [Dave Cheney's Blog](https://dave.cheney.net)
   - [Praticial Go: Real world advice for writing matintainable Go programs](https://dave.cheney.net/practical-go/presentations/qcon-china.html)
+- [Go101](https://go101.org/)
 
 ### Installing Go & configure your workspace
 
