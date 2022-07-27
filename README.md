@@ -1,76 +1,85 @@
-# Let's Go
+<p align="center">
+    <img src="./logo.png" style="max-width: 50%;">
+</p>
+<h1 align="center">Let's Go</h1>
 
-- [Let's Go](#lets-go)
-  - [Learn](#learn)
-  - [1. Introduction](#1-introduction)
-  - [2. Basic](#2-basic)
-    - [2.1. Say Hello World in Golang](#21-say-hello-world-in-golang)
-    - [2.2. Compiling & Running Code](#22-compiling--running-code)
-    - [2.4. Variables, Types & Keywords](#24-variables-types--keywords)
-    - [2.5. Operators & Built-in Functions](#25-operators--built-in-functions)
-    - [2.6. Go Keywords](#26-go-keywords)
-    - [2.7. Control Structures](#27-control-structures)
-    - [2.8. Built-in functions](#28-built-in-functions)
-    - [2.9. Arrays, Slices & Maps](#29-arrays-slices--maps)
-  - [3. Functions](#3-functions)
-    - [3.1. Scope](#31-scope)
-    - [3.2. Functions as values](#32-functions-as-values)
-    - [3.3. Callbacks](#33-callbacks)
-    - [3.4. Deferred Code](#34-deferred-code)
-    - [3.5. Variadic Parameter](#35-variadic-parameter)
-    - [3.6. Panic & recovering](#36-panic--recovering)
-  - [4. Packages](#4-packages)
-    - [4.1. Identifiers](#41-identifiers)
-    - [4.2. Documeting packages](#42-documeting-packages)
-    - [4.3. Creating a package](#43-creating-a-package)
-    - [4.4. Package initialization](#44-package-initialization)
-    - [4.5. Program execution order](#45-program-execution-order)
-    - [4.6. Installing 3rd party package](#46-installing-3rd-party-package)
-    - [4.7. Testing packages](#47-testing-packages)
-    - [4.8. Useful packages](#48-useful-packages)
-  - [5. Beyond the basics](#5-beyond-the-basics)
-    - [5.1. Allocation](#51-allocation)
-    - [5.2. Defining your own types](#52-defining-your-own-types)
-    - [5.3. Conversions](#53-conversions)
-  - [6. Interfaces](#6-interfaces)
-    - [6.1. Which is what?](#61-which-is-what)
-    - [6.2. Empty interface](#62-empty-interface)
-    - [6.3. Methods](#63-methods)
-    - [6.4. Listing interfaces in interfaces](#64-listing-interfaces-in-interfaces)
-    - [6.5. Introspection & reflection](#65-introspection--reflection)
-  - [7. Concurrency](#7-concurrency)
-    - [7.1. Make it run in parallel](#71-make-it-run-in-parallel)
-    - [7.2. More on channels](#72-more-on-channels)
-  - [8. Communication](#8-communication)
-    - [8.1. io.Reader](#81-ioreader)
-    - [8.2. Command line arguments](#82-command-line-arguments)
-    - [8.3. Executing commands](#83-executing-commands)
-    - [8.4. Networking](#84-networking)
-  - [9. Modules (>=1.11)](#9-modules-111)
-    - [9.1. Quickstart](#91-quickstart)
-    - [9.2. New concepts](#92-new-concepts)
-  - [10. Web Programming](#10-web-programming)
-    - [10.1. HTTP Server](#101-http-server)
-    - [10.2. Routing (using gorilla/mux)](#102-routing-using-gorillamux)
-    - [10.3. Templating](#103-templating)
-    - [10.4. Requests & Forms](#104-requests--forms)
-    - [10.5. Assets & Files](#105-assets--files)
-    - [10.6. Middleware (Basic)](#106-middleware-basic)
-    - [10.7. Middleware (Advanced)](#107-middleware-advanced)
-    - [10.8. Session](#108-session)
-    - [10.10. Websockets](#1010-websockets)
-    - [10.11. Security - Password Hashing (bcrypt)](#1011-security---password-hashing-bcrypt)
-  - [11. Data IO in Go](#11-data-io-in-go)
-    - [11.1. IO with readers and writers](#111-io-with-readers-and-writers)
-    - [11.2. Formatted IO with fmt](#112-formatted-io-with-fmt)
-    - [11.3. Buffered IO](#113-buffered-io)
-    - [11.4. In-memory IO](#114-in-memory-io)
-  - [12. Encoding & Decoding](#12-encoding--decoding)
-    - [12.1. JSON](#121-json)
-  - [Resource for new Go programmers](#resource-for-new-go-programmers)
-    - [Online resources](#online-resources)
-    - [Installing Go & configure your workspace](#installing-go--configure-your-workspace)
-    - [Text editors & IDE](#text-editors--ide)
+<p align="center">
+    <a href="https://github.com/ntk148v/lets-go/blob/master/LICENSE">
+        <img alt="GitHub license" src="https://img.shields.io/github/license/ntk148v/lets-go?style=for-the-badge">
+    </a>
+    <a href="https://github.com/ntk148v/lets-go/stargazers"> <img alt="GitHub stars" src="https://img.shields.io/github/stars/ntk148v/lets-go?style=for-the-badge"></a>
+</p>
+
+- [Learn](#learn)
+- [1. Introduction](#1-introduction)
+- [2. Basic](#2-basic)
+  - [2.1. Say Hello World in Golang](#21-say-hello-world-in-golang)
+  - [2.2. Compiling & Running Code](#22-compiling--running-code)
+  - [2.4. Variables, Types & Keywords](#24-variables-types--keywords)
+  - [2.5. Operators & Built-in Functions](#25-operators--built-in-functions)
+  - [2.6. Go Keywords](#26-go-keywords)
+  - [2.7. Control Structures](#27-control-structures)
+  - [2.8. Built-in functions](#28-built-in-functions)
+  - [2.9. Arrays, Slices & Maps](#29-arrays-slices--maps)
+- [3. Functions](#3-functions)
+  - [3.1. Scope](#31-scope)
+  - [3.2. Functions as values](#32-functions-as-values)
+  - [3.3. Callbacks](#33-callbacks)
+  - [3.4. Deferred Code](#34-deferred-code)
+  - [3.5. Variadic Parameter](#35-variadic-parameter)
+  - [3.6. Panic & recovering](#36-panic--recovering)
+- [4. Packages](#4-packages)
+  - [4.1. Identifiers](#41-identifiers)
+  - [4.2. Documeting packages](#42-documeting-packages)
+  - [4.3. Creating a package](#43-creating-a-package)
+  - [4.4. Package initialization](#44-package-initialization)
+  - [4.5. Program execution order](#45-program-execution-order)
+  - [4.6. Installing 3rd party package](#46-installing-3rd-party-package)
+  - [4.7. Testing packages](#47-testing-packages)
+  - [4.8. Useful packages](#48-useful-packages)
+- [5. Beyond the basics](#5-beyond-the-basics)
+  - [5.1. Allocation](#51-allocation)
+  - [5.2. Defining your own types](#52-defining-your-own-types)
+  - [5.3. Conversions](#53-conversions)
+- [6. Interfaces](#6-interfaces)
+  - [6.1. Which is what?](#61-which-is-what)
+  - [6.2. Empty interface](#62-empty-interface)
+  - [6.3. Methods](#63-methods)
+  - [6.4. Listing interfaces in interfaces](#64-listing-interfaces-in-interfaces)
+  - [6.5. Introspection & reflection](#65-introspection--reflection)
+- [7. Concurrency](#7-concurrency)
+  - [7.1. Make it run in parallel](#71-make-it-run-in-parallel)
+  - [7.2. More on channels](#72-more-on-channels)
+- [8. Communication](#8-communication)
+  - [8.1. io.Reader](#81-ioreader)
+  - [8.2. Command line arguments](#82-command-line-arguments)
+  - [8.3. Executing commands](#83-executing-commands)
+  - [8.4. Networking](#84-networking)
+- [9. Modules (>=1.11)](#9-modules-111)
+  - [9.1. Quickstart](#91-quickstart)
+  - [9.2. New concepts](#92-new-concepts)
+- [10. Web Programming](#10-web-programming)
+  - [10.1. HTTP Server](#101-http-server)
+  - [10.2. Routing (using gorilla/mux)](#102-routing-using-gorillamux)
+  - [10.3. Templating](#103-templating)
+  - [10.4. Requests & Forms](#104-requests--forms)
+  - [10.5. Assets & Files](#105-assets--files)
+  - [10.6. Middleware (Basic)](#106-middleware-basic)
+  - [10.7. Middleware (Advanced)](#107-middleware-advanced)
+  - [10.8. Session](#108-session)
+  - [10.10. Websockets](#1010-websockets)
+  - [10.11. Security - Password Hashing (bcrypt)](#1011-security---password-hashing-bcrypt)
+- [11. Data IO in Go](#11-data-io-in-go)
+  - [11.1. IO with readers and writers](#111-io-with-readers-and-writers)
+  - [11.2. Formatted IO with fmt](#112-formatted-io-with-fmt)
+  - [11.3. Buffered IO](#113-buffered-io)
+  - [11.4. In-memory IO](#114-in-memory-io)
+- [12. Encoding & Decoding](#12-encoding--decoding)
+  - [12.1. JSON](#121-json)
+- [Resource for new Go programmers](#resource-for-new-go-programmers)
+  - [Online resources](#online-resources)
+  - [Installing Go & configure your workspace](#installing-go--configure-your-workspace)
+  - [Text editors & IDE](#text-editors--ide)
 
 ## Learn
 
@@ -79,7 +88,7 @@
 
 These above links contain a lot of sources, so finding documentation isn't a big deal.. Just choose one & let's start. In my case, I follow [Learning Go - Miek Gieben](https://miek.nl/go/).
 
-> **NOTE**: Every examples in this documentation are stored in directories named by section. I assume that every commands in section X will be executed **in X directory**, so I don't write a full path to Go script file.
+> **NOTE**: Every examples in this documentation are stored in directories named by section. I assume that every commands in section X will be executed **in example/X directory**, so I don't write a full path to Go script file.
 
 ## 1. Introduction
 
@@ -109,7 +118,7 @@ func main() {
 
 ### 2.2. Compiling & Running Code
 
-- To build [helloworld.go](./2/hello_world.go), just type:
+- To build [helloworld.go](./examples/2/hello_world.go), just type:
 
 ```bash
 go build helloworld.go # Return an executable called helloworld
@@ -1386,7 +1395,7 @@ fmt.Println(g(s))
 
 ## 7. Concurrency
 
-- Firstly, don't mess between [parallelism & concurrency](https://github.com/ntk148v/til/blob/master/concurrency-parallelism/concurrency-is-not-parallelism.md).
+- Firstly, don't mess between [parallelism & concurrency](https://github.com/ntk148v/lets-go/blob/master/concurrency-parallelism/concurrency-is-not-parallelism.md).
 - **Goroutines** are the central entity in Go's ability for concurrency. A goroutine has a simple model: it is a function executing in parallel with other goroutines in the same address space. It is lightweight, costing little more than the allocation of stack space. And the stack start small, so they are cheap, & grow by allocating (and freeing) heap storage as required.
 
 ```Go
