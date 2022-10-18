@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./logo.png" style="max-width: 50%;">
+    <img src="./logo.png" width="50%" height="50%">
 </p>
 <h1 align="center">Let's Go</h1>
 
