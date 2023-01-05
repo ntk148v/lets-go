@@ -2,7 +2,7 @@
 
 ## Article 1
 
-https://medium.com/@cep21/how-to-correctly-use-context-context-in-go-1-7-8f2c0fafdf39
+<https://medium.com/@cep21/how-to-correctly-use-context-context-in-go-1-7-8f2c0fafdf39>
 
 ### Integrate Context into API
 
@@ -37,7 +37,7 @@ https://medium.com/@cep21/how-to-correctly-use-context-context-in-go-1-7-8f2c0fa
 
 ## Article 2
 
-http://p.agnihotry.com/post/understanding_the_context_package_in_golang/
+<http://p.agnihotry.com/post/understanding_the_context_package_in_golang/>
 
 **Best practices**:
 

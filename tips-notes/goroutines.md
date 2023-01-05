@@ -2,8 +2,8 @@
 
 Source:
 
-- https://codeburst.io/why-goroutines-are-not-lightweight-threads-7c460c1f155f
-- https://medium.com/@riteeksrivastava/a-complete-journey-with-goroutines-8472630c7f5c
+- <https://codeburst.io/why-goroutines-are-not-lightweight-threads-7c460c1f155f>
+- <https://medium.com/@riteeksrivastava/a-complete-journey-with-goroutines-8472630c7f5c>
 
 ## Threads
 
