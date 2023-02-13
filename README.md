@@ -21,6 +21,8 @@
   - [2.7. Control Structures](#27-control-structures)
   - [2.8. Built-in functions](#28-built-in-functions)
   - [2.9. Arrays, Slices \& Maps](#29-arrays-slices--maps)
+  - [2.10. Structs](#210-structs)
+  - [2.11. Embedding](#211-embedding)
 - [3. Functions](#3-functions)
   - [3.1. Scope](#31-scope)
   - [3.2. Functions as values](#32-functions-as-values)
@@ -144,7 +146,7 @@ go run helloworld.go
 
 ### 2.4. Variables, Types & Keywords
 
-- Go is different from most other language in that type of a variable is specified _after_ the variable name: ~~int a~~ a int.
+- Go is different from most other language in that type of a variable is specified _after_ the variable name: a int.
 
 ```Go
 /* When you declare a variable it is assigned the "natural" null value for the type */
@@ -171,8 +173,8 @@ a, b := 26, 9
 _, b := 26, 9
 ```
 
-- Boolean Types: `bool`
-- Numerical Types:
+- **Boolean**: `bool`
+- **Numerical**:
 
   - Go has most of the well-know types such as `int` - it has the appropriate length for your machine (32-bit machine - 32 bits, 64-bit machine - 64 bits)
   - The full list for (signed & unsigned) integers is `int8`, `int16`, `int32`, `int64` & `byte` (an alias for `uint8`), `uint8`, `uint16`, `uint32`, `uint64`.
@@ -199,7 +201,7 @@ const (
 )
 ```
 
-- Strings:
+- **Strings**:
 
   - Strings in Go are a sequence of UTF-8 characters enclosed in double quotes. If you use the single quote you mean one character (encoded in UTF-8) - which is _not_ a `string` in Go. Note that! In Python (my favourite programming language), I can use both of them for string assignment.
   - String in Go are immutable. To change one character in string, you have to create a new one.
@@ -212,10 +214,10 @@ const (
   fmt.Printf("%s\n", s2)
   ```
 
-- Rune: `Rune` is an alias for `int32`, (use when you're iterating over characters in a string).
-- Complex Numbers: `complex128` (64 bit real & imaginary parts) or `complex32`.
-- Errors: Go has a builtin type specially for errors, called `error.var e`.
-- [Go 1.18](https://go.dev/doc/go1.18) brings support for Generic types. The generics implementation provided by Go 1.18 follows the [type parameter proposal](https://go.googlesource.com/proposal/+/refs/heads/master/design/43651-type-parameters.md) and allows developers to add optional type parameters to type and function declarations. Checkout [Golang's generics tutorial](https://go.dev/doc/tutorial/generics).
+- **Rune**: `Rune` is an alias for `int32`, (use when you're iterating over characters in a string).
+- **Complex Numbers**: `complex128` (64 bit real & imaginary parts) or `complex32`.
+- **Errors**: Go has a builtin type specially for errors, called `error.var e`.
+- [Go 1.18](https://go.dev/doc/go1.18) brings support for **Generic types**. The generics implementation provided by Go 1.18 follows the [type parameter proposal](https://go.googlesource.com/proposal/+/refs/heads/master/design/43651-type-parameters.md) and allows developers to add optional type parameters to type and function declarations. Checkout [Golang's generics tutorial](https://go.dev/doc/tutorial/generics).
 
 ```go
 package main
@@ -332,7 +334,7 @@ continue  for          import  return      var
 
 ### 2.7. Control Structures
 
-- If-Else
+- **If-Else**:
 
 ```Go
 if x > 0 {
@@ -348,7 +350,7 @@ if err := MagicFunction(); err != nil {
 // do something
 ```
 
-- Goto: With `goto` you jump to a label which must be defined within the current function.
+- **Goto**: With `goto` you jump to a label which must be defined within the current function.
 
 ```Go
 /* goto_test */
@@ -362,7 +364,7 @@ Here:
 }
 ```
 
-- For: `for` loop has three forms, only one of which has semicolons:
+- **For**: `for` loop has three forms, only one of which has semicolons:
 
 ```Go
 for init; condition; post { } // aloop using the syntax borrowed from C
@@ -375,7 +377,7 @@ for i := 0; i < 10; i++ {
 }
 ```
 
-- Break & continue
+- **Break & continue**:
 
 ```Go
 for i := 0; i < 10; i++ {
@@ -396,7 +398,7 @@ J: for j := 0; j < 5; j++ {
 }
 ```
 
-- Range:
+- **Range**:
 
   - `range` can be used for loops. It can loop over slices, arrays, strings, maps & channels.
   - `range` is an iterator that, when called, returns the next key-value pair from the "thing" it loops over.
@@ -408,7 +410,7 @@ J: for j := 0; j < 5; j++ {
   }
   ```
 
-- Switch:
+- **Switch**:
 
   - The case are evaluated top to bottom until a match is found, & if the `switch` has no expression it switches on `true`.
   - It's therefore possible - & idomatic - to write an `if-else-if-else` chain as a `switch`.
@@ -455,7 +457,7 @@ cap         copy       println
 ### 2.9. Arrays, Slices & Maps
 
 - Brief: list -> arrays, slices. dict -> map
-- Arrays:
+- **Arrays**:
 
   - An array is defined by `[n]<type>`.
 
@@ -472,7 +474,7 @@ cap         copy       println
 
   - Array are **value types**: Assigning one array to another copies all the elements. In particular, if you pass an array to a function it will receive a copy of the array, not a pointer to it. To avoid the copy you could pass a pointer to the array, but then that's a pointer to an array, not an array.
 
-- Slices:
+- **Slices**:
 
   - Similar to an array, but it can grow when new elements are added.
   - A slice is a pointer to an (underlaying) array, slices are **reference types**.
@@ -582,7 +584,7 @@ cap         copy       println
   n2 := copy(s, s[2:]) // n2 = 4; s := []int{2, 3, 4, 5, 4, 5}
   ```
 
-- Maps:
+- **Maps**:
 
   - Python has its dictionaries. In go we have the `map` type.
 
@@ -598,6 +600,75 @@ cap         copy       println
   ```
 
   - Use `make` when only declaring a map. A map is **reference type**. [A map **is not** reference variable](https://dave.cheney.net/2017/04/30/if-a-map-isnt-a-reference-variable-what-is-it), its value is a pointer to a `runtime.hmap` structure.
+
+### 2.10. Structs
+
+- There are no classes, only structs. Structs can have methods:
+
+```go
+// A struct is a type. It's also a collection of fields
+
+// Declaration
+type Vertex struct {
+    X, Y float64
+}
+
+// Creating
+var v = Vertex{1, 2}
+var v = Vertex{X: 1, Y: 2} // Creates a struct by defining values with keys
+var v = []Vertex{{1,2},{5,2},{5,5}} // Initialize a slice of structs
+
+// Accessing members
+v.X = 4
+
+// You can declare methods on structs. The struct you want to declare the
+// method on (the receiving type) comes between the the func keyword and
+// the method name. The struct is copied on each method call(!)
+func (v Vertex) Abs() float64 {
+    return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+// Call method
+v.Abs()
+
+// For mutating methods, you need to use a pointer (see below) to the Struct
+// as the type. With this, the struct value is not copied for the method call.
+func (v *Vertex) add(n float64) {
+    v.X += n
+    v.Y += n
+}
+```
+
+- Anonymous structs: cheaper & safer than using `map[string]intefaces`.
+- You can check [Defining your own types](#52-defining-your-own-types) for more.
+
+### 2.11. Embedding
+
+- There is no subclassing in Go. Instead, there is interface and struct embedding.
+
+```go
+// ReadWriter implementations must satisfy both Reader and Writer
+type ReadWriter interface {
+    Reader
+    Writer
+}
+
+// Server exposes all the methods that Logger has
+type Server struct {
+    Host string
+    Port int
+    *log.Logger
+}
+
+// initialize the embedded type the usual way
+server := &Server{"localhost", 80, log.New(...)}
+
+// methods implemented on the embedded struct are passed through
+server.Log(...) // calls server.Logger.Log(...)
+
+// the field name of the embedded type is its type name (in this case Logger)
+var logger *log.Logger = server.Logger
+```
 
 ## 3. Functions
 
