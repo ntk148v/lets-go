@@ -1402,6 +1402,35 @@ fmt.Println(g(s))
 
 ### 6.5. Introspection & reflection
 
+- Type switching: A type switching is like a regular switch statement, but the cases in a type switch specify types (not values) which are compared against the type of the value held by the given interface value.
+
+```go
+package main
+
+import "fmt"
+
+func do(i interface{}) {
+    switch v := i.(type) {
+    case int:
+        fmt.Printf("Twice %v is %v\n", v, v*2)
+    case string:
+        fmt.Printf("%q is %v bytes long\n", v, len(v))
+    default:
+        fmt.Printf("I don't know about type %T!\n", v)
+    }
+}
+
+func main() {
+    do(21)
+    do("hello")
+    do(true)
+}
+
+// Twice 21 is 42
+// "hello" is 5 bytes long
+// I don't know about type bool!
+```
+
 ## 7. Concurrency
 
 - Firstly, don't mess between [parallelism & concurrency](https://github.com/ntk148v/lets-go/blob/master/concurrency-parallelism/concurrency-is-not-parallelism.md).
