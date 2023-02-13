@@ -10,8 +10,8 @@
     <a href="https://github.com/ntk148v/lets-go/stargazers"> <img alt="GitHub stars" src="https://img.shields.io/github/stars/ntk148v/lets-go?style=for-the-badge"></a>
 </p>
 
-- [Learn](#learn)
-- [1. Introduction](#1-introduction)
+- [0. Before we start](#0-before-we-start)
+- [1. Introduction or Golang (Go) in a Nutshell](#1-introduction-or-golang-go-in-a-nutshell)
 - [2. Basic](#2-basic)
   - [2.1. Say Hello World in Golang](#21-say-hello-world-in-golang)
   - [2.2. Compiling \& Running Code](#22-compiling--running-code)
@@ -55,20 +55,19 @@
   - [8.2. Command line arguments](#82-command-line-arguments)
   - [8.3. Executing commands](#83-executing-commands)
   - [8.4. Networking](#84-networking)
-- [9. Modules (\>=1.11)](#9-modules-111)
+- [9. Modules (Golang version \>=1.11)](#9-modules-golang-version-111)
   - [9.1. Quickstart](#91-quickstart)
   - [9.2. New concepts](#92-new-concepts)
 - [10. Web Programming](#10-web-programming)
   - [10.1. HTTP Server](#101-http-server)
-  - [10.2. Routing (using gorilla/mux)](#102-routing-using-gorillamux)
-  - [10.3. Templating](#103-templating)
-  - [10.4. Requests \& Forms](#104-requests--forms)
-  - [10.5. Assets \& Files](#105-assets--files)
-  - [10.6. Middleware (Basic)](#106-middleware-basic)
-  - [10.7. Middleware (Advanced)](#107-middleware-advanced)
-  - [10.8. Session](#108-session)
-  - [10.10. Websockets](#1010-websockets)
-  - [10.11. Security - Password Hashing (bcrypt)](#1011-security---password-hashing-bcrypt)
+  - [10.2. Templating](#102-templating)
+  - [10.3. Requests \& Forms](#103-requests--forms)
+  - [10.4. Assets \& Files](#104-assets--files)
+  - [10.5. Middleware (Basic)](#105-middleware-basic)
+  - [10.6. Middleware (Advanced)](#106-middleware-advanced)
+  - [10.7. Session](#107-session)
+  - [10.8. Websockets](#108-websockets)
+  - [10.9. Security - Password Hashing (bcrypt)](#109-security---password-hashing-bcrypt)
 - [11. Data IO in Go](#11-data-io-in-go)
   - [11.1. IO with readers and writers](#111-io-with-readers-and-writers)
   - [11.2. Formatted IO with fmt](#112-formatted-io-with-fmt)
@@ -81,22 +80,29 @@
   - [Installing Go \& configure your workspace](#installing-go--configure-your-workspace)
   - [Text editors \& IDE](#text-editors--ide)
 
-## Learn
+## 0. Before we start
 
-- [Official Golang Documetation](https://golang.org/doc/#learning)
-- [Community-driven initiatives](https://github.com/golang/go/wiki/Learn)
-
-These above links contain a lot of sources, so finding documentation isn't a big deal.. Just choose one & let's start. In my case, I follow [Learning Go - Miek Gieben](https://miek.nl/go/).
+Finding Golang documentation isn't a big deal. There are many [good resources](#online-resources), just choose one & start your learning journey. I mainly follow [Learning Go - Miek Gieben](https://miek.nl/go/).
 
 > **NOTE**: Every examples in this documentation are stored in directories named by section. I assume that every commands in section X will be executed **in example/X directory**, so I don't write a full path to Go script file.
 
-## 1. Introduction
+## 1. Introduction or Golang (Go) in a Nutshell
 
-> Is Go an object-oriented language? Yes & no!
-> [FAQ - Golang documentation](https://golang.org/doc/faq#Is_Go_an_object-oriented_language)
-
-- What is Golang? Golang Programming language is an open source programming language that makes it easy to build simple, reliable & efficient software.
-- Go is a compliaed statically typed language that feels like a dynamically typed, interpreted language.
+- An _open source_ programming language supported by Google.
+- _Imperative language_
+- _Statically typed_
+- _Compile_ to native code (no JVM)
+- Syntax tokens similar to C (bu tless parentheses and no semicolors) and the structure to Oberon-2
+- [Is Go an object-oriented language?](https://go.dev/doc/faq#Is_Go_an_object-oriented_language): _Yes and no_
+  - Has types and methods and allows an object-oriented style of programming, there is no type hierarchy (There's [type embedding](http://golang.org/doc/effective_go.html#embedding), though).
+  - No classes, but structs with methods.
+  - Interfaces
+  - Functions - Methods are first class citizens:
+    - Methods are more general than Java or C++: they can be defined for any sort of data, even built-in types such as plain, "unboxes" integers. They are not restricted to structs (classes).
+    - Methods can return multiple values.
+- Has closures
+- _Pointers_, but not pointer arithmetic
+- Built-in _concurrency_ primitives: Goroutines and Channels
 
 ## 2. Basic
 
@@ -1646,7 +1652,7 @@ conn, e := Dial("udp", "192.0.32.10:80")
 conn, e := Dial("tcp", "[2620:0:2d0:200::10]:80")
 ```
 
-## 9. Modules (>=1.11)
+## 9. Modules (Golang version >=1.11)
 
 Go 1.11 includes preliminary support for versioned [modules](https://github.com/golang/go/wiki/Modules).
 
@@ -1740,15 +1746,13 @@ func main() {
 }
 ```
 
-### 10.2. Routing (using gorilla/mux)
+### 10.2. Templating
 
-### 10.3. Templating
+### 10.3. Requests & Forms
 
-### 10.4. Requests & Forms
+### 10.4. Assets & Files
 
-### 10.5. Assets & Files
-
-### 10.6. Middleware (Basic)
+### 10.5. Middleware (Basic)
 
 A simple logging middleware.
 
@@ -1785,7 +1789,7 @@ func main() {
 }
 ```
 
-### 10.7. Middleware (Advanced)
+### 10.6. Middleware (Advanced)
 
 - A middleware in itself simple takes a `http.HandleFunc` as one of its parameters, wraps it & returns a new `http.HandlerFunc` for the server to call.
 
@@ -1890,11 +1894,11 @@ func main() {
 }
 ```
 
-### 10.8. Session
+### 10.7. Session
 
-### 10.10. Websockets
+### 10.8. Websockets
 
-### 10.11. Security - Password Hashing (bcrypt)
+### 10.9. Security - Password Hashing (bcrypt)
 
 ## 11. Data IO in Go
 
@@ -2114,6 +2118,8 @@ Oops, actually you can refer to [awesome-go](https://github.com/avelino/awesome-
 
 ### Online resources
 
+- [Official Golang Documetation](https://golang.org/doc/#learning)
+- [Community-driven initiatives](https://github.com/golang/go/wiki/Learn)
 - [The Go programming language tour](https://tour.golang.org/welcome/)
 - [Go by example](https://gobyexample.com/)
 - [Effective Go](https://golang.org/doc/effective_go.html)
