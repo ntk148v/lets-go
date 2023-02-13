@@ -1502,6 +1502,8 @@ func main() {
 // I don't know about type bool!
 ```
 
+- More examples [here](https://github.com/a8m/reflect-examples).
+
 ## 7. Concurrency
 
 - Firstly, don't mess between [parallelism & concurrency](https://github.com/ntk148v/lets-go/blob/master/concurrency-parallelism/concurrency-is-not-parallelism.md).
