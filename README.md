@@ -1133,7 +1133,58 @@ p = &i // Make p point to i
 fmt.Printf("%v", p) // Print somthing like 0x7ff96b81c000a
 ```
 
-![pointer](https://www.callicoder.com/assets/images/post/large/golang-pointers-illustration.jpg)
+- Pointer illustration:
+
+![](https://media.geeksforgeeks.org/wp-content/uploads/20190710183146/Pointer-To-Pointer.jpg)
+
+```go
+// Go program to illustrate the
+// concept of the Pointer to Pointer
+package main
+
+import "fmt"
+
+// Main Function
+func main() {
+
+        // taking a variable
+        // of integer type
+    var V int = 100
+
+    // taking a pointer
+    // of integer type
+    var pt1 *int = &V
+
+    // taking pointer to
+    // pointer to pt1
+    // storing the address
+    // of pt1 into pt2
+    var pt2 **int = &pt1
+
+    fmt.Println("The Value of Variable V is = ", V)
+    fmt.Println("Address of variable V is = ", &V)
+
+    fmt.Println("The Value of pt1 is = ", pt1)
+    fmt.Println("Address of pt1 is = ", &pt1)
+
+    fmt.Println("The value of pt2 is = ", pt2)
+
+    // Dereferencing the
+    // pointer to pointer
+    fmt.Println("Value at the address of pt2 is or *pt2 = ", *pt2)
+
+    // double pointer will give the value of variable V
+    fmt.Println("*(Value at the address of pt2 is) or **pt2 = ", **pt2)
+}
+
+// The Value of Variable V is =  100
+// Address of variable V is =  0x414020
+// The Value of pt1 is =  0x414020
+// Address of pt1 is =  0x40c128
+// The value of pt2 is =  0x40c128
+// Value at the address of pt2 is or *pt2 =  0x414020
+// *(Value at the address of pt2 is) or **pt2 =  100
+```
 
 - Check [pointer vs reference](./tips-notes/pointer-vs-references.md).
 
