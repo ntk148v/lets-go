@@ -58,8 +58,9 @@
   - [8.3. Executing commands](#83-executing-commands)
   - [8.4. Networking](#84-networking)
 - [9. Modules (Golang version \>=1.11)](#9-modules-golang-version-111)
-  - [9.1. Quickstart](#91-quickstart)
-  - [9.2. New concepts](#92-new-concepts)
+  - [9.1. Concepts](#91-concepts)
+  - [9.2. Quickstart](#92-quickstart)
+  - [9.3. Go Proxy](#93-go-proxy)
 - [10. Web Programming](#10-web-programming)
   - [10.1. HTTP Server](#101-http-server)
   - [10.2. Templating](#102-templating)
@@ -128,19 +129,19 @@ func main() {
 
 - To build [helloworld.go](./examples/2/hello_world.go), just type:
 
-```bash
+```shell
 go build helloworld.go # Return an executable called helloworld
 ```
 
 - Run a previous step result
 
-```bash
+```shell
 ./helloworld
 ```
 
 - Want to ombine these two steps? Ok, Golang got you.
 
-```bash
+```shell
 go run helloworld.go
 ```
 
@@ -863,7 +864,7 @@ func odd(i int) bool { // start with lower-case -> private
 
 - Build the package
 
-```bash
+```shell
 mkdir $GOPATH/src/even
 cp even.go $GOPATH/src/even
 go build
@@ -997,13 +998,13 @@ func TestSum(t *testing.T) {
 
   - Within the same directory as the test, _this picks up any files matching packagename_test.go_:
 
-  ```bash
+  ```shell
   go test
   ```
 
   - By fully-qualified package name:
 
-  ```bash
+  ```shell
   go test github.com/username/package
   ```
 
@@ -1015,7 +1016,7 @@ func TestSum(t *testing.T) {
 
 - Statement coverage: The `go test` tool has built-in code-coverage for statements.
 
-```bash
+```shell
 $ go test -cover
 PASS
 coverage: 50.0% of statements
@@ -1029,7 +1030,7 @@ $ go tool cover -html=c.out -o coverage.html
 
   - Running the benchmark
 
-    ```bash
+    ```shell
     $> go test -bench=.
      PASS
      BenchmarkVectorAdd-2 2000000 761 ns/op
@@ -1044,7 +1045,7 @@ $ go tool cover -html=c.out -o coverage.html
 
   - Skipping test functions
 
-    ```bash
+    ```shell
     > go test -bench=. -run=NONE -v
      PASS
      BenchmarkVectorAdd-2 2000000 791 ns/op
@@ -1807,15 +1808,31 @@ conn, e := Dial("tcp", "[2620:0:2d0:200::10]:80")
 
 ## 9. Modules (Golang version >=1.11)
 
-Go 1.11 includes preliminary support for versioned [modules](https://github.com/golang/go/wiki/Modules).
+Go 1.11 includes preliminary support for [modules](https://go.dev/doc/go1.11#modules), Go's [new dependency management system](https://blog.golang.org/versioning-proposal) that makes dependency version information explicit and easier to manage.
 
-[PackageManagementTools](https://github.com/golang/go/wiki/PackageManagementTools)
+### 9.1. Concepts
 
-### 9.1. Quickstart
+- **Modules**: a collection of related Go packages that are versioned together as a single unit.
+- Summarizing the relationship between repositories, modules, & packages:
+  - A repository contains one or more Go modules.
+  - Each module contains one or more Go packages.
+  - Each package consists of one or more Go source files in a single directory.
+- **go.mod**: A module is defined by a tree of Go source files with a `go.mod` file in the tree's root directory. Module source code may be located outside of GOPATH. There are four directives: `module`, `require`, `replace`, `exclude`.
+- **Version selection**: If you add a new import to your source code that is not yet covered by a `require`in `go.mod`, most go commands like 'go build' & 'go test' will automatically look up the proper module & add the _highest_ version of that new direct dependency to your module's `go.mod` as a `require` directive. For example, if your new import corresponds to dependency M whose latest tagged release version is `v1.2.3`, your module's `go.mod` will end up with `require M v1.2.3`, which indicates module M is a dependency with allowed version >= v1.2.3 (and < v2, given v2 is considered incompatible with v1).
+- **Semantic Import versioning**: The result of following both the import compatibility rule & semver is called _Semantic Import Versioning_, where the major version is included in the import path — this ensures the import path changes any time the major version increments due to a break in compatibility.
+- As a result of Semantic Import Versioning, code opting in to Go modules **must comply with these rules**:
+  - Follow [semver](https://semver.org/) (with tags such as `v1.2.3`).
+  - If the module is version v2 or higher, the major version of the module _must_ be included as a `/vN` at the end of the module paths used in `go.mod` files (e.g., `module github.com/my/mod/v2`, `require github.com/my/mod/v2 v2.0.0`) & in the package import path (e.g., `import "github.com/my/mod/v2/mypkg"`).
+  - If the module is version v0 or v1, do _not_ include the major version in either the module path or the import path.
+- As of Go 1.11, the go command enables the use of modules when the current directory or any parent directory has a `go.mod`, provides the directory is _outside_ `$GOPATH/src`. (Inside `$GOPATH/src`, for compatibility, the go command still runs in the old `GOPATH` mode, even if a `go.mod` is found)
+- Starting in Go 1.13, module mode will be the default for all development.
+- Check [Go Modules wiki](https://github.com/golang/go/wiki/Modules) for updated information.
 
-A simple example:
+### 9.2. Quickstart
 
-```bash
+- Go Module's hello-world: init module and add dependencies.
+
+```shell
 # Create a directory outside of your GOPATH:
 $ mkdir -p /tmp/scratchpad/hello
 $ cd /tmp/scratchpad/hello
@@ -1836,33 +1853,115 @@ func main() {
     fmt.Println(quote.Hello())
 }
 EOF
-# Build & run
-$ go build
-$ ./hello
 
-Hello, world.
+# Introduce `go mod tidy`
+# Tidy makes sure go.mod matches the source code in the module.
+# It adds any missing modules necessary to build the current module's
+# packages and dependencies, and it removes unused modules that
+# don't provide any relevant packages. It also adds any missing entries
+# to go.sum and removes any unnecessary ones
+$ go mod tidy                                                                                                                                              t/s/hello ﳑ  
+go: finding module for package rsc.io/quote
+go: downloading rsc.io/quote v1.5.2
+go: found rsc.io/quote in rsc.io/quote v1.5.2
+go: downloading rsc.io/sampler v1.3.0
+go: downloading golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c
 
 $ cat go.mod
 
 module github.com/you/hello
 
 require rsc.io/quote v1.5.2
+
+# Add a new dependency often brings in other indirect dependencies too
+# List the current module and all its dependencies
+$ go list -m all
+github.com/you/hello
+golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c
+rsc.io/quote v1.5.2
+rsc.io/sampler v1.3.0
+
+# In addition to go.mod, there is a go.sum file containing the expected
+# cryptographic hashes of the content of specific module versions
+$ cat go.sum                                                                                                                                                    t/s/hello ﳑ  
+golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c h1:qgOY6WgZOaTkIIMiVjBQcw93ERBE4m30iBm00nkL0i8=
+golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
+rsc.io/quote v1.5.2 h1:w5fcysjrx7yqtD/aO+QwRjYZOKnaM9Uh2b40tElTs3Y=
+rsc.io/quote v1.5.2/go.mod h1:LzX7hefJvL54yjefDEDHNONDjII0t9xZLPXsUe+TKr0=
+rsc.io/sampler v1.3.0 h1:7uVkIFmeBqHfdjD+gZwtXXI+RODJ2Wc4O7MPEh/QiW4=
+rsc.io/sampler v1.3.0/go.mod h1:T1hPZKmBbMNahiBKFy5HrXp6adAjACjK9JXDnKaTXpA=
+
+# Build & run
+$ go build
+$ ./hello
+
+Hello, world.
 ```
 
-### 9.2. New concepts
+- Upgrade your dependencies:
 
-- **Modules**: a collection of related Go packages that are versioned together as a single unit.
-- Summarizing the relationship between repositories, modules, & packages:
-  - A repository contains one or more Go modules.
-  - Each module contains one or more Go packages.
-  - Each package consists of one or more Go source files in a single directory.
-- **go.mod**: A module is defined by a tree of Go source files with a `go.mod` file in the tree's root directory. Module source code may be located outside of GOPATH. There are four directives: `module`, `require`, `replace`, `exclude`.
-- **Version selection**: If you add a new import to your source code that is not yet covered by a `require`in `go.mod`, most go commands like 'go build' & 'go test' will automatically look up the proper module & add the _highest_ version of that new direct dependency to your module's `go.mod` as a `require` directive. For example, if your new import corresponds to dependency M whose latest tagged release version is `v1.2.3`, your module's `go.mod` will end up with `require M v1.2.3`, which indicates module M is a dependency with allowed version >= v1.2.3 (and < v2, given v2 is considered incompatible with v1).
-- **Semantic Import versioning**: The result of following both the import compatibility rule & semver is called _Semantic Import Versioning_, where the major version is included in the import path — this ensures the import path changes any time the major version increments due to a break in compatibility.
-- As a result of Semantic Import Versioning, code opting in to Go modules **must comply with these rules**:
-  - Follow [semver](https://semver.org/) (with tags such as `v1.2.3`).
-  - If the module is version v2 or higher, the major version of the module _must_ be included as a `/vN` at the end of the module paths used in `go.mod` files (e.g., `module github.com/my/mod/v2`, `require github.com/my/mod/v2 v2.0.0`) & in the package import path (e.g., `import "github.com/my/mod/v2/mypkg"`).
-  - If the module is version v0 or v1, do _not_ include the major version in either the module path or the import path.
+```shell
+# From the output of go list -m all, we're using an untagged version of golang.org/x/text
+# Let's upgrade to the latest tagged version
+$ go get golang.org/x/text                                                                                                                                      t/s/hello ﳑ  
+go: downloading golang.org/x/text v0.7.0
+go: upgraded golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c => v0.7.0
+
+$ cat go.mod                                                                                                                                                    t/s/hello ﳑ  
+module github.com/you/hello
+
+go 1.19
+
+require rsc.io/quote v1.5.2
+
+require (
+        golang.org/x/text v0.7.0 // indirect
+        rsc.io/sampler v1.3.0 // indirect
+)
+
+$ go list -m all                                                                                                                                                t/s/hello ﳑ  
+github.com/you/hello
+golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4
+golang.org/x/sys v0.0.0-20220722155257-8c9f86f7a55f
+golang.org/x/text v0.7.0
+golang.org/x/tools v0.1.12
+rsc.io/quote v1.5.2
+rsc.io/sampler v1.3.0
+```
+
+- Remove unused dependencies: If you want to remove any dependencies, just simple run `go mod tidy` and Go does the rest.
+- Go modules takes care of versioning, but it doesn't necessarily take care of modules disappearing off the Internet or the Internet not being available. If a module is not available, the code cannot be built. Go Proxy will mitigate disappearing modules to some extent by mirroring modules, but it may not do it for all modules for all time. That's why `go` tool provides `go mod vendor` command.
+  - `go mod vendor` command constructs a directory named `vendor` in the main module's root directory that contains copies of all packages needed to support builds and tests of packages in the main modules.
+  - `go mod vendor` also creates the file `vendor/modules.txt` that contains a list of vendored packages and the module versions they were copied from.
+  - You can check in `vendor` to your Version Control System, then copy this around.
+
+```shell
+$ go mod vendor
+
+# Main module's directory structure
+$ tree -L 3
+├── go.mod
+├── go.sum
+├── hello.go
+└── vendor
+    ├── golang.org
+    │   └── x
+    ├── modules.txt
+    └── rsc.io
+        ├── quote
+        └── sampler
+```
+
+### 9.3. Go Proxy
+
+- Started from Go 1.13, `go` tool defaults to downloading modules from the public Go module mirror: <https://proxy.golang.org> and also defaults to validating downloaded modules (regardless of source) against the public Go checksum database at <https://sum.golang.org>.
+- If you want to change the default Go proxy, you can use the following command:
+
+```shell
+export GOPROXY=https://goproxy.io,direct
+```
+
+- The `go` command defaults to downloading modules from the public Go module mirror, therefore if you have private code, you most likely should configure the `GOPRIVATE` setting (such as `go env -w GOPRIVATE=*.corp.com,github.com/secret/repo`), or the more fine-grained variants `GONOPROXY` or `GONOSUMDB` that support less frequent use cases. See the [documentation](https://go.dev/ref/mod#private-module-privacy) for more details.
 
 ## 10. Web Programming
 
