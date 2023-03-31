@@ -61,6 +61,7 @@
   - [9.1. Concepts](#91-concepts)
   - [9.2. Quickstart](#92-quickstart)
   - [9.3. Go Proxy](#93-go-proxy)
+  - [9.4. Workspaces](#94-workspaces)
 - [10. Web Programming](#10-web-programming)
   - [10.1. HTTP Server](#101-http-server)
   - [10.2. Templating](#102-templating)
@@ -1962,6 +1963,143 @@ export GOPROXY=https://goproxy.io,direct
 ```
 
 - The `go` command defaults to downloading modules from the public Go module mirror, therefore if you have private code, you most likely should configure the `GOPRIVATE` setting (such as `go env -w GOPRIVATE=*.corp.com,github.com/secret/repo`), or the more fine-grained variants `GONOPROXY` or `GONOSUMDB` that support less frequent use cases. See the [documentation](https://go.dev/ref/mod#private-module-privacy) for more details.
+
+### 9.4. Workspaces
+
+- Go introduces the concept of workspaces in 1.18. Workspaces allows you to create projects of several modules that share a common list of dependencies through a new file called `go.work`. The dependencies in this file can span multiple modules and anything declared in the `go.work` file will override dependencies in the module's `go.mod`.
+  - A workspace is a collection of modules on disk that are used as the main modules when running minimal version selection (MVS).
+  - A workspace can be declared in a `go.work` file that specifies relative paths to the module directories of each the modules in the workspace. When no `go.work` file exists, the workspace consists of the single module containing the current directory.
+    - Lexical elements in `go.work` files are defined in exactly the same way as for `go.mod` files.
+    - Check out [here](https://go.dev/ref/mod#workspaces).
+
+```go
+go 1.18
+
+use ./my/first/thing
+use ./my/second/thing
+
+// or
+// use (
+//     ./my/first/thing
+//     ./my/second/thing
+// )
+
+replace example.com/bad/thing v1.4.5 => example.com/good/thing v1.4.5
+```
+
+- Example:
+
+```shell
+$ mkdir workspace
+$ cd workspace
+# Create hello module
+$ mkdir hello
+$ cd hello
+$ go mod init eaxmple.com/hello
+go: creating new go.mod: module example.com/hello
+$ cat <<EOF > hello.go
+package main
+
+import (
+    "fmt"
+
+    "golang.org/x/example/stringutil"
+)
+
+func main() {
+    fmt.Println(stringutil.Reverse("Hello"))
+}
+EOF
+
+$ go mod tidy
+go: finding module for package golang.org/x/example/stringutil
+go: found golang.org/x/example/stringutil in golang.org/x/example v0.0.0-20220412213650-2e68773dfca0
+
+$ go run example.com/hello
+olleH
+
+# Create the workspace
+$ cd ../
+$ go work init ./hello
+$ tree
+.
+├── go.work
+└── hello
+    ├── go.mod
+    ├── go.sum
+    └── hello.go
+
+1 directory, 4 files
+
+# Go command includes all the modules in the workspace as main modules. This allow us to refer to a package in the module
+# even outside the module.
+$ go run example.com/hello
+olleH
+
+# Download and modify the golang.org/x/example module
+$ git clone https://go.googlesource.com/example
+Cloning into 'example'...
+remote: Total 165 (delta 27), reused 165 (delta 27)
+Receiving objects: 100% (165/165), 434.18 KiB | 1022.00 KiB/s, done.
+Resolving deltas: 100% (27/27), done.
+# Add module to the workspace
+$ go work use ./example
+$ tree -L 1
+.
+├── example
+├── go.work
+└── hello
+
+2 directories, 1 file
+
+$ cat go.work
+go 1.20
+
+use (
+    ./example
+    ./hello
+)
+
+$ cd example/stringutil
+# Create a new file
+$ cat <<EOF > toupper.go
+package stringutil
+
+import "unicode"
+
+// ToUpper uppercases all the runes in its argument string.
+func ToUpper(s string) string {
+    r := []rune(s)
+    for i := range r {
+        r[i] = unicode.ToUpper(r[i])
+    }
+    return string(r)
+}
+EOF
+
+# Modify hello program
+$ cd ../../hello
+$ cat <<EOF > hello.go
+package main
+
+import (
+    "fmt"
+
+    "golang.org/x/example/stringutil"
+)
+
+func main() {
+    fmt.Println(stringutil.ToUpper("Hello"))
+}
+EOF
+
+$ cd ..
+# Go command finds the example.com/hello module specified in the command line
+# in the hello directory specified by the go.work file, and similiarly
+# resolves the golang.org/x/example import using the go.work file.
+$ go run example.com/hello
+HELLO
+```
 
 ## 10. Web Programming
 
