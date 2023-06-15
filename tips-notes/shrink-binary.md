@@ -2,7 +2,7 @@
 
 Source: <https://github.com/xaionaro/documentation/blob/master/golang/reduce-binary-size.md>
 
-Table of content:
+Table of contents:
 
 - [Shrink Golang binary](#shrink-golang-binary)
   - [0. Prepare](#0-prepare)
