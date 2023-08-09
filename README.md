@@ -10,6 +10,8 @@
     <a href="https://github.com/ntk148v/lets-go/stargazers"> <img alt="GitHub stars" src="https://img.shields.io/github/stars/ntk148v/lets-go?style=for-the-badge"></a>
 </p>
 
+**Table of Contents**
+
 - [0. Before we start](#0-before-we-start)
 - [1. Introduction or Golang (Go) in a Nutshell](#1-introduction-or-golang-go-in-a-nutshell)
 - [2. Basic](#2-basic)
@@ -79,6 +81,9 @@
   - [11.4. In-memory IO](#114-in-memory-io)
 - [12. Encoding \& Decoding](#12-encoding--decoding)
   - [12.1. JSON](#121-json)
+- [13. Remote Procedure Call (RPC), gRPC and protobuf](#13-remote-procedure-call-rpc-grpc-and-protobuf)
+  - [13.1. Remote Procedure Call (RPC)](#131-remote-procedure-call-rpc)
+  - [13.2. gRPC and Protobuf](#132-grpc-and-protobuf)
 - [Resource for new Go programmers](#resource-for-new-go-programmers)
   - [Online resources](#online-resources)
   - [Installing Go \& configure your workspace](#installing-go--configure-your-workspace)
@@ -2500,6 +2505,144 @@ func main() {
 
 > **NOTE**: There are a lot more helpful things in [tips-notes](./tips-notes/). You may want to check it out.
 
+## 13. Remote Procedure Call (RPC), gRPC and protobuf
+
+This section is mainly taken from: <https://github.com/zalopay-oss/go-advanced/blob/master/ch3-rpc/ch3-01-rpc-go.md>
+
+### 13.1. Remote Procedure Call (RPC)
+
+- A [remote procedure call (RPC)](https://en.wikipedia.org/wiki/Remote_procedure_call) is when a computer program causes a procedure (subroutine) to execute in a different address space (commonly on another computer on a shared network), which is written as if it were a normal (local) procedure call, without the programmer explicitly writing the details for the remote interaction.
+
+![](https://media.geeksforgeeks.org/wp-content/uploads/operating-system-remote-call-procedure-working.png)
+
+- Write a simple example with [net/rpc](https://golang.org/pkg/net/rpc/) library.
+
+```go
+// 13/rpc/rpcserver/main.go
+package main
+
+import (
+	"log"
+	"net"
+	"net/rpc"
+)
+
+type HelloService struct{}
+
+// Only methods that satisfy these criteria will be made available for remote access; other methods will be ignored:
+// - the method's type is exported.
+// - the method is exported.
+// - the method has two arguments, both exported (or builtin) types.
+// - the method's second argument is a pointer.
+// - the method has return type error.
+// func (t *T) MethodName(argType T1, replyType *T2) error
+func (p *HelloService) Hello(request string, reply *string) error {
+	*reply = "Hello " + request
+	return nil
+}
+
+func main() {
+	rpc.RegisterName("HelloService", new(HelloService))
+	listener, err := net.Listen("tcp", ":8081")
+	if err != nil {
+		log.Fatal("Listen TCP error:", err)
+	}
+
+	log.Println("Server is ready")
+
+	for {
+		// accept connection
+		conn, err := listener.Accept()
+		if err != nil {
+			log.Fatal("Accept error:", err)
+		}
+
+		// serve client in another goroutine
+		go func() {
+			log.Println("Accept new client:", conn.RemoteAddr())
+			rpc.ServeConn(conn)
+		}()
+	}
+}
+```
+
+```go
+// 13/rpc/rpcclient/main.go
+package main
+
+import (
+	"log"
+	"net/rpc"
+)
+
+func main() {
+	client, err := rpc.Dial("tcp", "localhost:8081")
+	if err != nil {
+		log.Fatal("Dialing error:", err)
+	}
+
+	var reply string
+
+	if err = client.Call("HelloService.Hello", "Kien", &reply); err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println(reply)
+}
+```
+
+- Run it:
+
+```shell
+# Server
+$ go run examples/13/rpc/rpcserver/main.go
+2023/08/09 16:29:29 Server is ready
+2023/08/09 16:29:30 Accept new client: 127.0.0.1:38728
+2023/08/09 16:29:31 Accept new client: 127.0.0.1:38734
+
+# Client
+$ go run examples/13/rpc/rpcclient/main.go
+2023/08/09 16:29:30 Hello Kien
+
+$ go run examples/13/rpc/rpcclient/main.go
+2023/08/09 16:29:31 Hello Kien
+```
+
+### 13.2. gRPC and Protobuf
+
+- Protocol Buffers, also referred as **protobuf**, is Google’s language-neutral, platform-neutral, extensible mechanism for serializing structured data. Protocol Buffers are smaller, faster, and simpler that provides high performance than other standards such as XML and JSON.
+- By using protocol buffers, you can define your structured data, then you generate source code for your choice of programming language using the protocol buffer compiler named **protoc**, to write and read your structured data using it. The current version of protocol buffers is **proto3**. The **proto3** version currently supports generated code in variety of languages including C++, Go, Java, Python, Ruby, and C#.
+- Install `protoc`:
+
+```shell
+# Ubuntu
+# https://grpc.io/docs/protoc-installation/#install-using-a-package-manager
+$ sudo apt install -y protobuf-compiler
+# install go plugin
+$ go install github.com/golang/protobuf/protoc-gen-go@latest
+```
+
+- Prepare `hello.proto`:
+
+```protobuf
+// version proto3
+syntax = "proto3";
+// generated package name
+package main;
+message String {
+    string value = 1;
+}
+```
+
+- Generate Golang source code:
+
+- **gRPC** is a high performance, open-source remote procedure call (RPC) framework that can run anywhere. It enables client and server applications to communicate transparently, and makes it easier to build connected systems.
+- The gRPC server implements the service interface and runs an RPC server to handle client calls to its service methods. On the client side, the client has a stub (referred to as just a client in some languages) that provides the same methods as the server.
+
+![](https://grpc.io/img/landing-2.svg)
+
+- By default, gRPC uses Protocol Buffers as the Interface Definition Language (IDL) and as its underlying message interchange format.
+
 ## Resource for new Go programmers
 
 There is the page lists a few resources for programmers interested in learning about the Golang.
@@ -2519,6 +2662,7 @@ Oops, actually you can refer to [awesome-go](https://github.com/avelino/awesome-
 - [Dave Cheney's Blog](https://dave.cheney.net)
   - [Praticial Go: Real world advice for writing matintainable Go programs](https://dave.cheney.net/practical-go/presentations/qcon-china.html)
 - [Go101](https://go101.org/)
+- [Zalopay's Go-advanced](https://github.com/zalopay-oss/go-advanced)
 
 ### Installing Go & configure your workspace
 
