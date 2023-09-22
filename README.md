@@ -1638,11 +1638,28 @@ func main() {
 ```
 
 - Buffered channel:
+
+  - Buffered channel has capacity.
+
+    - When a goroutine attempts to send a resourrce to a buffered and the channel is full, the channel will lock the goroutine and make it wait until a buffer becomes available.
+    - When a goroutine attempts to receive from a buffered channel and the buffered channel is empty, the channel will lock the goroutine and make it wait until a resource has been sent.
+
+    ![](https://www.ardanlabs.com/images/goinggo/Screen+Shot+2014-02-17+at+8.38.15+AM.png)
+
   - Buffered channel is used to perform asynchronous communcation.
   - A buffered channel has no such guarantee.
   - A receive will block only if there's no value in the channel to receive.
   - A send will block only if there's no available buffer to place the value being sent.
+
 - Unbuffered channel:
+
+  - Unbuffered channel has no capacity and therefore require both goroutines to be ready to make any exchange.
+
+    - When a goroutine attempts to send a resource to and unbuffered channel and there is no goroutine waiting to receive the resource, the channel will lock the sending goroutine and make it wait.
+    - When a goroutine attempts to receive from an unbuffered channel, and there is no goroutine waiting to send a resource, the channel will lock the receiving goroutine and make it wait.
+
+    ![](https://www.ardanlabs.com/images/goinggo/Screen+Shot+2014-02-16+at+10.10.54+AM.png)
+
   - Unbuffered channel is used to perform synchronous communication between goroutines. Unbuffered channel provides a guarantee that an exchange between 2 goroutines is performed at the instant the send and receive take place.
   - Synchronization is fundamental in the interaction between the send and receive on the channel.
 
@@ -1651,6 +1668,7 @@ unbuffered := make(chan int) // Unbuffered channel of integer type
 buffered := make(chan int, 10)    // Buffered channel of integer type
 ```
 
+- You can check [ArdanLabs blog post for more detail](https://www.ardanlabs.com/blog/2014/02/the-nature-of-channels-in-go.html). These pictures are taken from there.
 - What if we don't know how many goroutines we started? This is where another Go built-in comes in: `select`.
 
 ```Go
