@@ -41,49 +41,47 @@
   - [4.6. Installing 3rd party package](#46-installing-3rd-party-package)
   - [4.7. Testing packages](#47-testing-packages)
   - [4.8. Useful packages](#48-useful-packages)
-- [5. Beyond the basics](#5-beyond-the-basics)
-  - [5.1. Allocation](#51-allocation)
-  - [5.2. Defining your own types](#52-defining-your-own-types)
-  - [5.3. Conversions](#53-conversions)
-- [6. Interfaces](#6-interfaces)
-  - [6.1. Which is what?](#61-which-is-what)
-  - [6.2. Empty interface](#62-empty-interface)
-  - [6.3. Methods](#63-methods)
-  - [6.4. Listing interfaces in interfaces](#64-listing-interfaces-in-interfaces)
-  - [6.5. Introspection \& reflection](#65-introspection--reflection)
-- [7. Concurrency](#7-concurrency)
-  - [7.1. Make it run in parallel](#71-make-it-run-in-parallel)
-  - [7.2. More on channels](#72-more-on-channels)
-- [8. Communication](#8-communication)
-  - [8.1. io.Reader](#81-ioreader)
-  - [8.2. Command line arguments](#82-command-line-arguments)
-  - [8.3. Executing commands](#83-executing-commands)
-  - [8.4. Networking](#84-networking)
-- [9. Modules (Golang version \>=1.11)](#9-modules-golang-version-111)
-  - [9.1. Concepts](#91-concepts)
-  - [9.2. Quickstart](#92-quickstart)
-  - [9.3. Go Proxy](#93-go-proxy)
-  - [9.4. Workspaces](#94-workspaces)
-- [10. Web Programming](#10-web-programming)
-  - [10.1. HTTP Server](#101-http-server)
-  - [10.2. Templating](#102-templating)
-  - [10.3. Requests \& Forms](#103-requests--forms)
-  - [10.4. Assets \& Files](#104-assets--files)
-  - [10.5. Middleware (Basic)](#105-middleware-basic)
-  - [10.6. Middleware (Advanced)](#106-middleware-advanced)
-  - [10.7. Session](#107-session)
-  - [10.8. Websockets](#108-websockets)
-  - [10.9. Security - Password Hashing (bcrypt)](#109-security---password-hashing-bcrypt)
-- [11. Data IO in Go](#11-data-io-in-go)
-  - [11.1. IO with readers and writers](#111-io-with-readers-and-writers)
-  - [11.2. Formatted IO with fmt](#112-formatted-io-with-fmt)
-  - [11.3. Buffered IO](#113-buffered-io)
-  - [11.4. In-memory IO](#114-in-memory-io)
-- [12. Encoding \& Decoding](#12-encoding--decoding)
-  - [12.1. JSON](#121-json)
-- [13. Remote Procedure Call (RPC), gRPC and protobuf](#13-remote-procedure-call-rpc-grpc-and-protobuf)
-  - [13.1. Remote Procedure Call (RPC)](#131-remote-procedure-call-rpc)
-  - [13.2. gRPC and Protobuf](#132-grpc-and-protobuf)
+- [5. Pointer](#5-pointer)
+- [6. Allocation \& Constructor](#6-allocation--constructor)
+- [7. Conversions](#7-conversions)
+- [8. Interfaces](#8-interfaces)
+  - [8.1. Which is what?](#81-which-is-what)
+  - [8.2. Empty interface](#82-empty-interface)
+  - [8.3. Methods](#83-methods)
+  - [8.4. Listing interfaces in interfaces](#84-listing-interfaces-in-interfaces)
+  - [8.5. Introspection \& reflection](#85-introspection--reflection)
+- [9. Concurrency](#9-concurrency)
+  - [9.1. Make it run in parallel](#91-make-it-run-in-parallel)
+  - [9.2. More on channels](#92-more-on-channels)
+- [10. Communication](#10-communication)
+  - [10.1. io.Reader](#101-ioreader)
+  - [10.2. Command line arguments](#102-command-line-arguments)
+  - [10.3. Executing commands](#103-executing-commands)
+  - [10.4. Networking](#104-networking)
+- [11. Modules (Golang version \>=1.11)](#11-modules-golang-version-111)
+  - [11.1. Concepts](#111-concepts)
+  - [11.2. Quickstart](#112-quickstart)
+  - [11.3. Go Proxy](#113-go-proxy)
+  - [11.4. Workspaces](#114-workspaces)
+- [12. Data IO in Go](#12-data-io-in-go)
+  - [12.1. IO with readers and writers](#121-io-with-readers-and-writers)
+  - [12.2. Formatted IO with fmt](#122-formatted-io-with-fmt)
+  - [12.3. Buffered IO](#123-buffered-io)
+  - [12.4. In-memory IO](#124-in-memory-io)
+- [13. Encoding \& Decoding](#13-encoding--decoding)
+  - [13.1. JSON](#131-json)
+- [14. Web Programming](#14-web-programming)
+  - [14.1. HTTP Server](#141-http-server)
+  - [14.2. Templating](#142-templating)
+  - [14.3. Requests \& Forms](#143-requests--forms)
+  - [14.4. Assets \& Files](#144-assets--files)
+  - [14.5. Middleware (Basic)](#145-middleware-basic)
+  - [14.6. Middleware (Advanced)](#146-middleware-advanced)
+  - [14.7. Session](#147-session)
+  - [14.8. Websockets](#148-websockets)
+- [15. Remote Procedure Call (RPC), gRPC and protobuf](#15-remote-procedure-call-rpc-grpc-and-protobuf)
+  - [15.1. Remote Procedure Call (RPC)](#151-remote-procedure-call-rpc)
+  - [15.2. gRPC and Protobuf](#152-grpc-and-protobuf)
 - [Resource for new Go programmers](#resource-for-new-go-programmers)
   - [Online resources](#online-resources)
   - [Installing Go \& configure your workspace](#installing-go--configure-your-workspace)
@@ -1101,7 +1099,7 @@ $ go tool cover -html=c.out -o coverage.html
 
 - **os/exec**: The os/exec package runs external commands.
 
-## 5. Beyond the basics
+## 5. Pointer
 
 - Go has pointers but not pointer arthmetic, so they act more like references than pointers that you may know from C.
 
@@ -1195,7 +1193,7 @@ func main() {
 
 - Check [pointer vs reference](./tips-notes/pointer-vs-references.md).
 
-### 5.1. Allocation
+## 6. Allocation & Constructor
 
 - Go also has garbage collection.
 - To allocate memory Go has 2 primitives, `new` & `make`.
@@ -1242,7 +1240,7 @@ sl := []string{Enone: "no error", Einval: "invalid argument"}
 ma := map[int]string {Enone: "no error", Einval: "invalid argument"}
 ```
 
-### 5.2. Defining your own types
+- Defining your own types
 
 ```Go
 /* defining_own_type.go */
@@ -1307,7 +1305,7 @@ type NewMutex Mutex
 type PrintableMutex struct{Mutex}
 ```
 
-### 5.3. Conversions
+## 7. Conversions
 
 ```
 FROM    b []byte    i []int    r []rune    s string    f float32    i int
@@ -1355,7 +1353,7 @@ var f foo = b      // Assign `b` to `f` --> Cannot use b (type bar) as type foo 
 var f foo = foo(b) // OK!
 ```
 
-## 6. Interfaces
+## 8. Interfaces
 
 - Every type has an interface, which is the _set of methods defined_ for that type.
 
@@ -1440,7 +1438,7 @@ f(&s)
 
 - Go's interfaces let you use `duck typing` like you would in a purely dynamic language like Python but still have the compiler catch obvious mistakes like passing an `int` where an object with a `Read` method was expected, or like calling the `Read` method with the wrong number of arguments.
 
-### 6.1. Which is what?
+### 8.1. Which is what?
 
 - Let's define another type R that also implements the interface I.
 
@@ -1458,7 +1456,7 @@ func f(p I) {
 }
 ```
 
-### 6.2. Empty interface
+### 8.2. Empty interface
 
 - Create a generic function which has an empty interface as its argument
 
@@ -1475,7 +1473,7 @@ s = new(S)
 fmt.Println(g(s))
 ```
 
-### 6.3. Methods
+### 8.3. Methods
 
 - Methods are functions that have a receiver.
 - You can definen methods on any type (except on non-local types, this includes built-in types: the type `int` can not have methods).
@@ -1527,9 +1525,9 @@ fmt.Println(g(s))
   - 3rd: consistency. If some of the methods of the type must have pointer receivers, the rest should too, so the method set is consistent regardless of how the type is used.
   - For types such as basic types, slices & small `struct`, a value receiver is very cheap so unless the semantics of the methods requires a pointer, a value receiver is effient & clear.
 
-### 6.4. Listing interfaces in interfaces
+### 8.4. Listing interfaces in interfaces
 
-### 6.5. Introspection & reflection
+### 8.5. Introspection & reflection
 
 - Type switching: A type switching is like a regular switch statement, but the cases in a type switch specify types (not values) which are compared against the type of the value held by the given interface value.
 
@@ -1562,7 +1560,7 @@ func main() {
 
 - More examples [here](https://github.com/a8m/reflect-examples).
 
-## 7. Concurrency
+## 9. Concurrency
 
 - Firstly, don't mess between [parallelism & concurrency](https://github.com/ntk148v/lets-go/blob/master/concurrency-parallelism/concurrency-is-not-parallelism.md).
 - **Goroutines** are the central entity in Go's ability for concurrency. A goroutine has a simple model: it is a function executing in parallel with other goroutines in the same address space. It is lightweight, costing little more than the allocation of stack space. And the stack start small, so they are cheap, & grow by allocating (and freeing) heap storage as required.
@@ -1759,7 +1757,7 @@ func main() {
 }
 ```
 
-### 7.1. Make it run in parallel
+### 9.1. Make it run in parallel
 
 - While our goroutines were running concurrently, they were not running in parallel! (Once more time, make sure you know that Concurrency is not Parralel!)
 - With `runtime.GOMAXPROCS(n)` or set an environment variable `GOMAXPROCS` you can set the number of goroutines that can run in parallel.
@@ -1768,7 +1766,7 @@ func main() {
 
 - From version 1.5 & above, `GOMAXPROCS` defaults to the number of CPU cores.
 
-### 7.2. More on channels
+### 9.2. More on channels
 
 - Note that:
 
@@ -1789,23 +1787,23 @@ received is a zero value of the channel's type.
 
 - You can find more about concurrency [here](./tips-notes/concurrency-synchronization/README.md).
 
-## 8. Communication
+## 10. Communication
 
 - Building blocks in Go for communcating with the outside world (fiels, directories, networking & executing other programs).
 - Central to Go's I/O are the interfaces `io.Reader` & `io.Writer`.
 
-### 8.1. io.Reader
+### 10.1. io.Reader
 
 - `io.Reader` is an important interface in the language Go. A lot (if not all) functions that need to read from something take an `io.Reader` as input.
 - The writing side `io.Writer` has the `Write` method.
 - If you think of new type in your program or package & you make it fulfill the `io.Reader` or `io.Writer` interface, _the whole standard Go library can be used_ on that type.
 
-### 8.2. Command line arguments
+### 10.2. Command line arguments
 
 - Arguments from the command line are available inside your program via the string slide `os.Args`.
 - The `flag` package has a more sophisticated interface, & also provided a way to parse flags.
 
-### 8.3. Executing commands
+### 10.3. Executing commands
 
 - The `os/exec` package has functions to run external commands, & is the premier way to execute commands from within a Go program.
 
@@ -1819,7 +1817,7 @@ err := cmd.Run()
 buf, err := cmd.Output() // buf is byte slice
 ```
 
-### 8.4. Networking
+### 10.4. Networking
 
 - All network related types & functions can be found in the package `net`.
 - One of the most important functions in there is `Dial`. When you `Dial` into a remote system the function returns a `Conn` interface type, which can be used to send & receive information. The function `Dial` neatly abstracts away the network family & transport.
@@ -1830,11 +1828,11 @@ conn, e := Dial("udp", "192.0.32.10:80")
 conn, e := Dial("tcp", "[2620:0:2d0:200::10]:80")
 ```
 
-## 9. Modules (Golang version >=1.11)
+## 11. Modules (Golang version >=1.11)
 
 Go 1.11 includes preliminary support for [modules](https://go.dev/doc/go1.11#modules), Go's [new dependency management system](https://blog.golang.org/versioning-proposal) that makes dependency version information explicit and easier to manage.
 
-### 9.1. Concepts
+### 11.1. Concepts
 
 - **Modules**: a collection of related Go packages that are versioned together as a single unit.
 - Summarizing the relationship between repositories, modules, & packages:
@@ -1852,7 +1850,7 @@ Go 1.11 includes preliminary support for [modules](https://go.dev/doc/go1.11#mod
 - Starting in Go 1.13, module mode will be the default for all development.
 - Check [Go Modules wiki](https://github.com/golang/go/wiki/Modules) for updated information.
 
-### 9.2. Quickstart
+### 11.2. Quickstart
 
 - Go Module's hello-world: init module and add dependencies.
 
@@ -1976,7 +1974,7 @@ $ tree -L 3
         └── sampler
 ```
 
-### 9.3. Go Proxy
+### 11.3. Go Proxy
 
 - Started from Go 1.13, `go` tool defaults to downloading modules from the public Go module mirror: <https://proxy.golang.org> and also defaults to validating downloaded modules (regardless of source) against the public Go checksum database at <https://sum.golang.org>.
 - If you want to change the default Go proxy, you can use the following command:
@@ -1987,7 +1985,7 @@ export GOPROXY=https://goproxy.io,direct
 
 - The `go` command defaults to downloading modules from the public Go module mirror, therefore if you have private code, you most likely should configure the `GOPRIVATE` setting (such as `go env -w GOPRIVATE=*.corp.com,github.com/secret/repo`), or the more fine-grained variants `GONOPROXY` or `GONOSUMDB` that support less frequent use cases. See the [documentation](https://go.dev/ref/mod#private-module-privacy) for more details.
 
-### 9.4. Workspaces
+### 11.4. Workspaces
 
 - Go introduces the concept of workspaces in 1.18. Workspaces allows you to create projects of several modules that share a common list of dependencies through a new file called `go.work`. The dependencies in this file can span multiple modules and anything declared in the `go.work` file will override dependencies in the module's `go.mod`.
   - A workspace is a collection of modules on disk that are used as the main modules when running minimal version selection (MVS).
@@ -2124,202 +2122,13 @@ $ go run example.com/hello
 HELLO
 ```
 
-## 10. Web Programming
+## 12. Data IO in Go
 
-[Go Web Example](https://gowebexamples.com)
-
-### 10.1. HTTP Server
-
-A basic HTTP server has a few key jobs to take care of:
-
-- _Process dynamic request_: Process incoming requests from users who browse the website, log into their accounts or post images.
-- _Serve static assets_: Serve JavaScript, CSS & images to browsers to create a dynamic experience for the user.
-- _Accept connections_: The HTTP Server must listen on a specific port to be able to accept connections from the Internet.
-
-```go
-package main
-
-import (
-    "fmt"
-    "net/http"
-)
-
-func main() {
-    // Process dynamic request
-    http.HandleFunc("/", func (w http.ResponseWriter, r *http.Request) {
-        fmt.Fprintf(w, "Welcome to my website!")
-    })
-
-    // Serving static assets
-    fs := http.FileServer(http.Dir("static/"))
-    http.Handle("/static/", http.StripPrefix("/static/", fs))
-
-    // Accept connections
-    http.ListenAndServe(":80", nil)
-}
-```
-
-### 10.2. Templating
-
-### 10.3. Requests & Forms
-
-### 10.4. Assets & Files
-
-### 10.5. Middleware (Basic)
-
-A simple logging middleware.
-
-```go
-// basic-middleware.go
-package main
-
-import (
-    "fmt"
-    "log"
-    "net/http"
-)
-
-func logging(f http.HandlerFunc) http.HandlerFunc {
-    return func(w http.ResponseWriter, r *http.Request) {
-        log.Println(r.URL.Path)
-        f(w, r)
-    }
-}
-
-func foo(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintln(w, "foo")
-}
-
-func bar(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintln(w, "bar")
-}
-
-func main() {
-    http.HandleFunc("/foo", logging(foo))
-    http.HandleFunc("/bar", logging(bar))
-
-    http.ListenAndServe(":8080", nil)
-}
-```
-
-### 10.6. Middleware (Advanced)
-
-- A middleware in itself simple takes a `http.HandleFunc` as one of its parameters, wraps it & returns a new `http.HandlerFunc` for the server to call.
-
-- Define a new type `Middleware` which makes it eventually easier to chain multiple middlewares together.
-
-- How a new middleware is created, boilerplate code:
-
-```go
-func newMiddleware() Middleware {
-
-    // Create a new Middleware
-    middleware := func(next http.HandlerFunc) http.HandlerFunc {
-
-        // Define the http.HandlerFunc which is called by the server eventually
-        handler := func(w http.ResponseWriter, r *http.Request) {
-
-            // ... do middleware things
-
-            // Call the next middleware/handler in chain
-            next(w, r)
-        }
-
-        // Return newly created handler
-        return handler
-    }
-
-    // Return newly created middleware
-    return middleware
-}
-```
-
-- Show me code! Ok, a full example is here:
-
-```go
-// advanced-middleware.go
-package main
-
-import (
-    "fmt"
-    "log"
-    "net/http"
-    "time"
-)
-
-type Middleware func(http.HandlerFunc) http.HandlerFunc
-
-// Logging logs all requests with its path & the time it took to process
-func Logging() Middleware {
-
-    // Create a new Middleware
-    return func(f http.HandlerFunc) http.HandlerFunc {
-
-        // Define the http.HandlerFunc
-        return func(w http.ResponseWriter, r *http.Request) {
-
-            // Do middleware things
-            start := time.Now()
-            defer func() { log.Println(r.URL.Path, time.Since(start)) }()
-
-            // Call the next middleware/handler in chain
-            f(w, r)
-        }
-    }
-}
-
-// Method ensures that url can only be requested with a specific method, else returns a 400 Bad Request
-func Method(m string) Middleware {
-
-    // Create a new Middleware
-    return func(f http.HandlerFunc) http.HandlerFunc {
-
-        // Define the http.HandlerFunc
-        return func(w http.ResponseWriter, r *http.Request) {
-
-            // Do middleware things
-            if r.Method != m {
-                http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
-                return
-            }
-
-            // Call the next middleware/handler in chain
-            f(w, r)
-        }
-    }
-}
-
-// Chain applies middlewares to a http.HandlerFunc
-func Chain(f http.HandlerFunc, middlewares ...Middleware) http.HandlerFunc {
-    for _, m := range middlewares {
-        f = m(f)
-    }
-    return f
-}
-
-func Hello(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintln(w, "hello world")
-}
-
-func main() {
-    http.HandleFunc("/", Chain(Hello, Method("GET"), Logging()))
-    http.ListenAndServe(":8080", nil)
-}
-```
-
-### 10.7. Session
-
-### 10.8. Websockets
-
-### 10.9. Security - Password Hashing (bcrypt)
-
-## 11. Data IO in Go
-
-### 11.1. IO with readers and writers
+### 12.1. IO with readers and writers
 
 Go models data input and output as a stream that flows from sources to targets. Data sources, such as files, network connections, or even some in-memory objects , can be modeled as streams of bytes from which data can be read or written to.
 
-### 11.2. Formatted IO with fmt
+### 12.2. Formatted IO with fmt
 
 The most common usage of the `fmt` package is for writting to standard output and reading from standard input.
 
@@ -2348,19 +2157,19 @@ func main() {
 }
 ```
 
-### 11.3. Buffered IO
+### 12.3. Buffered IO
 
 The `bufio` package offers several functions to do buffered writing of IO streams using an `io.Writer interface.
 
-### 11.4. In-memory IO
+### 12.4. In-memory IO
 
 In `bytes` package offers common primitives to achieve streaming IO on blocks of bytes stored in memory, represented by the `bytes.Buffer` byte. Since the `bytes.Buffer` type implements both `io.Reader` and `io.Writer` interfaces it is a great option to stream data into or out of memory using streaming IO primitives.
 
-## 12. Encoding & Decoding
+## 13. Encoding & Decoding
 
 - Go’s standard library comes packed with some great encoding and decoding packages covering a wide array of encoding schemes. Everything from CSV, XML, JSON, and even gob - a Go specific encoding format - is covered, and all of these packages are incredibly easy to get started with.
 
-### 12.1. JSON
+### 13.1. JSON
 
 - Go offers built-in support for JSON encoding and decoding, including to and from built-in and custom data types.
 - There are two types of data:
@@ -2523,11 +2332,198 @@ func main() {
 
 > **NOTE**: There are a lot more helpful things in [tips-notes](./tips-notes/). You may want to check it out.
 
-## 13. Remote Procedure Call (RPC), gRPC and protobuf
+## 14. Web Programming
+
+[Go Web Example](https://gowebexamples.com)
+
+### 14.1. HTTP Server
+
+A basic HTTP server has a few key jobs to take care of:
+
+- _Process dynamic request_: Process incoming requests from users who browse the website, log into their accounts or post images.
+- _Serve static assets_: Serve JavaScript, CSS & images to browsers to create a dynamic experience for the user.
+- _Accept connections_: The HTTP Server must listen on a specific port to be able to accept connections from the Internet.
+
+```go
+package main
+
+import (
+    "fmt"
+    "net/http"
+)
+
+func main() {
+    // Process dynamic request
+    http.HandleFunc("/", func (w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintf(w, "Welcome to my website!")
+    })
+
+    // Serving static assets
+    fs := http.FileServer(http.Dir("static/"))
+    http.Handle("/static/", http.StripPrefix("/static/", fs))
+
+    // Accept connections
+    http.ListenAndServe(":80", nil)
+}
+```
+
+### 14.2. Templating
+
+### 14.3. Requests & Forms
+
+### 14.4. Assets & Files
+
+### 14.5. Middleware (Basic)
+
+A simple logging middleware.
+
+```go
+// basic-middleware.go
+package main
+
+import (
+    "fmt"
+    "log"
+    "net/http"
+)
+
+func logging(f http.HandlerFunc) http.HandlerFunc {
+    return func(w http.ResponseWriter, r *http.Request) {
+        log.Println(r.URL.Path)
+        f(w, r)
+    }
+}
+
+func foo(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintln(w, "foo")
+}
+
+func bar(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintln(w, "bar")
+}
+
+func main() {
+    http.HandleFunc("/foo", logging(foo))
+    http.HandleFunc("/bar", logging(bar))
+
+    http.ListenAndServe(":8080", nil)
+}
+```
+
+### 14.6. Middleware (Advanced)
+
+- A middleware in itself simple takes a `http.HandleFunc` as one of its parameters, wraps it & returns a new `http.HandlerFunc` for the server to call.
+
+- Define a new type `Middleware` which makes it eventually easier to chain multiple middlewares together.
+
+- How a new middleware is created, boilerplate code:
+
+```go
+func newMiddleware() Middleware {
+
+    // Create a new Middleware
+    middleware := func(next http.HandlerFunc) http.HandlerFunc {
+
+        // Define the http.HandlerFunc which is called by the server eventually
+        handler := func(w http.ResponseWriter, r *http.Request) {
+
+            // ... do middleware things
+
+            // Call the next middleware/handler in chain
+            next(w, r)
+        }
+
+        // Return newly created handler
+        return handler
+    }
+
+    // Return newly created middleware
+    return middleware
+}
+```
+
+- Show me code! Ok, a full example is here:
+
+```go
+// advanced-middleware.go
+package main
+
+import (
+    "fmt"
+    "log"
+    "net/http"
+    "time"
+)
+
+type Middleware func(http.HandlerFunc) http.HandlerFunc
+
+// Logging logs all requests with its path & the time it took to process
+func Logging() Middleware {
+
+    // Create a new Middleware
+    return func(f http.HandlerFunc) http.HandlerFunc {
+
+        // Define the http.HandlerFunc
+        return func(w http.ResponseWriter, r *http.Request) {
+
+            // Do middleware things
+            start := time.Now()
+            defer func() { log.Println(r.URL.Path, time.Since(start)) }()
+
+            // Call the next middleware/handler in chain
+            f(w, r)
+        }
+    }
+}
+
+// Method ensures that url can only be requested with a specific method, else returns a 400 Bad Request
+func Method(m string) Middleware {
+
+    // Create a new Middleware
+    return func(f http.HandlerFunc) http.HandlerFunc {
+
+        // Define the http.HandlerFunc
+        return func(w http.ResponseWriter, r *http.Request) {
+
+            // Do middleware things
+            if r.Method != m {
+                http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+                return
+            }
+
+            // Call the next middleware/handler in chain
+            f(w, r)
+        }
+    }
+}
+
+// Chain applies middlewares to a http.HandlerFunc
+func Chain(f http.HandlerFunc, middlewares ...Middleware) http.HandlerFunc {
+    for _, m := range middlewares {
+        f = m(f)
+    }
+    return f
+}
+
+func Hello(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintln(w, "hello world")
+}
+
+func main() {
+    http.HandleFunc("/", Chain(Hello, Method("GET"), Logging()))
+    http.ListenAndServe(":8080", nil)
+}
+```
+
+### 14.7. Session
+
+### 14.8. Websockets
+
+## 15. Remote Procedure Call (RPC), gRPC and protobuf
 
 This section is mainly taken from: <https://github.com/zalopay-oss/go-advanced/blob/master/ch3-rpc/ch3-01-rpc-go.md>
 
-### 13.1. Remote Procedure Call (RPC)
+### 15.1. Remote Procedure Call (RPC)
 
 - A [remote procedure call (RPC)](https://en.wikipedia.org/wiki/Remote_procedure_call) is when a computer program causes a procedure (subroutine) to execute in a different address space (commonly on another computer on a shared network), which is written as if it were a normal (local) procedure call, without the programmer explicitly writing the details for the remote interaction.
 
@@ -2626,7 +2622,7 @@ $ go run examples/13/rpc/rpcclient/main.go
 2023/08/09 16:29:31 Hello Kien
 ```
 
-### 13.2. gRPC and Protobuf
+### 15.2. gRPC and Protobuf
 
 - Protocol Buffers, also referred as **protobuf**, is Google’s language-neutral, platform-neutral, extensible mechanism for serializing structured data. Protocol Buffers are smaller, faster, and simpler that provides high performance than other standards such as XML and JSON.
 - By using protocol buffers, you can define your structured data, then you generate source code for your choice of programming language using the protocol buffer compiler named **protoc**, to write and read your structured data using it. The current version of protocol buffers is **proto3**. The **proto3** version currently supports generated code in variety of languages including C++, Go, Java, Python, Ruby, and C#.
