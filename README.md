@@ -2681,6 +2681,7 @@ Oops, actually you can refer to [awesome-go](https://github.com/avelino/awesome-
   - [Praticial Go: Real world advice for writing matintainable Go programs](https://dave.cheney.net/practical-go/presentations/qcon-china.html)
 - [Go101](https://go101.org/)
 - [Zalopay's Go-advanced](https://github.com/zalopay-oss/go-advanced)
+- [Practical Go Lessions](https://www.practical-go-lessons.com/)
 
 ### Installing Go & configure your workspace
 
