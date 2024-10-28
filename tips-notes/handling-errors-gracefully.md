@@ -16,7 +16,7 @@ Source:
 
 ## 1. What is an error in go?
 
-```golang
+```go
 // The error built-in interface type is the conventional interface for
 // representing an error condition, with the nil value representing no error.
 type error interface {
@@ -46,7 +46,7 @@ Goals:
 
 Create an error type:
 
-```golang
+```go
 package error
 
 import (

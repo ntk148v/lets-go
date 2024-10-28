@@ -6,7 +6,7 @@
 
 Type declaration:
 
-```golang
+```go
 type Foo struct {
     i int
     s string
@@ -15,7 +15,7 @@ type Foo struct {
 
 The latter part of a type declaration is the **type literal**:
 
-```golang
+```go
 struct {
     i int
     s string
@@ -24,7 +24,7 @@ struct {
 
 An unnamed struct literal is often called an **anonymous struct**:
 
-```golang
+```go
 var t struct {
     i int
     s string
@@ -35,7 +35,7 @@ var t struct {
 
 ### Template data
 
-```golang
+```go
 data := struct {
     Title               string
     Firstname, Lastname string
@@ -52,7 +52,7 @@ if err := tmpl.Execute(os.Stdout, data); err != nil {
 
 - Encode and decode JSON objects.
 
-```golang
+```go
 b, err := json.Marshal(struct {
     ID   int
     Name string
@@ -75,7 +75,7 @@ fmt.Println(data.ID, data.Name)
 
 - Structs can be nested to describe more complex JSON objects
 
-```golang
+```go
 var data struct {
     ID int
     Person struct {
@@ -94,7 +94,7 @@ fmt.Println(data.ID, data.Person.Name, data.Person.Job)
 
 ## Repeated literals and struct names
 
-```golang
+```go
 type Foo struct {
     i int
     s string
@@ -113,7 +113,7 @@ var m = map[int]Foo{
 
 - Combined with anonymous structs, this convenience shortens the code dramatically:
 
-```golang
+```go
 var s = []struct {
     i int
     s string

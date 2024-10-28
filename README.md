@@ -127,7 +127,7 @@ Finding Golang documentation isn't a big deal. There are many [good resources](#
 
 - Get started with Go in the classic way: printing "Hello World" (Ken Thompson & Dennies Ritchie started this when they presented the C language in the 1970s #til)
 
-```Go
+```go
 /* hello_world.go */
 package main
 
@@ -163,7 +163,7 @@ go run helloworld.go
 
 - Go is different from most other language in that type of a variable is specified _after_ the variable name: a int.
 
-```Go
+```go
 /* When you declare a variable it is assigned the "natural" null value for the type */
 var a int // a has a value of 0
 var s string // s is assigned the zero string, which is ""
@@ -195,7 +195,7 @@ _, b := 26, 9
   - The full list for (signed & unsigned) integers is `int8`, `int16`, `int32`, `int64` & `byte` (an alias for `uint8`), `uint8`, `uint16`, `uint32`, `uint64`.
   - For floating point values there is `float32`, `float64`, ~~float~~.
 
-  ```Go
+  ```go
   /* numerical_types.go */
   package main
 
@@ -209,7 +209,7 @@ _, b := 26, 9
 
 - Constants: Constants are created at compile time, & can only be numbers, strings, or booleans. You can use `iota` to enumerate values.
 
-```Go
+```go
 const (
     a = iota // First use of iota will yield 0. Whenever iota is used again on a new line its value is incremented with 1, so b has a vaue of 1.
     b
@@ -221,7 +221,7 @@ const (
   - Strings in Go are a sequence of UTF-8 characters enclosed in double quotes. If you use the single quote you mean one character (encoded in UTF-8) - which is _not_ a `string` in Go. Note that! In Python (my favourite programming language), I can use both of them for string assignment.
   - String in Go are immutable. To change one character in string, you have to create a new one.
 
-  ```Go
+  ```go
   s1 := "Hello"
   c := []rune(s) // Convert s1 to an array of runes
   c[0] := 'M'
@@ -351,7 +351,7 @@ continue  for          import  return      var
 
 - **If-Else**:
 
-```Go
+```go
 if x > 0 {
     return y
 } esle {
@@ -367,7 +367,7 @@ if err := MagicFunction(); err != nil {
 
 - **Goto**: With `goto` you jump to a label which must be defined within the current function.
 
-```Go
+```go
 /* goto_test */
 /* Create a loop */
 func gototestfunc() {
@@ -381,7 +381,7 @@ Here:
 
 - **For**: `for` loop has three forms, only one of which has semicolons:
 
-```Go
+```go
 for init; condition; post { } // aloop using the syntax borrowed from C
 for condition { } // a while loop
 for { } // a endless loop
@@ -394,7 +394,7 @@ for i := 0; i < 10; i++ {
 
 - **Break & continue**:
 
-```Go
+```go
 for i := 0; i < 10; i++ {
     if i > 5 {
         break
@@ -418,7 +418,7 @@ J: for j := 0; j < 5; j++ {
   - `range` can be used for loops. It can loop over slices, arrays, strings, maps & channels.
   - `range` is an iterator that, when called, returns the next key-value pair from the "thing" it loops over.
 
-  ```Go
+  ```go
   list := []string{"a", "b", "c", "d", "e", "f"}
   for k, v := range list {
       // do some fancy thing with k & v
@@ -430,7 +430,7 @@ J: for j := 0; j < 5; j++ {
   - The case are evaluated top to bottom until a match is found, & if the `switch` has no expression it switches on `true`.
   - It's therefore possible - & idomatic - to write an `if-else-if-else` chain as a `switch`.
 
-  ```Go
+  ```go
   /* Convert hexadecimal character to an int value */
   switch { // switch without condition = switch true
       case '0' <= c && c <= '9':
@@ -476,7 +476,7 @@ cap         copy       println
 
   - An array is defined by `[n]<type>`.
 
-  ```Go
+  ```go
   var arr [10]int // The size is part of the type, fixed size
   arr[0] = 42
   arr[1] = 13
@@ -494,7 +494,7 @@ cap         copy       println
   - Similar to an array, but it can grow when new elements are added.
   - A slice is a pointer to an (underlaying) array, slices are **reference types**.
 
-  ```Go
+  ```go
   // Init array primes
   primes := [6]int{2, 3, 5, 7, 11, 13}
 
@@ -534,7 +534,7 @@ cap         copy       println
 
   ![slice-1](https://go.dev/blog/slices-intro/slice-struct.png)
 
-  ```Go
+  ```go
   s := make([]byte, 5)
   ```
 
@@ -551,7 +551,7 @@ cap         copy       println
 
     - Slicing does not copy the slice's data. It creates a new slice that points to the original array. This makes slice operations as efficient as manipulating array indicies. Therefore, modifying the elements (not the slice itself) of a re-slice modifies the elements of the original slice:
 
-      ```Go
+      ```go
       d := []byte{'r', 'o', 'a', 'd'}
       e := d[2:]
       // e = []byte{'a', 'd'}
@@ -562,7 +562,7 @@ cap         copy       println
 
       - Earlier we sliced `s` to a length shorter than its capacity. We can grow s to its capacity by slicing it again.
 
-      ```Go
+      ```go
       s = s[:cap(s)]
       ```
 
@@ -570,7 +570,7 @@ cap         copy       println
 
   ![slice-4](https://go.dev/blog/slices-intro/slice-3.png)
 
-  ```Go
+  ```go
   // Another example
   var array [m]int
   slice := array[:n]
@@ -581,7 +581,7 @@ cap         copy       println
 
   - To extend a slice, there are a couple of built-in functions that make life easier: `append` & `copy`.
 
-  ```Go
+  ```go
   s0 := []int{0, 0}
   s1 := append(s0, 2) // same type as s0 - int.
   // If the original slice isn't big enough to fit the added values,
@@ -603,7 +603,7 @@ cap         copy       println
 
   - Python has its dictionaries. In go we have the `map` type.
 
-  ```Go
+  ```go
   monthdays := map[string]int{
       "Jan": 31, "Feb": 28, "Mar": 31,
       "Apr": 30, "May": 31, "Jun": 30,
@@ -687,7 +687,7 @@ var logger *log.Logger = server.Logger
 
 ## 3. Functions
 
-```Go
+```go
 // General Function
 type mytype int
 func (p mytype) funcname(q, int) (r, s int) { return 0,0 }
@@ -708,7 +708,7 @@ func (p mytype) funcname(q, int) (r, s int) { return 0,0 }
 
 - As with almost everything in Go, functions are also just values.
 
-```Go
+```go
 import "fmt"
 
 func main() {
@@ -721,7 +721,7 @@ func main() {
 
 ### 3.3. Callbacks
 
-```Go
+```go
 func printit(x int) {
     fmt.Println("%v\n", x)
 }
@@ -733,7 +733,7 @@ func callback(y int, f func(int)) {
 
 ### 3.4. Deferred Code
 
-```Go
+```go
 /* Open a file & perform various writes & reads on it. */
 func ReadWrite() bool {
     file.Open("file")
@@ -771,7 +771,7 @@ func ReadWrite() bool {
 - Can put multiple functions on the "defer list".
 - `Defer` functions are executed in _LIFO_ order.
 
-```Go
+```go
 for i := 0; i < 5; i++ {
     defer fmt.Printf("%d ", i) // 4 3 2 1 0
 }
@@ -779,7 +779,7 @@ for i := 0; i < 5; i++ {
 
 - With `defer` you can even change return values, provided that you are using named result parameters & a function literal (`def func(x int) {/*....*/}(5)`).
 
-```Go
+```go
 func f() (ret int)
     defer func() { // Initialized with zero
         ret++
@@ -792,7 +792,7 @@ func f() (ret int)
 
 - Functions that take a variable number of parameters are known as variadic functions.
 
-```Go
+```go
 func func1(arg... int) { // the variadic parameter is just a slice.
     for _, n := range arg {
         fmt.Printf("And the number is: %d\n", n)
@@ -806,7 +806,7 @@ func func1(arg... int) { // the variadic parameter is just a slice.
   - Panic: Built-in function that tstops the oridinary flow of control & begins panicking. When function F call `pacnic`, execution of `F` stops, any deferred functions in F are executed normally, & then F returns to its caller. To the caller, F then behaves like a call to panic. The process continues up the stack until all functions in the current goroutine have returned, at which point the program crashes. Panics can be initiated by invoking panic directly. They can also be caused by runtime errors, such as out-of-bounds array accesses.
   - Recover: Built-in function that regains control of a panicking goroutine. Recover is only useful inside deferred functions. During normal execution, a call to recover will return nil & have no other effect. If the current goroutine is panicking, a call to recover will capture the value given to panic & resume normal execution.
 
-```Go
+```go
 /* defer_panic_recover.go */
 package main
 
@@ -864,7 +864,7 @@ func g(i int) {
 - A package is a collection of functions & data.
 - The convention for package names is to use lowercase characters - the file does not have to match the package name.
 
-```Go
+```go
 package even
 
 func Even(i int) bool { // starts with capital -> exported
@@ -902,7 +902,7 @@ go install
 - When a package consists of multiple files the package comment should only appear in 1 file.
 - A common convention (in really big packages) is to have a separate `doc.go` that only holds the package comment.
 
-```Go
+```go
 /*
     The regexp package implements a simple library for
     regular expressions.
@@ -956,7 +956,7 @@ Installing a 3rd party package is nothing but cloning the remote code into local
 - Unit testing in Go is just a opinionated as any other aspect of the language like formatting or naming.
 - Example:
 
-```golang
+```go
 package main
 
 func Sum(x int, y int) int {
@@ -982,7 +982,7 @@ func TestSum(t *testing.T) {
 
 - Test tables is a set (slice array) of test input & output values. Example:
 
-```golang
+```go
 package main
 
 import "testing"
@@ -1117,7 +1117,7 @@ $ go tool cover -html=c.out -o coverage.html
   - A reference is a variable which refers to another value.
   - There is no pointer arithmetic. You cannot write in Go. That is, you cannot alter the address p points to unless you assign another address to it.
 
-  ```Go
+  ```go
   var p *int
   p++
   ```
@@ -1138,7 +1138,7 @@ $ go tool cover -html=c.out -o coverage.html
 
 - All newly declared variables are assigned their zero value & pointers are no different. A newly declared pointer, or just a pointer that points to nothing, has a nil-value.
 
-```Go
+```go
 var p *int // declare a pointer
 fmt.Printf("%v", p)
 
@@ -1215,7 +1215,7 @@ func main() {
 
 - Constructors & compiste literals
 
-```Go
+```go
 // A lot of boiler plate
 func NewFile(fd int, name string) *File {
     if fd < 0 {
@@ -1244,7 +1244,7 @@ func NewFile(fd int, name string) *File {
 
 - Composite literal can also be created for arrays, slices, & maps, with the field labels being indices or map keys as appropriate.
 
-```Go
+```go
 ar := [...]string{Enone: "no error", Einval: "invalid argument"}
 sl := []string{Enone: "no error", Einval: "invalid argument"}
 ma := map[int]string {Enone: "no error", Einval: "invalid argument"}
@@ -1252,7 +1252,7 @@ ma := map[int]string {Enone: "no error", Einval: "invalid argument"}
 
 - Defining your own types
 
-```Go
+```go
 /* defining_own_type.go */
 package main
 
@@ -1273,7 +1273,7 @@ func main() {
 
 - More on structure fields
 
-```Go
+```go
 struct {
     x, y int
     A *[]int
@@ -1285,7 +1285,7 @@ struct {
 
   - Create a function that takes the type as an argument:
 
-  ```Go
+  ```go
   func doSomething1(n1 *NameAge, n2 int) {/* */}
   // method call
   var n *NameAge
@@ -1294,7 +1294,7 @@ struct {
 
   - Create a function that works on the type:
 
-  ```Go
+  ```go
   func (n1 *NameAge) doSomething2(n2 int) {/* */}
   ```
 
@@ -1302,7 +1302,7 @@ struct {
 
 - Suppose we have:
 
-```Go
+```go
 // A mutex is a data type with two methods, Lock & Unlock
 type Mutex struct {/* Mutex fields */}
 func (m *Mutex) Lock() {/* Lock impl */}
@@ -1331,7 +1331,7 @@ int                                                    int(f)       .
 - float64 works the same as float32
 - From a `string` to a slice of bytes or runes
 
-```Go
+```go
 mystring := "hello this is string"
 byteslice := []byte(mystring)
 runeslice := []rune(string)
@@ -1339,7 +1339,7 @@ runeslice := []rune(string)
 
 - From a slice of bytes or runes to a string
 
-```Go
+```go
 b := []byte{'h', 'e', 'l', 'l', 'o'} // Composite literal
 s := string(b)
 i := []rune(26, 9, 1994)
@@ -1354,7 +1354,7 @@ r := string(i)
 
 - User defined types & conversions
 
-```Go
+```go
 type foo struct { int } // Anonymous struct field
 type bar foo            // bar is an alias for foo
 
@@ -1367,7 +1367,7 @@ var f foo = foo(b) // OK!
 
 - Every type has an interface, which is the _set of methods defined_ for that type.
 
-```Go
+```go
 /* a struct type S with 1 field, 2 methods */
 type S struct { i int }
 func (p *S) Get() int { return p.i }
@@ -1383,7 +1383,7 @@ type I interface {
 
 - S is a valid implementation for ineterface I. A Go program can use this fact via yet another meaning of interface, which is an interface value:
 
-```Go
+```go
 func f(p I) {
     fmt.Println(p.Get())
     p.Put(1)
@@ -1402,7 +1402,7 @@ f(&s)
 
   - _Duck typing - If it looks like a duck, & it quacks like a duck, then it is a duck_. It means if it has a set of methods that match an interface, then you can use it wherever that interface is needed without explicitly defining that your types implement that interface.
 
-  ```Go
+  ```go
   package main
 
   import "fmt"
@@ -1452,7 +1452,7 @@ f(&s)
 
 - Let's define another type R that also implements the interface I.
 
-```Go
+```go
 type R struct { i int }
 func (p * R) Get() int { return p.i }
 func (p *R) Put(v int) { p.i = v }
@@ -1470,7 +1470,7 @@ func f(p I) {
 
 - Create a generic function which has an empty interface as its argument
 
-```Go
+```go
 func g(something interface{}) int {
     return something.(I).Get()
 }
@@ -1478,7 +1478,7 @@ func g(something interface{}) int {
 
 - The `.(I)` is a type assertion which converts `something` to an interface of type I. If we have the type we can invoke the `Get()` function.
 
-```Go
+```go
 s = new(S)
 fmt.Println(g(s))
 ```
@@ -1493,7 +1493,7 @@ fmt.Println(g(s))
 - By convention, one-method interfaces are named by the method name plus the -er suffix: Reader, Writer, Formatter,...
 - Pointer & Non-pointer method receivers.
 
-  ```Go
+  ```go
   func (s *MyStruct) pointerMethod() {} // method on pointer
   func (s MyStruct) valueMethod() {} // method on value
   ```
@@ -1501,7 +1501,7 @@ fmt.Println(g(s))
   - When defining a method on a type, the receiver behaves exactly as if it were an argument to the method. Whether to define the receiver as a value or as a pointer is the same question, then, as whether a function argument should be a value or a pointer.
   - 1st: Does the method need to modify the receiver? If it _does_, the receiver must be a _pointer_ (Slices & maps act as references, so their story is a little more subtle, but for instance to change the length of a slice in a method the receiver must still be a pointer). Otherwise, it should be _value_.
 
-  ```Go
+  ```go
   package main
 
   import "fmt"
@@ -1577,7 +1577,7 @@ func main() {
   - [Goroutine vs OS Thread](./tips-notes/goroutines.md).
   - [The maximum number of goroutines](./tips-notes/max-number-of-goroutines.md)
 
-```Go
+```go
 ready("Tea", 2) // Normal function call
 go ready("Tea", 2) // .. Bum! Here is goroutine
 
@@ -1606,7 +1606,7 @@ func main() {
 
 - In fact, we have no idea how long we should wait until all goroutine have exited. To fix this, we need some kind of mechanism which allows us to communicate with the goroutines - channel. A channel can be compared to a two-way pipe in Unix shells: you can send to & receive values from it.
 
-```Go
+```go
 /* Define a channel, we must also define the type of
 the values we can send on the channel */
 ci := make(chan int)
@@ -1619,7 +1619,7 @@ i := <-ci // Receive from the channel ci & store it in i
 
 - Put this to previous example (ready).
 
-```Go
+```go
 package main
 
 import (
@@ -1679,7 +1679,7 @@ buffered := make(chan int, 10)    // Buffered channel of integer type
 - You can check [ArdanLabs blog post for more detail](https://www.ardanlabs.com/blog/2014/02/the-nature-of-channels-in-go.html). These pictures are taken from there.
 - What if we don't know how many goroutines we started? This is where another Go built-in comes in: `select`.
 
-```Go
+```go
 L: for {
     select {
     case <-c:
@@ -1780,7 +1780,7 @@ func main() {
 
 - Note that:
 
-```Go
+```go
 ch := make(chan type, value)
 // if value == 0 -> unbuffered
 // if value > 0 -> buffer value elements
@@ -1788,7 +1788,7 @@ ch := make(chan type, value)
 
 - When a channel is closed the reading side needs to know this
 
-```Go
+```go
 x, ok = <-ch
 /* Where ok is set to True the channel is not closed & we've read something
 Otherwise ok is set to False. In that case the channel was closed & the value
@@ -1817,7 +1817,7 @@ received is a zero value of the channel's type.
 
 - The `os/exec` package has functions to run external commands, & is the premier way to execute commands from within a Go program.
 
-```Go
+```go
 import "os/exec"
 
 cmd := exec.Command("/bin/ls", "-l")
@@ -1832,7 +1832,7 @@ buf, err := cmd.Output() // buf is byte slice
 - All network related types & functions can be found in the package `net`.
 - One of the most important functions in there is `Dial`. When you `Dial` into a remote system the function returns a `Conn` interface type, which can be used to send & receive information. The function `Dial` neatly abstracts away the network family & transport.
 
-```Go
+```go
 conn, e := Dial("tcp", "192.0.32.10:80")
 conn, e := Dial("udp", "192.0.32.10:80")
 conn, e := Dial("tcp", "[2620:0:2d0:200::10]:80")
@@ -2220,7 +2220,7 @@ project-root-directory/
 
 - As a reminder, we assume that the module line in go.mod says:
 
-```golang
+```go
 module github.com/someuser/modname
 ```
 
@@ -2299,7 +2299,7 @@ Go models data input and output as a stream that flows from sources to targets. 
 
 The most common usage of the `fmt` package is for writting to standard output and reading from standard input.
 
-```golang
+```go
 type metalloid struct {
     name string
     number int32

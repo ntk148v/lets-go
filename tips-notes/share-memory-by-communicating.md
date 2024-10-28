@@ -8,7 +8,7 @@ _Do not communicate by sharing memory; instead, share memory by communicating._
 
 In a traditional threading environment, one might structure its data like so:
 
-```golang
+```go
 type Resource struct {
     url        string
     polling    bool
@@ -55,7 +55,7 @@ func Poller(res *Resources) {
 
 --> Convert to use Go idiom. Poller is a function that receives Resources to be polled from an input channel, and sends them to an output channel when they're done.
 
-```golang
+```go
 type Resource string
 
 func Poller(in, out chan *Resource) {
