@@ -63,6 +63,14 @@
   - [11.2. Quickstart](#112-quickstart)
   - [11.3. Go Proxy](#113-go-proxy)
   - [11.4. Workspaces](#114-workspaces)
+  - [11.5. Organizing a Go module](#115-organizing-a-go-module)
+    - [11.5.1. Basic package](#1151-basic-package)
+    - [11.5.2. Basic command](#1152-basic-command)
+    - [11.5.3. Package or command with supporting packages](#1153-package-or-command-with-supporting-packages)
+    - [11.5.4. Multiple packages](#1154-multiple-packages)
+    - [11.5.5. Multiple commands](#1155-multiple-commands)
+    - [11.5.6. Packages and commands in the same repository](#1156-packages-and-commands-in-the-same-repository)
+  - [11.5.7. Server project](#1157-server-project)
 - [12. Data IO in Go](#12-data-io-in-go)
   - [12.1. IO with readers and writers](#121-io-with-readers-and-writers)
   - [12.2. Formatted IO with fmt](#122-formatted-io-with-fmt)
@@ -82,6 +90,8 @@
 - [15. Remote Procedure Call (RPC), gRPC and protobuf](#15-remote-procedure-call-rpc-grpc-and-protobuf)
   - [15.1. Remote Procedure Call (RPC)](#151-remote-procedure-call-rpc)
   - [15.2. gRPC and Protobuf](#152-grpc-and-protobuf)
+- [16. New packages](#16-new-packages)
+  - [16.1. `unique` package](#161-unique-package)
 - [Resource for new Go programmers](#resource-for-new-go-programmers)
   - [Online resources](#online-resources)
   - [Installing Go \& configure your workspace](#installing-go--configure-your-workspace)
@@ -2121,6 +2131,163 @@ $ cd ..
 $ go run example.com/hello
 HELLO
 ```
+
+### 11.5. Organizing a Go module
+
+Source: <https://go.dev/doc/modules/layout>
+
+Go projects can include packages, command-line programs or a combination of the two. This guide is organized by project type.
+
+> **NOTE**: throughout this document, file/package names are entirely arbitrary
+
+#### 11.5.1. Basic package
+
+- A basic Go package has all its code in the project’s root directory. The project consists of a single module, which consists of a single package. The package name matches the last path component of the module name. For a very simple package requiring a single Go file, the project structure is:
+
+```shell
+project-root-directory/
+  go.mod
+  modname.go
+  modname_test.go
+  auth.go
+  auth_test.go
+  hash.go
+  hash_test.go
+```
+
+- The code in `modname.go` declares the package with:
+
+```go
+package modname
+
+// ... package code here
+```
+
+#### 11.5.2. Basic command
+
+- A basic executable program (or command-line tool) is structured according to its complexity and code size. The simplest program can consist of a single Go file where func main is defined. Larger programs can have their code split across multiple files, all declaring package main:
+
+```shell
+project-root-directory/
+  go.mod
+  auth.go
+  auth_test.go
+  client.go
+  main.go
+```
+
+- Here the `main.go` file contains `func main`, but this is just a convention. The “main” file can also be called `modname.go` (for an appropriate value of modname) or anything else.
+
+#### 11.5.3. Package or command with supporting packages
+
+- Larger packages or commands may benefit from splitting off some functionality into supporting packages. Initially, it’s recommended placing such packages into a directory named `internal`; [this prevents](https://pkg.go.dev/cmd/go#hdr-Internal_Directories) other modules from depending on packages we don’t necessarily want to expose and support for external uses. Since other projects cannot import code from our `internal` directory, we’re free to refactor its API and generally move things around without breaking external users. The project structure for a package is thus:
+
+```shell
+project-root-directory/
+  internal/
+    auth/
+      auth.go
+      auth_test.go
+    hash/
+      hash.go
+      hash_test.go
+  go.mod
+  modname.go
+  modname_test.go
+```
+
+#### 11.5.4. Multiple packages
+
+- A module can consist of multiple importable packages; each package has its own directory, and can be structured hierarchically. Here’s a sample project structure:
+
+```shell
+project-root-directory/
+  go.mod
+  modname.go
+  modname_test.go
+  auth/
+    auth.go
+    auth_test.go
+    token/
+      token.go
+      token_test.go
+  hash/
+    hash.go
+  internal/
+    trace/
+      trace.go
+```
+
+- As a reminder, we assume that the module line in go.mod says:
+
+```golang
+module github.com/someuser/modname
+```
+
+#### 11.5.5. Multiple commands
+
+- Multiple programs in the same repository will typically have separate directories:
+
+```shell
+project-root-directory/
+  go.mod
+  internal/
+    ... shared internal packages
+  prog1/
+    main.go
+  prog2/
+    main.go
+```
+
+- In each directory, the program’s Go files declare package `main`. A top-level `internal` directory can contain shared packages used by all commands in the repository.
+- A common convention is placing all commands in a repository into a `cmd` directory; while this isn’t strictly necessary in a repository that consists only of commands, it’s very useful in a mixed repository that has both commands and importable packages, as we will discuss next.
+
+#### 11.5.6. Packages and commands in the same repository
+
+- Sometimes a repository will provide both importable packages and installable commands with related functionality. Here’s a sample project structure for such a repository:
+
+```shell
+project-root-directory/
+  go.mod
+  modname.go
+  modname_test.go
+  auth/
+    auth.go
+    auth_test.go
+  internal/
+    ... internal packages
+  cmd/
+    prog1/
+      main.go
+    prog2/
+      main.go
+```
+
+### 11.5.7. Server project
+
+- Go is a common language choice for implementing servers. There is a very large variance in the structure of such projects, given the many aspects of server development: protocols (REST? gRPC?), deployments, front-end files, containerization, scripts and so on. We will focus our guidance here on the parts of the project written in Go.
+- Server projects typically won’t have packages for export, since a server is usually a self-contained binary (or a group of binaries). Therefore, it’s recommended to keep the Go packages implementing the server’s logic in the `internal` directory. Moreover, since the project is likely to have many other directories with non-Go files, it’s a good idea to keep all Go commands together in a cmd directory:
+
+```shell
+project-root-directory/
+  go.mod
+  internal/
+    auth/
+      ...
+    metrics/
+      ...
+    model/
+      ...
+  cmd/
+    api-server/
+      main.go
+    metrics-analyzer/
+      main.go
+    ...
+  ... the project's other directories with non-Go code
+```
+
+- In case the server repository grows packages that become useful for sharing with other projects, it’s best to split these off to separate modules.
 
 ## 12. Data IO in Go
 
