@@ -2,7 +2,7 @@
 
 Source: <https://victoriametrics.com/blog/go-graceful-shutdown/>
 
-Table of content:
+Table of contents:
 - [Graceful shutdown](#graceful-shutdown)
   - [1. Catching the signal](#1-catching-the-signal)
   - [2. Timeout awareness](#2-timeout-awareness)
