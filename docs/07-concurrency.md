@@ -153,10 +153,35 @@ func writeOnly(ch chan<- string) {}
 
 ### 3.2. Buffered vs Unbuffered
 
-| Type       | When Sends Block       | When Receives Block  | Use Case            |
-| ---------- | ---------------------- | -------------------- | ------------------- |
-| Unbuffered | When no receiver ready | When no sender ready | Synchronization     |
-| Buffered   | When buffer is full    | When buffer is empty | Async communication |
+**Buffered Channels:**
+
+- Buffered channel has capacity.
+- When a goroutine attempts to send a resource to a buffered and the channel is full, the channel will lock the goroutine and make it wait until a buffer becomes available.
+- When a goroutine attempts to receive from a buffered channel and the buffered channel is empty, the channel will lock the goroutine and make it wait until a resource has been sent.
+
+![Buffered Channel](https://www.ardanlabs.com/images/goinggo/Screen+Shot+2014-02-17+at+8.38.15+AM.png)
+
+- Buffered channel is used to perform asynchronous communication.
+- A receive will block only if there's no value in the channel to receive.
+- A send will block only if there's no available buffer to place the value being sent.
+
+**Unbuffered Channels:**
+
+- Unbuffered channel has no capacity and therefore require both goroutines to be ready to make any exchange.
+- When a goroutine attempts to send a resource to an unbuffered channel and there is no goroutine waiting to receive the resource, the channel will lock the sending goroutine and make it wait.
+- When a goroutine attempts to receive from an unbuffered channel, and there is no goroutine waiting to send a resource, the channel will lock the receiving goroutine and make it wait.
+
+![Unbuffered Channel](https://www.ardanlabs.com/images/goinggo/Screen+Shot+2014-02-16+at+10.10.54+AM.png)
+
+- Unbuffered channel is used to perform synchronous communication between goroutines. Unbuffered channel provides a guarantee that an exchange between 2 goroutines is performed at the instant the send and receive take place.
+- Synchronization is fundamental in the interaction between the send and receive on the channel.
+
+```go
+unbuffered := make(chan int)      // Unbuffered channel of integer type
+buffered := make(chan int, 10)    // Buffered channel of integer type
+```
+
+You can check [ArdanLabs blog post for more detail](https://www.ardanlabs.com/blog/2014/02/the-nature-of-channels-in-go.html).
 
 ### 3.3. Channel Example
 

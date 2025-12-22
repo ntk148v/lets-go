@@ -214,4 +214,4 @@ func main() {
 // I don't know about type bool!
 ```
 
-More examples [here](https://github.com/a8m/reflect-examples).
+More examples at [a8m/reflect-examples](https://github.com/a8m/reflect-examples).

@@ -15,6 +15,19 @@ A comprehensive Go learning guide. From basics to advanced topics, covering Go 1
 > [!important]
 > Checkout the previous one-page version [here](./README_onepage.md)
 
+Table of Contents:
+- [1. Quick Start](#1-quick-start)
+- [2. Documentation](#2-documentation)
+- [3. Repository Structure](#3-repository-structure)
+- [4. Advanced Topics (tips-notes)](#4-advanced-topics-tips-notes)
+- [5. Learning Path](#5-learning-path)
+  - [5.1. For Beginners](#51-for-beginners)
+  - [5.2. For Intermediate Developers](#52-for-intermediate-developers)
+  - [5.3. For Advanced Users](#53-for-advanced-users)
+- [6. Resources](#6-resources)
+- [7. Contributing](#7-contributing)
+- [8. License](#8-license)
+
 ## 1. Quick Start
 
 ```go
@@ -56,14 +69,14 @@ go run hello.go
 ```shell
 golang/
 ├── README.md           # This file (documentation hub)
-├── README_full.md      # Complete reference documentation (preserved)
+├── README_onepage.md   # Complete reference documentation (one-page version)
 ├── docs/               # Focused topic guides
 │   ├── 01-getting-started.md
 │   ├── 02-basics.md
 │   ├── 03-functions.md
 │   ├── ...
-│   └── 16-go-1.24-1.25.md
-├── examples/           # Code examples by section
+│   └── 15-new-packages.md
+├── examples/           # Code examples by section (matches README_onepage numbering)
 ├── gobyexample/        # Examples by topic
 └── tips-notes/         # Advanced tips and patterns
 ```
@@ -96,7 +109,7 @@ Deep-dive guides for specific topics:
 
 ### 5.2. For Intermediate Developers
 
-1. [Concurrency](docs/06-concurrency.md) - Master goroutines and channels
+1. [Concurrency](docs/07-concurrency.md) - Master goroutines and channels
 2. [Testing](docs/10-testing.md) - Write effective tests
 3. [Web Programming](docs/13-web-programming.md) - Build web applications
 4. [Error Handling](tips-notes/handling-errors-gracefully.md) - Handle errors properly
