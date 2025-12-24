@@ -2,7 +2,7 @@
 
 > **NOTE**: Related code examples can be found in [`examples/7/`](../examples/7/) which contains goroutine examples.
 
-Go's concurrency model, based on goroutines and channels, is one of its most powerful features. This guide covers everything from basics to advanced patterns.
+Firstly, don't mess between [parallelism & concurrency](https://go.dev/blog/waza-talk). Go's concurrency model, based on goroutines and channels, is one of its most powerful features. This guide covers everything from basics to advanced patterns.
 
 Table of Contents:
 
@@ -75,8 +75,6 @@ go func() {
 }()
 ```
 
----
-
 ## 2. Goroutines
 
 ### 2.1. Basic Goroutine
@@ -128,8 +126,6 @@ func main() {
     time.Sleep(5 * time.Second)
 }
 ```
-
----
 
 ## 3. Channels
 
@@ -216,8 +212,6 @@ for value := range ch {
 }
 ```
 
----
-
 ## 4. Select Statement
 
 Select lets a goroutine wait on multiple channel operations.
@@ -245,8 +239,6 @@ default:
     fmt.Println("No message, moving on")
 }
 ```
-
----
 
 ## 5. Synchronization Primitives
 
@@ -305,8 +297,6 @@ func (c *Counter) Value() int64 {
 }
 ```
 
----
-
 ## 6. Context
 
 Context provides cancellation signals and request-scoped values.
@@ -354,8 +344,6 @@ func doWork(ctx context.Context) error {
 - Don't store context in a struct
 - Use context.Value sparingly - it should inform, not control
 - Always call cancel() to release resources
-
----
 
 ## 7. Concurrency Patterns
 
@@ -473,8 +461,6 @@ func (rl *RateLimiter) Wait() {
 }
 ```
 
----
-
 ## 8. Best Practices
 
 ### 8.1. Always Use Context for Cancellation
@@ -537,8 +523,6 @@ if err := g.Wait(); err != nil {
 }
 ```
 
----
-
 ## 9. Common Pitfalls
 
 ### 9.1. Goroutine Leak
@@ -600,8 +584,6 @@ func (c *Config) Get() string {
 }
 ```
 
----
-
 ## 10. Container-aware GOMAXPROCS *(Go 1.25+)*
 
 Go 1.25 introduces container-aware CPU scheduling. On Linux, the runtime now considers the CPU bandwidth limit of the containing cgroup.
@@ -631,8 +613,6 @@ GODEBUG=containercpucount=0 ./myapp
 ```
 
 This change significantly improves performance in containerized environments like Kubernetes by preventing CPU throttling.
-
----
 
 ## Further Reading
 

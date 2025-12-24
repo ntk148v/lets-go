@@ -1580,7 +1580,7 @@ func main() {
 
 ## 9. Concurrency
 
-- Firstly, don't mess between [parallelism & concurrency](https://github.com/ntk148v/lets-go/blob/master/concurrency-parallelism/concurrency-is-not-parallelism.md).
+- Firstly, don't mess between [parallelism & concurrency](https://go.dev/blog/waza-talk).
 - **Goroutines** are the central entity in Go's ability for concurrency. A goroutine has a simple model: it is a function executing in parallel with other goroutines in the same address space. It is lightweight, costing little more than the allocation of stack space. And the stack start small, so they are cheap, & grow by allocating (and freeing) heap storage as required.
   - [Goroutine vs OS Thread](./tips-notes/go-concurrency.md).
   - [The maximum number of goroutines](./tips-notes/max-number-of-goroutines.md)

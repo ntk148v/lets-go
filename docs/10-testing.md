@@ -28,8 +28,6 @@ Table of Contents:
     - [Use Cases](#use-cases)
   - [Further Reading](#further-reading)
 
----
-
 ## 1. Basic Testing
 
 ### Test File Naming
@@ -77,8 +75,6 @@ go test -run TestSum
 go test ./...
 ```
 
----
-
 ## 2. Table-Driven Tests
 
 Table-driven tests make it easy to add new test cases:
@@ -107,8 +103,6 @@ func TestSum(t *testing.T) {
     }
 }
 ```
-
----
 
 ## 3. Subtests
 
@@ -140,8 +134,6 @@ Run specific subtest:
 ```bash
 go test -run TestMath/Sum/positive
 ```
-
----
 
 ## 4. Testing Concurrent Code
 
@@ -176,8 +168,6 @@ func TestConcurrent(t *testing.T) {
 ```bash
 go test -race ./...
 ```
-
----
 
 ## 5. HTTP Testing
 
@@ -232,8 +222,6 @@ func TestAPIClient(t *testing.T) {
 }
 ```
 
----
-
 ## 6. Benchmarking
 
 Benchmark functions start with `Benchmark`:
@@ -268,8 +256,6 @@ go test -bench=. -count=5
 BenchmarkSum-8     1000000000     0.29 ns/op     0 B/op     0 allocs/op
 ```
 
----
-
 ## 7. Code Coverage
 
 ```bash
@@ -283,8 +269,6 @@ go tool cover -html=coverage.out
 # Coverage by function
 go tool cover -func=coverage.out
 ```
-
----
 
 ## 8. Mocking and Dependency Injection
 
@@ -348,8 +332,6 @@ func TestGetUserName(t *testing.T) {
 }
 ```
 
----
-
 ## 9. testing/synctest Package *(Go 1.25+)*
 
 The `testing/synctest` package provides robust testing for concurrent code by virtualizing time.
@@ -394,8 +376,6 @@ func TestTimeout(t *testing.T) {
 - Testing ticker/timer behavior
 - Testing retry logic with exponential backoff
 - Testing cache expiration
-
----
 
 ## Further Reading
 
