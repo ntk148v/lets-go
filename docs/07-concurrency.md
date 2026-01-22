@@ -41,7 +41,7 @@ Table of Contents:
     - [9.1. Goroutine Leak](#91-goroutine-leak)
     - [9.2. Race Condition](#92-race-condition)
     - [9.3. Mutex Copying](#93-mutex-copying)
-  - [10. Container-aware GOMAXPROCS *(Go 1.25+)*](#10-container-aware-gomaxprocs-go-125)
+  - [10. Container-aware GOMAXPROCS _(Go 1.25+)_](#10-container-aware-gomaxprocs-go-125)
     - [10.1. The Problem (Before Go 1.25)](#101-the-problem-before-go-125)
     - [10.2. The Solution (Go 1.25+)](#102-the-solution-go-125)
     - [10.3. Opting Out](#103-opting-out)
@@ -281,6 +281,77 @@ func (c *Counter) Get(key string) int {
 
 ### 5.3. Atomic Operations
 
+`sync/atomic` package provides low-level, primitive operations that perform common tasks like adding, comparing-and-swapping, or loading values in a thread-safe manner without explicit locking. These operations are typically implemented using special CPU instructions that guarantee atomicity, meaning they complete in a single, indivisible step, even in a multi-core environment. This makes them highly efficient for specific use cases.
+
+But why Atomic operations?
+
+Consider a scenario where multiple goroutines need to increment a shared counter.
+
+```go
+package main
+
+import (
+	"fmt"
+	"runtime"
+	"sync"
+	"time"
+)
+
+func main() {
+	counter := 0
+	numGoroutines := 1000
+	var wg sync.WaitGroup
+
+	wg.Add(numGoroutines)
+	for i := 0; i < numGoroutines; i++ {
+		go func() {
+			defer wg.Done()
+			for j := 0; j < 1000; j++ {
+				counter++ // Data race!
+			}
+		}()
+	}
+
+	wg.Wait()
+	fmt.Println("Final Counter (potential race):", counter)
+}
+```
+
+Running this code multiple times might yield different results, this is because the `counter++` is not atomic; it involves three steps: read, increment, and write. A context switch can happen between these steps, leading to lost updates. One way to fix this is using `sync.Mutex`, but acquiring and releasing a mutex for every tiny increment can introduce unnecessary overhead. For simple arithmetic operations or value swapping, `sync/atomic` provides a more performant alternative.
+
+`Add*` functions atomically a delta to a value and return the new value.
+
+```go
+package main
+
+import (
+	"fmt"
+	"sync"
+	"sync/atomic" // Import the atomic package
+)
+
+func main() {
+	var counter int64 // Use int64 for atomic operations
+	numGoroutines := 1000
+	var wg sync.WaitGroup
+
+	wg.Add(numGoroutines)
+	for i := 0; i < numGoroutines; i++ {
+		go func() {
+			defer wg.Done()
+			for j := 0; j < 1000; j++ {
+				atomic.AddInt64(&counter, 1) // Atomically add 1
+			}
+		}()
+	}
+
+	wg.Wait()
+	fmt.Println("Final Counter (with atomic):", counter) // Should be 1,000,000
+}
+```
+
+`Load*` functions atomically load (read) the value stored at an address. It's crucial to always use atomic loads when reading a value that might be written to atomically by another goroutine. This ensures you get the most up-to-date, consistent value.
+
 ```go
 import "sync/atomic"
 
@@ -296,6 +367,22 @@ func (c *Counter) Value() int64 {
     return c.count.Load()
 }
 ```
+
+When to use `sync/atomic` vs. `sync.Mutex`
+
+Use sync/atomic when:
+
+- You need to perform simple read, write, add, swap, or compare-and-swap operations on primitive integer types or pointers.
+- Performance is critical, and the operations are truly atomic at the hardware level.
+- You want to avoid the overhead of mutex locking/unlocking.
+- You're implementing lock-free data structures (though this is advanced and error-prone).
+
+Use sync.Mutex (or sync.RWMutex) when:
+
+- The shared state is a complex data structure (e.g., maps, slices, structs) where multiple fields might be modified in a related way, or where operations involve multiple discrete reads/writes that need to be grouped as a single logical unit.
+- The operations are more complex than simple arithmetic or assignments (e.g., appending to a slice, deleting from a map).
+- You need to protect an entire critical section, not just a single value.
+- Simplicity and correctness are prioritized over micro-optimizations. Mutexes are generally easier to reason about and less error-prone for complex scenarios.
 
 ## 6. Context
 
@@ -584,7 +671,7 @@ func (c *Config) Get() string {
 }
 ```
 
-## 10. Container-aware GOMAXPROCS *(Go 1.25+)*
+## 10. Container-aware GOMAXPROCS _(Go 1.25+)_
 
 Go 1.25 introduces container-aware CPU scheduling. On Linux, the runtime now considers the CPU bandwidth limit of the containing cgroup.
 
