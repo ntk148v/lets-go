@@ -127,9 +127,15 @@ func main() {
 }
 ```
 
+### 3.4. Go scheduler
+
+The Go scheduler is the behind-the-scenes magical machine that powers Go programs. It efficiently runs goroutines, and also coordinates network IO and memory management.
+
+[Kavya’s talk](https://youtu.be/YHRO5WQGh0k) will explore the inner workings of the scheduler machinery. She will delve into the M:N multiplexing of goroutines on system threads, and the mechanisms to schedule, unschedule, and rebalance goroutines. Kavya will also touch upon how the scheduler supports the netpoller and the memory management systems for goroutine stack resizing and heap garbage collection. Finally, she will evaluate the effectiveness and performance of the scheduler.
+
 ## 3. Channels
 
-Channels are typed conduits for communication between goroutines.
+Channels are typed conduits for communication between goroutines. You can check out the [Kavya Joshi's talk - Understanding channels](https://youtu.be/KBZlN0izeiY) for the inner working of channels and channel operations, including how they're supported by the runtime scheduler and memory management systems.
 
 ### 3.1. Channel Types
 
