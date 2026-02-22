@@ -3,16 +3,17 @@
 Source: <https://sergey.kamardin.org/articles/generic-concurrency-in-go/>
 
 Table of contents:
+
 - [Generic Concurrency](#generic-concurrency)
-	- [TL;DR](#tldr)
-	- [1. Introduction](#1-introduction)
-		- [1.1. Pre-Generics era](#11-pre-generics-era)
-		- [1.2. Generics era](#12-generics-era)
-	- [2. Concurrent mapping](#2-concurrent-mapping)
-		- [2.1. Context cancellation](#21-context-cancellation)
-		- [2.2. Limit concurrency](#22-limit-concurrency)
-		- [2.3. Reusing goroutines](#23-reusing-goroutines)
-	- [3. Generalisation of `transform()`](#3-generalisation-of-transform)
+  - [TL;DR](#tldr)
+  - [1. Introduction](#1-introduction)
+    - [1.1. Pre-Generics era](#11-pre-generics-era)
+    - [1.2. Generics era](#12-generics-era)
+  - [2. Concurrent mapping](#2-concurrent-mapping)
+    - [2.1. Context cancellation](#21-context-cancellation)
+    - [2.2. Limit concurrency](#22-limit-concurrency)
+    - [2.3. Reusing goroutines](#23-reusing-goroutines)
+  - [3. Generalisation of `transform()`](#3-generalisation-of-transform)
 
 ## TL;DR
 
@@ -43,7 +44,7 @@ transform([]int{1, 2, 3}, func(n int) int {
 })
 ```
 
-Now lets assume we want to map integers to strings. That's easy, define `transform()` *just slightly* different:
+Now lets assume we want to map integers to strings. That's easy, define `transform()` _just slightly_ different:
 
 ```go
 func transform([]int, func(int) string) []string
@@ -51,7 +52,7 @@ func transform([]int, func(int) string) []string
 transform([]int{1, 2, 3}, strconv.Itoa)
 ```
 
-What about reporting whether a number is odd or even? Just another *tiny correction*:
+What about reporting whether a number is odd or even? Just another _tiny correction_:
 
 ```go
 func transform([]int, func(int) bool) []bool
@@ -59,7 +60,7 @@ func transform([]int, func(int) bool) []bool
 
 ### 1.2. Generics era
 
-Thanks to the generics, we now have an ability to *parametrize* functions and types with *type parameters* and define `tranform()` this way:
+Thanks to the generics, we now have an ability to _parametrize_ functions and types with _type parameters_ and define `tranform()` this way:
 
 ```go
 func transform[A, B any]([]A, func(A) B) []B

@@ -16,6 +16,7 @@ A comprehensive Go learning guide. From basics to advanced topics, covering Go 1
 > Checkout the previous one-page version [here](./README_onepage.md)
 
 Table of Contents:
+
 - [1. Quick Start](#1-quick-start)
 - [2. Documentation](#2-documentation)
 - [3. Repository Structure](#3-repository-structure)

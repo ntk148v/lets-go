@@ -485,7 +485,6 @@ s := make([]byte, 5)
   ```
 
   ![slice-3](https://go.dev/blog/slices-intro/slice-2.png)
-
   - Slicing does not copy the slice's data. It creates a new slice that points to the original array. This makes slice operations as efficient as manipulating array indicies. Therefore, modifying the elements (not the slice itself) of a re-slice modifies the elements of the original slice:
 
     ```go

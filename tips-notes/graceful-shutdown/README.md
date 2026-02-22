@@ -3,6 +3,7 @@
 Source: <https://victoriametrics.com/blog/go-graceful-shutdown/>
 
 Table of contents:
+
 - [Graceful shutdown](#graceful-shutdown)
   - [1. Catching the signal](#1-catching-the-signal)
   - [2. Timeout awareness](#2-timeout-awareness)
@@ -15,6 +16,7 @@ Table of contents:
 
 > [!IMPORTANT]
 > Graceful shutdown generally satisfies three minimum conditions:
+>
 > 1. Close the entrypoint by stopping new requests or messages from sources like HTTP, pub/sub systems, etc. However, keep outgoing connections to third-party services like databases or caches active.
 > 2. Wait for all ongoing request to finish. If a request takes too long, respond with a graceful error.
 > 3. Release critical resources such as database conections, file locks, or network listeners. Do any final cleanup.
@@ -169,7 +171,7 @@ time.Sleep(5 * time.Second) // optional delay to allow context propagation
 
 ## 5. Release critical resources
 
-- A common mistake is releasing critical resources as soon as the termination signal is received. At that point, your handlers and in-flight requests may still be using those resources. *You should delay the resource cleanup until the shutdown timeout has passed or all requests are done*.
+- A common mistake is releasing critical resources as soon as the termination signal is received. At that point, your handlers and in-flight requests may still be using those resources. _You should delay the resource cleanup until the shutdown timeout has passed or all requests are done_.
 - In many cases, simple letting the process exit is enough. The operating system will automatically reclaim resources. However, there are important cases where explicit cleanup is still necessary during shutdown:
   - **Database connections** should be closed properly. If any transactions are still open, they need to be committed or rolled back. Without a proper shutdown, the database has to rely on connection timeouts.
   - **Message queues and brokers** often require a clean shutdown. This may involve flushing messages, committing offsets, or signaling to the broker that the client is exiting. Without this, there can be rebalancing issues or message loss.

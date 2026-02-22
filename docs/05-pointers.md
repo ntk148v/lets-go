@@ -16,7 +16,6 @@ Table of Contents:
 ## 1. Pointers
 
 - Go has pointers but not pointer arthmetic, so they act more like references than pointers that you may know from C.
-
   - A pointer is a variable which stores the address of another variable. A pointer is thus the location at which a value is stored. Not every value has an address but every variable does.
   - A reference is a variable which refers to another value.
   - There is no pointer arithmetic. You cannot write in Go. That is, you cannot alter the address p points to unless you assign another address to it.
@@ -126,7 +125,6 @@ func main() {
 ### 2.1. new vs make
 
 - **new** allocates; **make** initializes.
-
   - _new(T)_ returns \*T pointing to a zerod T.
   - _make(T)_ returns an initialized T.
   - _make_ is only used for slices, maps, channels.
@@ -265,7 +263,6 @@ r := string(i)
 ```
 
 - For numeric values:
-
   - Convert to an integer with a specific (bit) length: `uint8(int)`.
   - From floating point to an integer value: `int(float32)`. This discards the fraction part from the floating point value.
   - And other way around `float32(int)`

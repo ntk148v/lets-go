@@ -1,6 +1,7 @@
 # Go Concurrency
 
 Table of contents
+
 - [Go Concurrency](#go-concurrency)
   - [1. Goroutines vs OS Threads](#1-goroutines-vs-os-threads)
     - [1.1. Threads](#11-threads)
@@ -16,7 +17,6 @@ Table of contents
     - [3.8. Best practices](#38-best-practices)
     - [3.9 Common pitfalls](#39-common-pitfalls)
     - [3.10. Performance tips](#310-performance-tips)
-
 
 ## 1. Goroutines vs OS Threads
 
@@ -124,7 +124,6 @@ func main() {
 ```
 
 - Key points:
-
   - Add() must be called before the goroutine starts.
   - Done() should be deferred to handle panics.
   - Wait() blocks until the counter reaches zero.
@@ -423,7 +422,6 @@ func doOperation(ctx context.Context) (string, error) {
   - **Automatic Cleanup with defer**: By using `defer`, we ensure that the lock is released when the function finishes, even if it exits early. This helps prevent deadlocks and keeps the code clean.
   - **Encapsulation of State**: The `Counter` struct and its methods hide the synchronization details from the caller and reducing the chance of misuse.
 
-
 ```go
 type Counter struct {
     mu    sync.RWMutex
@@ -499,7 +497,6 @@ func (rl *RateLimiter) Wait() {
   - **Threshold and Reset Logic**: The circuit “trips” if `failureCount` exceeds threshold. The breaker then rechecks the `resetTimeout` before allowing another call, minimizing downtime.
   - **Efficient Synchronization**: The combination of `RLock` for reading states and `Lock` for writing states in the `canExecute` and `recordResult` methods prevents race conditions and improves performance.
 
-
 ```go
 type CircuitBreaker struct {
     mu             sync.RWMutex
@@ -573,7 +570,8 @@ func (cb *CircuitBreaker) recordResult(err error) {
   - **Controlled Concurrency**: `g.Go` launches each goroutine with `errgroup`, reducing boilerplate code for error handling.
   - **Channel-Based Results Processing**: `results` channel stores successful items and is closed after all tasks finish, preventing deadlocks by gracefully shutting down.
   - **Ensured Closure Safety**: Creating a new `item` variable inside the loop prevents closure data race issues, ensuring each goroutine has a unique item.
-`
+    `
+
 ```go
 func processItems(ctx context.Context, items []string) error {
     // Initialize an error group with context for managing goroutines and errors.

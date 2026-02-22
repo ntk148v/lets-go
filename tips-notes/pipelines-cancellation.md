@@ -169,7 +169,6 @@ func main() {
 ```
 
 - Replace send operation with a `select` statement.
-
   - Problem: Each downstream receiver needs to know the number of potentially blocked upstream senders and arrange to signal those senders on early return.
 
   ```go

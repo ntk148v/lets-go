@@ -11,7 +11,7 @@ This section is about the new packages be added.
 
 Source: <https://go.dev/blog/unique>
 
-The standard library of Go 1.23 now includes the [new unique package](https://pkg.go.dev/unique). The purposes behind this package is to enable the canonicalization of comparable values. In other words, this package lets you deduplicate values so that they point to a single, canonical, unique copy, while efficiently managing the canonical copies under the hood ([interning](https://en.wikipedia.org/wiki/Interning_(computer_science))).
+The standard library of Go 1.23 now includes the [new unique package](https://pkg.go.dev/unique). The purposes behind this package is to enable the canonicalization of comparable values. In other words, this package lets you deduplicate values so that they point to a single, canonical, unique copy, while efficiently managing the canonical copies under the hood ([interning](<https://en.wikipedia.org/wiki/Interning_(computer_science)>)).
 
 At high level, interning is very simple:
 

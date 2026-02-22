@@ -5,8 +5,9 @@ Source: https://www.digitalocean.com/community/tutorials/building-go-application
 It is important to consider the operating system and underlying processor architecture that you would like to compile your binary for.
 
 Go solves this problem by building support for multiple platforms directly into the `go build` tool as well as the rest of the Go toolchain:
-* Environment variables.
-* Build tags.
+
+- Environment variables.
+- Build tags.
 
 ## Possible platforms for `GOOS` and `GOARCH`
 
@@ -16,7 +17,7 @@ To find the list of possible platforms:
 $ go tool dist list
 ```
 
-* Output with Format: `<operating system>/<architecture>`
+- Output with Format: `<operating system>/<architecture>`
 
 ```
 aix/ppc64

@@ -49,7 +49,6 @@ Don't (let computations) communicate by sharing memory, (let them) share memory 
 ### 3.2. Channel operations
 
 - 5 operations:
-
   - Close the channel:
 
   ```go
@@ -125,7 +124,6 @@ func main() {
 ### 3.3. Use cases
 
 - Use channels as Futures/Promises.
-
   - Return receive-only channels as results.
 
     ```go

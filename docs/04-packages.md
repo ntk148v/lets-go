@@ -55,7 +55,7 @@ Now you can use the package in your program with `import "even"`.
 
 ## 2. Documeting packages
 
-- Each package should have a _package comment**.
+- Each package should have a \_package comment\*\*.
 - When a package consists of multiple files the package comment should only appear in 1 file.
 - A common convention (in really big packages) is to have a separate `doc.go` that only holds the package comment.
 
@@ -238,7 +238,6 @@ Isolating dependencies: The Key factor that defines a unit test is isolation fro
 ## 8. Useful packages
 
 - **fmt**: Package `fmt` implements formatted I/O with functions analogous to C's`printf` & `scanf`. The format verbs are derived from C's but are simpler. Some verbs (%-sequences) that can be used:
-
   - %v, the value in a default format, when printing structs, the plus flag (%+v) adds fields names.
   - %#v, a Go-syntax representation of the value.
   - %T, a Go-sytanx representation of the type of the value.

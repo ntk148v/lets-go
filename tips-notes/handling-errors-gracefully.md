@@ -6,13 +6,13 @@ Source:
 - <https://www.sobyte.net/post/2022-06/go-error/>
 
 - [Handling errors gracefully](#handling-errors-gracefully)
-	- [1. What is an error in go?](#1-what-is-an-error-in-go)
-	- [2. Error flow](#2-error-flow)
-	- [3. A solution to handle errors gracefully?](#3-a-solution-to-handle-errors-gracefully)
-	- [4. Techniques and principles of error handling](#4-techniques-and-principles-of-error-handling)
-		- [4.1. Using wrappers to avoid repetitive error judgments](#41-using-wrappers-to-avoid-repetitive-error-judgments)
-		- [4.2. Error handling before Golang 1.13](#42-error-handling-before-golang-113)
-		- [4.3. Error Handling in Golang 1.13](#43-error-handling-in-golang-113)
+  - [1. What is an error in go?](#1-what-is-an-error-in-go)
+  - [2. Error flow](#2-error-flow)
+  - [3. A solution to handle errors gracefully?](#3-a-solution-to-handle-errors-gracefully)
+  - [4. Techniques and principles of error handling](#4-techniques-and-principles-of-error-handling)
+    - [4.1. Using wrappers to avoid repetitive error judgments](#41-using-wrappers-to-avoid-repetitive-error-judgments)
+    - [4.2. Error handling before Golang 1.13](#42-error-handling-before-golang-113)
+    - [4.3. Error Handling in Golang 1.13](#43-error-handling-in-golang-113)
 
 ## 1. What is an error in go?
 

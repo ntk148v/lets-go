@@ -22,7 +22,7 @@ Table of Contents:
   - [7. Code Coverage](#7-code-coverage)
   - [8. Mocking and Dependency Injection](#8-mocking-and-dependency-injection)
     - [Interface-Based Mocking](#interface-based-mocking)
-  - [9. testing/synctest Package *(Go 1.25+)*](#9-testingsynctest-package-go-125)
+  - [9. testing/synctest Package _(Go 1.25+)_](#9-testingsynctest-package-go-125)
     - [The Problem](#the-problem)
     - [The Solution](#the-solution)
     - [Use Cases](#use-cases)
@@ -332,7 +332,7 @@ func TestGetUserName(t *testing.T) {
 }
 ```
 
-## 9. testing/synctest Package *(Go 1.25+)*
+## 9. testing/synctest Package _(Go 1.25+)_
 
 The `testing/synctest` package provides robust testing for concurrent code by virtualizing time.
 

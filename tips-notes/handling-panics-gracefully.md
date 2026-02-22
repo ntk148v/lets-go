@@ -2,7 +2,7 @@
 
 Source: <https://github.com/sourcegraph/conc#goal-2-handle-panics-gracefully>
 
-A frequent problem with goroutines in long-running applications is handling panics. A goroutine spawned without a panic  handler will crash the whole process on panic. This is usually undesirable.
+A frequent problem with goroutines in long-running applications is handling panics. A goroutine spawned without a panic handler will crash the whole process on panic. This is usually undesirable.
 
 We will use the following example, just a simple one with panic, goroutine and WaitGroup.
 

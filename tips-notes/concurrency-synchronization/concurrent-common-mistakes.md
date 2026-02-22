@@ -1,16 +1,16 @@
 # Common cocurrent programming mistakes
 
 - [Common cocurrent programming mistakes](#common-cocurrent-programming-mistakes)
-	- [1. No synchronizations when synchronizations are needed](#1-no-synchronizations-when-synchronizations-are-needed)
-	- [2. Use `time.Sleep` calls to do synchronizations](#2-use-timesleep-calls-to-do-synchronizations)
-	- [3. Leaves Goroutines hanging](#3-leaves-goroutines-hanging)
-	- [4. Copy values of the types in the `sync` standard package](#4-copy-values-of-the-types-in-the-sync-standard-package)
-	- [5. Call the `sync.WaitGroup.Add method` at wrong places](#5-call-the-syncwaitgroupadd-method-at-wrong-places)
-	- [6. Use Channels as futures/promises improperly](#6-use-channels-as-futurespromises-improperly)
-	- [7. Close channels not from the last active sender goroutine](#7-close-channels-not-from-the-last-active-sender-goroutine)
-	- [8. Do 64-bit atomic operations on values which are not guaranteed to be 8-byte aligned](#8-do-64-bit-atomic-operations-on-values-which-are-not-guaranteed-to-be-8-byte-aligned)
-	- [9. Not pay attention to too many resources are consumed by calls to the `time.After` function](#9-not-pay-attention-to-too-many-resources-are-consumed-by-calls-to-the-timeafter-function)
-	- [10. Use `time.Timer` values incorrectly](#10-use-timetimer-values-incorrectly)
+  - [1. No synchronizations when synchronizations are needed](#1-no-synchronizations-when-synchronizations-are-needed)
+  - [2. Use `time.Sleep` calls to do synchronizations](#2-use-timesleep-calls-to-do-synchronizations)
+  - [3. Leaves Goroutines hanging](#3-leaves-goroutines-hanging)
+  - [4. Copy values of the types in the `sync` standard package](#4-copy-values-of-the-types-in-the-sync-standard-package)
+  - [5. Call the `sync.WaitGroup.Add method` at wrong places](#5-call-the-syncwaitgroupadd-method-at-wrong-places)
+  - [6. Use Channels as futures/promises improperly](#6-use-channels-as-futurespromises-improperly)
+  - [7. Close channels not from the last active sender goroutine](#7-close-channels-not-from-the-last-active-sender-goroutine)
+  - [8. Do 64-bit atomic operations on values which are not guaranteed to be 8-byte aligned](#8-do-64-bit-atomic-operations-on-values-which-are-not-guaranteed-to-be-8-byte-aligned)
+  - [9. Not pay attention to too many resources are consumed by calls to the `time.After` function](#9-not-pay-attention-to-too-many-resources-are-consumed-by-calls-to-the-timeafter-function)
+  - [10. Use `time.Timer` values incorrectly](#10-use-timetimer-values-incorrectly)
 
 ## 1. No synchronizations when synchronizations are needed
 

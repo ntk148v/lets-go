@@ -198,7 +198,6 @@ _, b := 26, 9
 
 - **Boolean**: `bool`
 - **Numerical**:
-
   - Go has most of the well-know types such as `int` - it has the appropriate length for your machine (32-bit machine - 32 bits, 64-bit machine - 64 bits)
   - The full list for (signed & unsigned) integers is `int8`, `int16`, `int32`, `int64` & `byte` (an alias for `uint8`), `uint8`, `uint16`, `uint32`, `uint64`.
   - For floating point values there is `float32`, `float64`, ~~float~~.
@@ -225,7 +224,6 @@ const (
 ```
 
 - **Strings**:
-
   - Strings in Go are a sequence of UTF-8 characters enclosed in double quotes. If you use the single quote you mean one character (encoded in UTF-8) - which is _not_ a `string` in Go. Note that! In Python (my favourite programming language), I can use both of them for string assignment.
   - String in Go are immutable. To change one character in string, you have to create a new one.
 
@@ -422,7 +420,6 @@ J: for j := 0; j < 5; j++ {
 ```
 
 - **Range**:
-
   - `range` can be used for loops. It can loop over slices, arrays, strings, maps & channels.
   - `range` is an iterator that, when called, returns the next key-value pair from the "thing" it loops over.
 
@@ -434,7 +431,6 @@ J: for j := 0; j < 5; j++ {
   ```
 
 - **Switch**:
-
   - The case are evaluated top to bottom until a match is found, & if the `switch` has no expression it switches on `true`.
   - It's therefore possible - & idomatic - to write an `if-else-if-else` chain as a `switch`.
 
@@ -481,7 +477,6 @@ cap         copy       println
 
 - Brief: list -> arrays, slices. dict -> map
 - **Arrays**:
-
   - An array is defined by `[n]<type>`.
 
   ```go
@@ -498,7 +493,6 @@ cap         copy       println
   - Array are **value types**: Assigning one array to another copies all the elements. In particular, if you pass an array to a function it will receive a copy of the array, not a pointer to it. To avoid the copy you could pass a pointer to the array, but then that's a pointer to an array, not an array.
 
 - **Slices**:
-
   - Similar to an array, but it can grow when new elements are added.
   - A slice is a pointer to an (underlaying) array, slices are **reference types**.
 
@@ -547,7 +541,6 @@ cap         copy       println
   ```
 
   ![slice-2](https://go.dev/blog/slices-intro/slice-1.png)
-
   - `len` is the number of elements referred to by the slice.
   - `cap` is the number of elements in the underlying array (beginning at the element referred to by the slice pointer).
 
@@ -556,7 +549,6 @@ cap         copy       println
     ```
 
     ![slice-3](https://go.dev/blog/slices-intro/slice-2.png)
-
     - Slicing does not copy the slice's data. It creates a new slice that points to the original array. This makes slice operations as efficient as manipulating array indicies. Therefore, modifying the elements (not the slice itself) of a re-slice modifies the elements of the original slice:
 
       ```go
@@ -608,7 +600,6 @@ cap         copy       println
   ```
 
 - **Maps**:
-
   - Python has its dictionaries. In go we have the `map` type.
 
   ```go
@@ -1017,7 +1008,6 @@ func TestSum(t *testing.T) {
 ```
 
 - Launching tests:
-
   - Within the same directory as the test, _this picks up any files matching packagename_test.go_:
 
   ```shell
@@ -1031,7 +1021,6 @@ func TestSum(t *testing.T) {
   ```
 
 - HTTP testing:
-
   - The `net/http/httptest` sub-package facilitates the testing automation of both HTTP server and client code.
   - When writing HTTP server code, you will undoubtedly run into the need to test your code in a robust and repeatable manner, without having to set up some fragile code harness to simulate end-to-end testing. Type `httptest.ResponseRecorder` is designed specifically to provide unit testing capabilities for exercising the HTTP handler methods by inspecting state changes to the http.ResponseWriter in the tested function.
   - Creating test code for an HTTP client is more involved, since you actually need a server running for proper testing. Luckily, package `httptest` provides type `httptest.Server` to programmatically create servers to test client requests and send back mock responses to the client.
@@ -1049,7 +1038,6 @@ $ go tool cover -html=c.out -o coverage.html
 ```
 
 - Code benchmark: The purpose of benchmarking is to measure a code's performance. The go test command-line tool comes with support for the automated generation and measurement of benchmark metrics. Similar to unit tests, the test tool uses benchmark functions to specify what portion of the code to measure.
-
   - Running the benchmark
 
     ```shell
@@ -1086,7 +1074,6 @@ $ go tool cover -html=c.out -o coverage.html
 ### 4.8. Useful packages
 
 - **fmt**: Package `fmt` implements formatted I/O with functions analogous to C's`printf` & `scanf`. The format verbs are derived from C's but are simpler. Some verbs (%-sequences) that can be used:
-
   - %v, the value in a default format, when printing structs, the plus flag (%+v) adds fields names.
   - %#v, a Go-syntax representation of the value.
   - %T, a Go-sytanx representation of the type of the value.
@@ -1120,7 +1107,6 @@ $ go tool cover -html=c.out -o coverage.html
 ## 5. Pointer
 
 - Go has pointers but not pointer arthmetic, so they act more like references than pointers that you may know from C.
-
   - A pointer is a variable which stores the address of another variable. A pointer is thus the location at which a value is stored. Not every value has an address but every variable does.
   - A reference is a variable which refers to another value.
   - There is no pointer arithmetic. You cannot write in Go. That is, you cannot alter the address p points to unless you assign another address to it.
@@ -1216,7 +1202,6 @@ func main() {
 - Go also has garbage collection.
 - To allocate memory Go has 2 primitives, `new` & `make`.
 - **new** allocates; **make** initializes.
-
   - _new(T)_ returns \*T pointing to a zerod T.
   - _make(T)_ returns an initialized T.
   - _make_ is only used for slices, maps, channels.
@@ -1290,7 +1275,6 @@ struct {
 ```
 
 - Methods:
-
   - Create a function that takes the type as an argument:
 
   ```go
@@ -1355,7 +1339,6 @@ r := string(i)
 ```
 
 - For numeric values:
-
   - Convert to an integer with a specific (bit) length: `uint8(int)`.
   - From floating point to an integer value: `int(float32)`. This discards the fraction part from the floating point value.
   - And other way around `float32(int)`
@@ -1407,7 +1390,6 @@ f(&s)
 ```
 
 - The fact that you do not need to declare whether or not a type implements an interface means that Go implements a form of [duck typing](https://en.wikipedia.org/wiki/Duck_typing). This is not pure duck typing, because when possible the Go complier will statically check whether the type implements the inerface. However, Go does have a purely dynamic aspect, in that you can convert from one interface to another. In the general case, that conversion is checked at run time. If the conversion is invalid - if the type of the value stored in the existing interface value does not satisfy the interface to which it is being converted - the program will fail with a run time error.
-
   - _Duck typing - If it looks like a duck, & it quacks like a duck, then it is a duck_. It means if it has a set of methods that match an interface, then you can use it wherever that interface is needed without explicitly defining that your types implement that interface.
 
   ```go
@@ -1654,9 +1636,7 @@ func main() {
 ```
 
 - Buffered channel:
-
   - Buffered channel has capacity.
-
     - When a goroutine attempts to send a resourrce to a buffered and the channel is full, the channel will lock the goroutine and make it wait until a buffer becomes available.
     - When a goroutine attempts to receive from a buffered channel and the buffered channel is empty, the channel will lock the goroutine and make it wait until a resource has been sent.
 
@@ -1668,9 +1648,7 @@ func main() {
   - A send will block only if there's no available buffer to place the value being sent.
 
 - Unbuffered channel:
-
   - Unbuffered channel has no capacity and therefore require both goroutines to be ready to make any exchange.
-
     - When a goroutine attempts to send a resource to and unbuffered channel and there is no goroutine waiting to receive the resource, the channel will lock the sending goroutine and make it wait.
     - When a goroutine attempts to receive from an unbuffered channel, and there is no goroutine waiting to send a resource, the channel will lock the receiving goroutine and make it wait.
 
@@ -1779,7 +1757,6 @@ func main() {
 
 - While our goroutines were running concurrently, they were not running in parallel! (Once more time, make sure you know that Concurrency is not Parralel!)
 - With `runtime.GOMAXPROCS(n)` or set an environment variable `GOMAXPROCS` you can set the number of goroutines that can run in parallel.
-
   - GOMAXPROCS sets the maximum number of CPUs that can be executing simultaneously & returns the previous setting. If n < 1, it does not change the current setting. This call will go away when the scheduler improves.>
 
 - From version 1.5 & above, `GOMAXPROCS` defaults to the number of CPU cores.
@@ -3093,7 +3070,7 @@ This section is about the new packages be added.
 
 Source: <https://go.dev/blog/unique>
 
-- The standard library of Go 1.23 now includes the [new unique package](https://pkg.go.dev/unique). The purposes behind this package is to enable the canonicalization of comparable values. In other words, this package lets you deduplicate values so that they point to a single, canonical, unique copy, while efficiently managing the canonical copies under the hood ([interning](https://en.wikipedia.org/wiki/Interning_(computer_science))).
+- The standard library of Go 1.23 now includes the [new unique package](https://pkg.go.dev/unique). The purposes behind this package is to enable the canonicalization of comparable values. In other words, this package lets you deduplicate values so that they point to a single, canonical, unique copy, while efficiently managing the canonical copies under the hood ([interning](<https://en.wikipedia.org/wiki/Interning_(computer_science)>)).
 - At high level, interning is very simple:
   - Interning is re-using objects of equal value on-demand instead of creating new objects.
   - For interning is a common application of interning, where many strings with identical values are needed in the same program. For example, if the name "Kien" appears 100 times, by interning you ensure only one "Kien" is actually allocated memory.

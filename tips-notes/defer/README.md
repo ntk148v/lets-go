@@ -107,7 +107,6 @@ func main() {
 ```
 
 - Common mistakes:
-
   - Use `recover` directly as a deferred function:
 
   ```go
@@ -187,7 +186,6 @@ func main() {
   ```
 
 - How to fix it?
-
   - Use a closure. This means wrapping the deferred function call inside another function. That way, you capture the variable by reference, not by value like before.
 
   ```go
@@ -268,7 +266,6 @@ defer Data.pushAnalytic(d) // defer d.pushAnalytic()
 
 - So, the same rule applies: the arguments of the deferred function are evaluated right away.
 - How to fix:
-
   - Use a closure.
   - Use a pointer but you need to change a bit.
 

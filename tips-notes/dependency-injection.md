@@ -6,11 +6,11 @@
   - Other services: Making your code more modular, less duplicate code and more testable.
   - Configuration: Such as a database passwords, URL endpoints.
   - System or environment state: Such as the clock or file system.
-  - *Stubs or external APIs.  So that API requests can be mocked within the system during tests to keep things stable and quick.*
+  - _Stubs or external APIs. So that API requests can be mocked within the system during tests to keep things stable and quick._
 - Terminology:
-  - *Service*: an instance of a class.
-  - *Container*: a collection of services. Services are lazy-loaded and only initialized when they are requested from the container.
-  - *Singleton*: an instance that is initialised once, but can be reused many times.
+  - _Service_: an instance of a class.
+  - _Container_: a collection of services. Services are lazy-loaded and only initialized when they are requested from the container.
+  - _Singleton_: an instance that is initialised once, but can be reused many times.
 
 ## 2. Example
 

@@ -19,9 +19,9 @@ spec:
       image: images.my-company.example/app:v4
       resources:
         requests:
-          cpu: '100m'
+          cpu: "100m"
         limits:
-          cpu: '1000m'
+          cpu: "1000m"
 ```
 
 - 100m translates to 0.1 (or 10%) of a CPU core. 1000m translates to 1 full CPU core.

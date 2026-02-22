@@ -1,6 +1,7 @@
 # Benchmarking
 
 Source:
+
 - <https://blog.logrocket.com/benchmarking-golang-improve-function-performance/#:~:text=A%20benchmark%20is%20a%20type,the%20code's%20overall%20performance%20level.>
 - <https://dave.cheney.net/2013/06/30/how-to-write-benchmarks-in-go>
 
